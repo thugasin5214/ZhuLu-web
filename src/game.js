@@ -482,11 +482,12 @@ function update(dt){
 /* ---------- 号令 ---------- */
 const selOK=()=>G.sel.filter(u=>u.alive&&u.state!=='rout');
 function pickUnit(wx,wy,side){let b=null,bd=1e9;for(const u of G.units){if(u.side!==side||!u.alive||(side===2&&!u.vis))continue;const d=Math.hypot(u.x-wx,(u.y-wy)*K);if(d<u.r+12&&d<bd){bd=d;b=u;}}return b;}
+const use=(...k)=>{if(G&&G.used)for(const x of k)G.used[x]=1;};
 function order(wx,wy){
  let s=selOK();if(!s.length)return;for(const u of s)u.man=null;
  const e=pickUnit(wx,wy,2);
  sfx('move');
- if(e){for(const u of s){u.bomb=null;if(u.hidden)u.ambushT=10;u.target=e;u.ordered=true;u.hold=false;u.state='idle';u.repT=0;}ring(e.x,e.y,ZHU);ack(s,'杀');return;}
+ if(e){for(const u of s){u.bomb=null;if(u.hidden)u.ambushT=10;u.target=e;u.ordered=true;u.hold=false;u.state='idle';u.repT=0;}ring(e.x,e.y,ZHU);ack(s,'杀');use('attack');return;}
  {const ti=tileIdx(wx,wy),tt=G.map[ti],gg=G.gateIdx[ti],cat=s.filter(u=>u.gear==='cata');
   if(cat.length&&(tt===WALL&&G.own[ti]!==1||(tt===GATE&&gg&&gg.hp>0&&gg.side!==1)||(G.tower[ti]>0&&G.own[ti]===2))){
    for(const u of cat){u.bomb={i:ti};u.bcd=1;u.target=null;u.ordered=false;u.hold=false;u.state='idle';u.path=[];u.repT=0;}
@@ -495,7 +496,7 @@ function order(wx,wy){
  const k=s.length,cols=Math.ceil(Math.sqrt(k)),rows=Math.ceil(k/cols);let bad=0;
  s.forEach((u,i)=>{const ox=((i%cols)-(cols-1)/2)*66,oy=((i/cols|0)-(rows-1)/2)*66;const p=findPath(u,wx+ox,wy+oy);
   if(!p.length){bad++;return;}u.path=p;u.state='move';u.target=null;u.ordered=false;u.hold=false;});
- if(bad===k)msg('此处不可至');else{ring(wx,wy,INK);ack(s,'得令');}
+ if(bad===k)msg('此处不可至');else{ring(wx,wy,INK);ack(s,'得令');use('move');}
 }
 function splitOff(u){if(u.n<1600||u.general){msg(u.general?'主将亲卫不可分兵':'兵力不足一千六，不可再分');return null;}
  const h=u.n/2;u.n=h;u.nMax/=2;const a=u.face+PI/2;
@@ -520,7 +521,7 @@ function tactic(mode,e){
  if(front){front.path=[];front.target=null;front.ordered=false;front.march=false;front.bomb=null;
   if(dist(front,e)>e.r+front.r+60){front.hold=false;front.state='move';front.man={tg:e,a,pts:[{da:0,R:-10}],hold:true};}else{front.man=null;front.hold=true;front.state='idle';front.face=ang(front,e);}ack([front],'守');}
  ack(mv,mode==='wings'?'包抄':mode==='rear'?'绕后':'侧击');sfx('move');ring(e.x,e.y,ZHU);
- msg(TAC[mode]+'：'+(front?front.name+'逼近敌前镇守，':'')+(mode==='wings'?'分兵左右两翼':mode==='rear'?'后军绕出敌后':'后军迂回侧翼')+'，合击敌'+e.name);}
+ use('tac',mode);msg(TAC[mode]+'：'+(front?front.name+'逼近敌前镇守，':'')+(mode==='wings'?'分兵左右两翼':mode==='rear'?'后军绕出敌后':'后军迂回侧翼')+'，合击敌'+e.name);}
 function tacAt(w){const mode=G.tacMode;G.tacMode=null;const e=pickUnit(w.x,w.y,2);if(!e){msg('须点选一支看得见的敌军');return;}tactic(mode,e);}
 function merge(s){if(s.length<2){msg('合兵需选中两阵以上同种军阵');return;}const a=s[0];let done=0;
  for(const b of s.slice(1)){if(b.kind!==a.kind||b.general||dist(a,b)>150)continue;const t=a.n+b.n;a.morale=(a.morale*a.n+b.morale*b.n)/t;a.stam=(a.stam*a.n+b.stam*b.n)/t;a.n=t;a.nMax+=b.nMax;b.alive=false;done++;}
@@ -530,12 +531,12 @@ function fireAt(w){
  if(!arch.length){msg('火攻需选中弩手');return;}
  if(G.weather==='rain'){msg('雨中火不可发');return;}
  const i=tileIdx(w.x,w.y);if(!flam(i)){msg('此地无草木营帐可燃（林地、敌营可火攻）');return;}
- for(const u of arch){if(u.fireCd>0||Math.hypot(u.x-w.x,u.y-w.y)>rangeOf(u)*1.3)continue;u.fireCd=25;volley(u,w,true);startFire(i);quote(G.windStr>1?'wind':'fire');return;}
+ for(const u of arch){if(u.fireCd>0||Math.hypot(u.x-w.x,u.y-w.y)>rangeOf(u)*1.3)continue;u.fireCd=25;volley(u,w,true);startFire(i);use('fire');quote(G.windStr>1?'wind':'fire');return;}
  msg('弩手距离太远，或火箭尚未备妥');
 }
 function cmd(c){
  if(!G||G.over)return;const s=selOK();sfx('tick');
- if(c==='all'){const pv=G.sel;G.sel=G.units.filter(u=>u.side===1&&!u.auto&&u.alive&&u.state!=='rout');hail(G.sel.filter(u=>!pv.includes(u)));return;}
+ if(c==='all'){const pv=G.sel;G.sel=G.units.filter(u=>u.side===1&&!u.auto&&u.alive&&u.state!=='rout');hail(G.sel.filter(u=>!pv.includes(u)));use('all');if(G.sel.length>1)use('multi');return;}
  if(c==='pause'){G.paused=!G.paused;return;}
  if(c==='siege'){$('siegemenu').hidden=!$('siegemenu').hidden;$('tacmenu').hidden=true;return;}
  if(c==='tac'){if(G.tacMode){G.tacMode=null;return;}$('tacmenu').hidden=!$('tacmenu').hidden;$('siegemenu').hidden=true;return;}
@@ -560,6 +561,7 @@ function cmd(c){
   if(s.some(u=>u.build))msg('就地筑楼：每层约十四息，遇敌接战则停工');}
  else if(c==='fire'){G.fireMode=!G.fireMode;if(G.fireMode)msg('点选林地或敌营，发火箭');}
  else if(FM[c])for(const u of s)u.fm=c;
+ if(c!=='fire'&&!TAC[c])use(c);
 }
 
 /* ---------- 墨迹特效 ---------- */
@@ -990,7 +992,7 @@ function newGame(mi){
  const M=typeof mi==='number'?MISSIONS[mi]:mi;installTypes(M.data&&M.data.unitTypes);setMusic(M.data&&M.data.music);
  G={mi:typeof mi==='number'?mi:-1,M,s0:[0,0,0],fortList:[],campList:[],tilePaint:false,t:0,map:new Uint8Array(MW*MH),own:new Uint8Array(MW*MH),burnt:new Uint8Array(MW*MH),units:[],gates:[],gateIdx:{},points:[],elev:new Uint8Array(MW*MH),hv:new Float32Array(MW*MH),props:[],floats:[],gap:new Uint8Array(MW*MH),shp:{},ramp:new Uint8Array(MW*MH),tower:new Uint8Array(MW*MH),riverLines:[],roadLines:[],fires:new Map(),arrows:[],parts:[],rings:[],sel:[],
   weather:'sun',wind:0,windStr:1,grain:[null,null,null],gen:[null,null,null],hour0:M.hour0,hourLen:M.paceTime?M.hourLen*100/D.pace:M.hourLen,heat:0,events:[],evi:0,over:null,speed:1,paused:true,uid:1,
-  stats:{kill:0,loss:0,surr:0},flags:{},rnd:rng32(M.seed),nameIdx:{},qt:{},qLast:-99,fireMode:false,ground:null,gctx:null};
+  stats:{kill:0,loss:0,surr:0},flags:{},used:{},rnd:rng32(M.seed),nameIdx:{},qt:{},qLast:-99,fireMode:false,ground:null,gctx:null};
  M.setup(G);G.events=M.events.slice().sort((a,b)=>a.t-b.t);
  computeElev();computeGap();for(const u of G.units)if(u.type!=='liang')G.s0[u.side]+=u.n;
  for(const u of G.units)if(u.ai&&u.ai.mode==='guard'&&u.hold&&G.map[tileIdx(u.x,u.y)]===FOREST){u.holdT=10;u.hidden=true;}
@@ -1023,8 +1025,10 @@ function buildTitle(){const box=$('mlist');box.innerHTML='';
  const add=(M,ord,won,play,edit)=>{const li=document.createElement('li');li.innerHTML='<span class="ord">'+ord+'</span><div><h3>'+M.name+(won?'<em class="seal sm">捷</em>':'')+'</h3><p class="role">'+M.role+'</p><p>'+M.line+'</p></div>';
   const sp=document.createElement('span');sp.className='acts';const b=document.createElement('button');b.textContent='入阵';b.className='pri';b.addEventListener('click',play);sp.appendChild(b);
   if(edit){const e=document.createElement('button');e.textContent='编辑';e.addEventListener('click',edit);sp.appendChild(e);}li.appendChild(sp);box.appendChild(li);};
+ const embedRow=L=>{const M=mkMission(L);add(M,M.ord,false,()=>showBrief(mkMission(L)),()=>openEditor(Object.assign({},L,{id:'lv'+Date.now().toString(36),name:(L.name||'')+'（改）'})));};
+ EMBED.filter(L=>L&&L.first).forEach(embedRow);
  MISSIONS.forEach((M,i)=>add(M,M.ord,done.includes(i),()=>showBrief(i)));
- EMBED.forEach((L,i)=>{const M=mkMission(L);add(M,M.ord,false,()=>showBrief(mkMission(L)),()=>openEditor(Object.assign({},L,{id:'lv'+Date.now().toString(36),name:(L.name||'')+'（改）'})));});
+ EMBED.filter(L=>!(L&&L.first)).forEach(embedRow);
  LOCAL.forEach((L,i)=>{const M=mkMission(L);add(M,M.ord,false,()=>showBrief(mkMission(L)),()=>openEditor(L,i));});
  syncDiff();}
 function syncDiff(){for(const k of['force','might','wit','pace','vol']){$('d_'+k).value=D[k];}
@@ -1070,10 +1074,10 @@ function init(){
   else if(d.mode==='touch'&&!d.moved){if(G.tacMode)return tacAt(w);if(G.fireMode)return fireAt(w);const u=pickUnit(w.x,w.y,1);
    if(u&&!u.auto&&u.state!=='rout'){if(G.sel.length===1&&G.sel[0]===u)G.sel=[];else if(G.sel.includes(u))G.sel=[u];else if(G.sel.length&&e.shiftKey)G.sel.push(u);else G.sel=[u];}
    else if(G.sel.length)order(w.x,w.y);}
-  {const nw=G.sel.filter(u=>!prevSel.includes(u));if(nw.length)hail(nw);}
+  {const nw=G.sel.filter(u=>!prevSel.includes(u));if(nw.length)hail(nw);if(G.sel.length)use('select');if(G.sel.length>1)use('multi');}
   hudT=0;};
  cvEl.addEventListener('pointerup',up);cvEl.addEventListener('pointercancel',e=>{ptrs.delete(e.pointerId);drag=null;});
- cvEl.addEventListener('dblclick',e=>{if(!G)return;const p=pos(e),w=toWorld(p.x,p.y),u=pickUnit(w.x,w.y,1);if(u&&!u.auto){G.sel=G.units.filter(o=>o.side===1&&!o.auto&&o.kind===u.kind&&o.state!=='rout');hail(G.sel);}});
+ cvEl.addEventListener('dblclick',e=>{if(!G)return;const p=pos(e),w=toWorld(p.x,p.y),u=pickUnit(w.x,w.y,1);if(u&&!u.auto){G.sel=G.units.filter(o=>o.side===1&&!o.auto&&o.kind===u.kind&&o.state!=='rout');hail(G.sel);use('select');if(G.sel.length>1)use('multi');}});
  cvEl.addEventListener('wheel',e=>{e.preventDefault();const p=pos(e),w=toWorld(p.x,p.y);cam.z=cl(cam.z*(e.deltaY<0?1.1:.91),.45,1.6);cam.x=w.x-p.x/cam.z;cam.y=w.y-(p.y/cam.z+hpx(w.x,w.y))/K;},{passive:false});
  const mj=e=>{if(!G)return;const r=miniEl.getBoundingClientRect();cam.x=(e.clientX-r.left)/r.width*WW-W/cam.z/2;cam.y=(e.clientY-r.top)/r.height*WH-H/cam.z/K/2;};
  miniEl.addEventListener('pointerdown',e=>{try{miniEl.setPointerCapture(e.pointerId);}catch(_){}mj(e);});miniEl.addEventListener('pointermove',e=>{if(e.buttons||e.pointerType==='touch')mj(e);});
@@ -1107,6 +1111,7 @@ const FORMAT_DOC=`【怎样加一关】
 {
  "id":"唯一标识", "name":"战役名", "ord":"序（如 别传）", "role":"我方主帅", "line":"一句话任务",
  "brief":"战前形势", "goals":["军令…"], "tips":["献策…"], "winText":"胜后题记",
+ "first":false,                                             // true：卷首排在所有战役之前（如教学关）
  "seed":7, "hour0":5, "hourLen":50, "paceTime":false,      // hour0: 0子 1丑 … 11亥；hourLen: 每时辰多少秒；戌亥子丑寅为夜
  "face":{"1":0,"2":3.1416},                                 // 双方开局朝向（弧度，0 朝东，3.1416 朝西，-1.5708 朝北）
  "cam":[12,19], "weather":{"type":"sun|rain|fog","wind":0,"str":1},   // wind: 风吹去的方向（弧度）；str 2 为大风
@@ -1135,8 +1140,10 @@ const FORMAT_DOC=`【怎样加一关】
             {"t":90,"do":"convoy","from":[58,3],"to":0,"gain":35,"n":1800},       // 我方粮队走向据点 to，入营加粮 gain
             {"t":120,"do":"weather","type":"rain","wind":0.785,"str":1,"text":"天降大雨"},
             {"t":180,"do":"retask","tag":"后队","ai":{"mode":"assault","point":0},"text":"敌军后队压上"},
-            {"t":200,"do":"grain","side":1,"add":20}, {"t":1,"do":"sfx","name":"drums"}, {"t":300,"do":"lose","text":"…"}, {"t":300,"do":"win"} ],
+            {"t":200,"do":"grain","side":1,"add":20}, {"t":1,"do":"lesson","title":"行军","text":"第一段\\n第二段","ok":"领命"},
+            {"do":"flag","name":"一"}, {"t":1,"do":"sfx","name":"drums"}, {"t":300,"do":"lose","text":"…"}, {"t":300,"do":"win"} ],
  "triggers":[{"when":<条件>,"do":[<同 events 的动作，不写 t>]}],                 // 条件首次成立时触发一次
+   // lesson：弹出教示并暂停，点按钮后继续（text 里 \\n 分段）；flag：立一个标记，供条件 {"type":"flag"} 判断，用来让教学一步接一步
 
  "win":[<条件>, …],            // 满足其一即胜。缺省：敌军全灭
  "lose":[{"when":<条件>,"text":"败因"}],    // 缺省：我军主将阵亡。另外“我军全灭”恒为败
@@ -1163,6 +1170,11 @@ const FORMAT_DOC=`【怎样加一关】
 {"type":"grain","side":2,"below":0}    该方粮草不高于某值
 {"type":"convoys","n":2} / {"type":"convoysLost","n":2}   粮队入营数 / 被劫数
 {"type":"time","t":300} 或 {"type":"time","hours":6}      开战后已过多久
+{"type":"near","x":30,"y":19,"r":2,"n":1}  我方（side 缺省为 1）至少 n 阵进到 (x,y) 周围 r 格内
+{"type":"flag","name":"一"}            事件或触发器立过此标记
+{"type":"used","c":"feng"}             玩家下过此令；c 可为数组，须全部下过。可用：select 点选 multi 多选 all 全选 move 行军 attack 进攻
+                                       fang feng yuan yan 四阵  hold 镇守 stop 止步 march 急行 split 分兵 merge 合兵 build 筑楼
+                                       ram ladder cata 攻城器  fire 火攻得手  tac 用过战术 wings rear side 三种战术
 {"type":"all","of":[…]}  {"type":"any","of":[…]}  {"type":"not","of":<条件>}
 
 【提醒】删掉据点会让后面的据点序号前移，规则里引用的序号要跟着改。敌军兵力与战力还会按卷首的难度设置缩放。`;
@@ -1206,6 +1218,8 @@ function runAct(g,a){if(!a)return;switch(a.do){
  case'retask':for(const u of g.units)if(u.side===2&&u.tag===a.tag){u.ai=aiOf(g,a.ai||{mode:'assault'},u.x/TS|0,u.y/TS|0);u.hold=false;u.path=[];}if(a.text)msg(a.text,a.kind||'warn');break;
  case'grain':{const s=a.side===2?2:1;if(a.set!==undefined)g.grain[s]=a.set;if(a.add)g.grain[s]=cl((g.grain[s]||0)+a.add,0,100);break;}
  case'sfx':sfx(String(a.name));break;
+ case'flag':g.flags['f_'+String(a.name||'')]=1;break;
+ case'lesson':{const pv=g.paused;modal((a.title?'<p class="ord">教示</p><h2>'+esc(a.title)+'</h2>':'')+String(a.text||'').split('\n').map(x=>'<p>'+esc(x)+'</p>').join(''),[[esc(a.ok||'领命'),()=>{closeModal();if(G===g)g.paused=pv;}]]);break;}
  case'win':g.flags.forceWin=1;break;
  case'lose':g.flags.forceLose=esc(a.text||'兵败');break;}}
 function strength(g,side){let n=0;for(const u of g.units)if(u.side===side&&u.type!=='liang')n+=u.n;return n;}
@@ -1219,6 +1233,9 @@ function cond(g,c){if(!c)return false;const s=c.side===1?1:2;switch(c.type){
  case'strength':return g.s0[s]>0&&strength(g,s)/g.s0[s]*100<(c.below||20);
  case'wiped':return !g.units.some(u=>u.side===s&&u.type!=='liang');
  case'grain':{const k=c.side===2?2:1;return g.grain[k]!==null&&g.grain[k]<=(c.below||0);}
+ case'used':return [].concat(c.c||[]).every(k=>!!(g.used&&g.used[k]));
+ case'flag':return !!g.flags['f_'+String(c.name||'')];
+ case'near':{const s=c.side===2?2:1,r=(Number(c.r)||2)*TS,x=(Number(c.x)||0)*TS,y=(Number(c.y)||0)*TS,need=c.n||1;let k=0;for(const u of g.units)if(u.alive&&u.side===s&&u.type!=='liang'&&u.state!=='rout'&&Math.hypot(u.x-x,u.y-y)<=r)k++;return k>=need;}
  case'all':return(c.of||[]).every(x=>cond(g,x));
  case'any':return(c.of||[]).some(x=>cond(g,x));
  case'not':return !cond(g,c.of);}
@@ -1268,8 +1285,9 @@ const ETER=[[PLAIN,'平地'],[HILL,'山丘'],[FOREST,'林地'],[RIVER,'河流'],
 const ECOL={[PLAIN]:'#e9e2cf',[HILL]:'#b3ad9b',[FOREST]:'#5d7a64',[RIVER]:'#9fc0d8',[FORD]:'#d8c79a',[ROAD]:'#c39e6b',[MARSH]:'#93aa94',[CLIFF]:'#2f2d2a'};
 const TPL={
  events:{'军报':{t:10,do:'msg',text:'斥候来报……',kind:'warn'},'敌军来攻':{t:30,do:'spawn',text:'敌军来攻',units:[{side:2,type:'ji',n:5000,x:1,y:10,ai:{mode:'assault',point:0}}]},
-  '变天':{t:120,do:'weather',type:'rain',wind:0,str:1,text:'天降大雨'},'粮队':{t:90,do:'convoy',from:[58,3],to:0,gain:35},'改令':{t:180,do:'retask',tag:'后队',ai:{mode:'assault',point:0},text:'敌军后队压上'}},
- triggers:{'夺旗后':{when:{type:'point',i:0,side:1},do:[{do:'msg',text:'已夺敌旗！',kind:'good'}]},'敌粮尽':{when:{type:'grain',side:2,below:0},do:[{do:'msg',text:'敌军粮尽',kind:'good'}]}},
+  '变天':{t:120,do:'weather',type:'rain',wind:0,str:1,text:'天降大雨'},'粮队':{t:90,do:'convoy',from:[58,3],to:0,gain:35},'改令':{t:180,do:'retask',tag:'后队',ai:{mode:'assault',point:0},text:'敌军后队压上'},'教示':{t:1,do:'lesson',title:'行军',text:'点选我军军阵，右键点地面即可行军。',ok:'领命'}},
+ triggers:{'夺旗后':{when:{type:'point',i:0,side:1},do:[{do:'msg',text:'已夺敌旗！',kind:'good'}]},'敌粮尽':{when:{type:'grain',side:2,below:0},do:[{do:'msg',text:'敌军粮尽',kind:'good'}]},
+  '教学一步':{when:{type:'all',of:[{type:'flag',name:'一'},{type:'used',c:'feng'}]},do:[{do:'flag',name:'二'},{do:'lesson',title:'下一课',text:'……'}]}},
  win:{'斩将':{type:'dead',side:2},'夺旗':{type:'point',i:0,side:1},'击溃':{type:'strength',side:2,below:25},'守到时限':{type:'time',hours:6}},
  lose:{'主将阵亡':{when:{type:'dead',side:1},text:'主将阵亡'},'失旗':{when:{type:'point',i:0,side:2},text:'帅旗被夺'},'超时':{when:{type:'time',hours:6},text:'日落未克'}},
  grain:{'我军耗粮':{side:1,start:70,drain:.2},'断敌粮道':{side:2,start:100,drain:.7,regen:.08,cutBy:0}},
@@ -1432,6 +1450,6 @@ function edInit(){
  $('e_pick').addEventListener('change',e=>{const v=e.target.value;if(!v)return;const i=Number(v.slice(1));if(v[0]==='L'&&LOCAL[i])edLoad(LOCAL[i],i);else if(EMBED[i])edLoad(Object.assign({},EMBED[i],{id:'lv'+Date.now().toString(36),name:(EMBED[i].name||'')+'（改）'}),-1);});
 }
 
-if(typeof window!=='undefined'&&window.__TEST)window.__CP={newGame,update,render,hud,drawMini,MISSIONS,get G(){return G;},init,cmd,order,tactic,mkMission,checkLevel,captureBuiltin,levelOut,edLoad,blankLevel,terrainOf,UT,CT,setRun(){running=true;}};
+if(typeof window!=='undefined'&&window.__TEST)window.__CP={newGame,update,render,hud,drawMini,MISSIONS,fireAt,get G(){return G;},init,cmd,order,tactic,mkMission,checkLevel,captureBuiltin,levelOut,edLoad,blankLevel,terrainOf,UT,CT,setRun(){running=true;}};
 else init();
 })();

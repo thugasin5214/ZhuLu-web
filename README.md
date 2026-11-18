@@ -10,7 +10,7 @@
 
 ## 运行
 
-直接用浏览器打开 `index.html`。把仓库开成 GitHub Pages（Settings → Pages → 从 main 分支根目录发布）即可在线玩。
+直接用浏览器打开 `index.html`。把仓库开成 GitHub Pages（Settings → Pages → 从 main 分支根目录发布）即可在线玩。完整部署流程见 [`docs/DEPLOY.md`](docs/DEPLOY.md)。
 
 ## 目录
 

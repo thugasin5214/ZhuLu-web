@@ -233,7 +233,8 @@
     "x": 28,
     "y": 33,
     "general": true,
-    "name": "项羽亲卫"
+    "name": "项羽亲卫",
+    "name_en": "Xiang Yu's Guard"
    },
    {
     "side": 1,
@@ -287,7 +288,8 @@
     "name": "王离亲卫",
     "ai": {
      "mode": "stay"
-    }
+    },
+    "name_en": "Wang Li's Guard"
    },
    {
     "side": 2,
@@ -406,7 +408,9 @@
      "qi": 1.6,
      "che": 1.8,
      "dun": 0.95
-    }
+    },
+    "name_en": "Death-Sworn",
+    "weapon_en": "long pike"
    },
    "che": {
     "name": "战车",
@@ -425,7 +429,9 @@
     },
     "weakTo": {
      "ji": 1.7
-    }
+    },
+    "name_en": "Chariots",
+    "weapon_en": "four-horse chariot"
    }
   },
   "grain": [
@@ -447,7 +453,8 @@
     "t": 3,
     "do": "msg",
     "text": "楚军尽渡漳水，沉船破釜，只余三日之粮",
-    "kind": "warn"
+    "kind": "warn",
+    "text_en": "Chu has crossed the Zhang, sunk its boats and broken its pots: three days of grain remain"
    },
    {
     "t": 100,
@@ -477,7 +484,8 @@
        "pref": "nu"
       }
      }
-    ]
+    ],
+    "text_en": "Zhang Han sends troops down the corridor to relieve Wang Li!"
    },
    {
     "t": 150,
@@ -485,7 +493,8 @@
     "type": "sun",
     "wind": -1.5708,
     "str": 2,
-    "text": "大南风起，顺风而射者利"
+    "text": "大南风起，顺风而射者利",
+    "text_en": "A strong south wind rises: those who shoot downwind have the edge"
    }
   ],
   "triggers": [
@@ -499,7 +508,8 @@
      {
       "do": "msg",
       "text": "甬道已绝，王离军乏食！",
-      "kind": "good"
+      "kind": "good",
+      "text_en": "The corridor is cut: Wang Li's army goes hungry!"
      },
      {
       "do": "retask",
@@ -509,7 +519,8 @@
        "point": 0,
        "pref": "nu"
       },
-      "text": "秦军战车驰援甬道"
+      "text": "秦军战车驰援甬道",
+      "text_en": "Qin chariots race to retake the corridor"
      }
     ]
    },
@@ -523,7 +534,8 @@
      {
       "do": "msg",
       "text": "秦军已折其半，诸侯军在壁上观望",
-      "kind": "good"
+      "kind": "good",
+      "text_en": "Half the Qin army is gone; the allied armies watch from their walls"
      }
     ]
    }
@@ -546,14 +558,16 @@
      "side": 1,
      "below": 0
     },
-    "text": "三日粮尽，军心溃散"
+    "text": "三日粮尽，军心溃散",
+    "text_en": "Three days of grain are gone, and the army falls apart"
    },
    {
     "when": {
      "type": "dead",
      "side": 1
     },
-    "text": "项羽阵亡"
+    "text": "项羽阵亡",
+    "text_en": "Xiang Yu has fallen"
    }
   ],
   "objectives": [
@@ -563,14 +577,16 @@
      "type": "point",
      "i": 0,
      "side": 1
-    }
+    },
+    "text_en": "Cut the Qin corridor (enemy grain {grain2})"
    },
    {
     "text": "斩王离或击溃秦军（敌尚存 {enemy}%）",
     "done": {
      "type": "dead",
      "side": 2
-    }
+    },
+    "text_en": "Kill Wang Li or rout the Qin (enemy at {enemy}%)"
    },
    {
     "text": "军粮耗尽之前取胜（军粮 {grain1}）",
@@ -578,14 +594,16 @@
      "type": "grain",
      "side": 1,
      "below": 0
-    }
+    },
+    "text_en": "Win before the grain runs out (grain {grain1})"
    },
    {
     "text": "项羽无恙",
     "fail": {
      "type": "dead",
      "side": 1
-    }
+    },
+    "text_en": "Xiang Yu unharmed"
    }
   ],
   "music": {
@@ -627,6 +645,26 @@
      0
     ]
    ]
+  },
+  "en": {
+   "name": "Sink the Boats",
+   "ord": "Side Tale",
+   "role": "Chu · Supreme General Xiang Yu",
+   "line": "Cross the Zhang River, cut the Qin supply corridor, and break Wang Li before your three days of grain run out.",
+   "brief": "207 BC. Wang Li besieges Zhao at Julu, fed by grain that Zhang Han ships down a walled supply corridor. More than ten allied armies have come to rescue Zhao, yet none dares to fight. Xiang Yu leads his men across the Zhang River, then sinks the boats, smashes the cooking pots, burns the huts, and carries only three days of grain — to show every soldier there is no way home.",
+   "goals": [
+    "Seize and hold the Supply Corridor (甬道) to starve Wang Li's army",
+    "Kill Wang Li, or rout the Qin army",
+    "Before your grain runs out",
+    "Xiang Yu must survive"
+   ],
+   "tips": [
+    "You carry only three days of grain and will get no more: when it runs out morale falls daily. Fight fast.",
+    "Death-Sworn (死士, Chu's elite halberdiers) counter Qin chariots — put them in front.",
+    "Detach troops to take the corridor in the west first: once Qin is cut off its morale sinks; then converge on Wang Li's main body.",
+    "Qin guards the north-bank crossing, so it is you who will be hit halfway across. Pin them with crossbowmen from across the river, or go around by the eastern ford."
+   ],
+   "winText": "Every Chu warrior fought as ten, and their war cries shook the heavens. In nine battles they cut the corridor, crushed the Qin and captured Wang Li. When the allied generals came through the camp gate, every one of them advanced on his knees, and none dared look up."
   }
  },
  {
@@ -752,7 +790,8 @@
     "x": 10,
     "y": 19,
     "name": "中军",
-    "general": true
+    "general": true,
+    "name_en": "Centre"
    },
    {
     "side": 1,
@@ -760,7 +799,8 @@
     "n": 3000,
     "x": 13,
     "y": 17,
-    "name": "前军"
+    "name": "前军",
+    "name_en": "Vanguard"
    },
    {
     "side": 1,
@@ -768,7 +808,8 @@
     "n": 2400,
     "x": 13,
     "y": 21,
-    "name": "左军"
+    "name": "左军",
+    "name_en": "Left Wing"
    },
    {
     "side": 1,
@@ -776,7 +817,8 @@
     "n": 2500,
     "x": 8,
     "y": 22,
-    "name": "弩营"
+    "name": "弩营",
+    "name_en": "Crossbow Camp"
    },
    {
     "side": 1,
@@ -784,7 +826,8 @@
     "n": 2000,
     "x": 8,
     "y": 16,
-    "name": "骑营"
+    "name": "骑营",
+    "name_en": "Horse Camp"
    },
    {
     "side": 2,
@@ -797,7 +840,8 @@
     "ambush": true,
     "ai": {
      "mode": "stay"
-    }
+    },
+    "name_en": "Ambushers"
    }
   ],
   "events": [
@@ -806,7 +850,10 @@
     "do": "lesson",
     "title": "第一课　行军",
     "text": "此为讲武校场。先学行军。\n电脑：左键点选一阵，右键点地面，军阵即开往该处。\n手机：轻点军阵选中，再轻点地面。\n视野：方向键或 WASD 移动，滚轮缩放（手机单指拖动、双指缩放），点右下小地图可跳转。\n令“前军”（戟兵）开到东面“将台”旗下。",
-    "ok": "领命"
+    "ok": "领命",
+    "title_en": "Lesson 1 · Marching",
+    "text_en": "This is the drill ground. First, learn to march.\nMouse: left-click a unit to select it, then right-click the ground and it marches there.\nTouch: tap a unit to select it, then tap the ground.\nView: arrow keys or WASD to pan, mouse wheel to zoom (on touch, drag with one finger and pinch). Click the minimap at bottom-right to jump.\nMarch the Vanguard (halberdiers) to the Command Platform flag (将台) to the east.",
+    "ok_en": "Understood"
    }
   ],
   "triggers": [
@@ -826,7 +873,10 @@
       "do": "lesson",
       "title": "第二课　统众",
       "text": "善。一将不能独战，再学统领诸阵。\n按 Q（或下方“全选”）选中全军；也可按住左键拖框圈选多阵；按住 Shift 点选可增减；双击一阵，选中同种全部军阵。\n多阵同时右键一处，会排成方块齐进。\n令全军开到将台。",
-      "ok": "领命"
+      "ok": "领命",
+      "title_en": "Lesson 2 · Commanding the Army",
+      "text_en": "Well done. One general cannot fight alone — now learn to lead many units.\nPress Q (or the All button) to select your whole army. You can also drag a box around several units, Shift-click to add or remove one, or double-click a unit to select every unit of that kind.\nRight-click one spot with several units selected and they march there in a block.\nBring the whole army to the Command Platform.",
+      "ok_en": "Understood"
      }
     ]
    },
@@ -860,7 +910,10 @@
       "do": "lesson",
       "title": "第三课　四阵",
       "text": "阵者，兵之形也。选中军阵，按数字键或下方按钮变阵：\n1 方阵：攻守平均，常备之阵，锋矢冲来也能稳住。\n2 锋矢阵：攻击加三成、行军更快，但防御减弱；冲阵破敌用之，最克雁行阵，撞上圆阵则钝。\n3 圆阵：防御加四成，不惧侧背夹击，但行动迟缓；被围或待援时用之。\n4 雁行阵：箭矢杀伤加三成、射程更远；弩手专用之阵。\n选中全军，四阵各变一次。",
-      "ok": "领命"
+      "ok": "领命",
+      "title_en": "Lesson 3 · The Four Formations",
+      "text_en": "Formation is the shape of an army. Select units and press a number key or the buttons below:\n1 Square: balanced attack and defence; the standard formation, steady even against an Arrowhead charge.\n2 Arrowhead: +30% attack and faster marching, but weaker defence. Use it to smash enemy lines; it crushes the Wild Goose but blunts itself on a Circle.\n3 Circle: +40% defence and immune to flank and rear attacks, but slow. Use it when surrounded or waiting for help.\n4 Wild Goose: +30% missile damage and longer range — the crossbowmen's formation.\nSelect the whole army and try each of the four formations once.",
+      "ok_en": "Understood"
      }
     ]
    },
@@ -901,7 +954,8 @@
         "tag": "靶",
         "ai": {
          "mode": "stay"
-        }
+        },
+        "name_en": "Target Company"
        }
       ]
      },
@@ -909,7 +963,10 @@
       "do": "lesson",
       "title": "第四课　接战",
       "text": "东面来了一阵敌军（“靶阵”）。\n选中我军，右键点敌阵即进攻（手机：轻点敌阵）。\n兵种相克：戟克骑，骑克弩，盾克戟与弩。靶阵是戟兵，以盾兵当之最好，切莫让骑兵去撞。\n侧背受击的敌阵伤亡、士气损失大增；士气崩溃则溃走。\n击破靶阵。",
-      "ok": "领命"
+      "ok": "领命",
+      "title_en": "Lesson 4 · Engaging",
+      "text_en": "An enemy unit has appeared to the east: the Target Company (靶阵).\nSelect your troops and right-click the enemy to attack (touch: tap the enemy).\nCounters: halberdiers beat cavalry, cavalry beat crossbowmen, shieldmen beat halberdiers and crossbowmen. The target is halberdiers, so meet them with shieldmen — and keep your cavalry away.\nEnemies hit in the flank or rear take far heavier losses and morale damage; when morale breaks, they rout.\nDestroy the Target Company.",
+      "ok_en": "Understood"
      }
     ]
    },
@@ -936,7 +993,10 @@
       "do": "lesson",
       "title": "第五课　火攻",
       "text": "斥候报：东南“南林”中藏有伏兵。\n火攻须用弩手：选中弩营，按 V（或“火攻”），再点林地或敌营，即发火箭。弩手须进到射程之内；放过一次火，要二十余息才能再发。\n火借风势：右上角可见风向，今日大西风，火向东烧，人要站在上风。雨天不可火攻。\n令弩营火烧南林。",
-      "ok": "领命"
+      "ok": "领命",
+      "title_en": "Lesson 5 · Fire Attack",
+      "text_en": "Scouts report an ambush hidden in the South Wood (南林) to the southeast.\nFire needs crossbowmen: select the Crossbow Camp, press V (or the Fire button), then click a forest or enemy camp to loose fire arrows. The crossbowmen must be within range; after each volley it takes over twenty seconds to ready another.\nFire follows the wind: the top-right corner shows the wind. Today a strong west wind blows the fire east, so stand upwind. Fire will not catch in rain.\nHave the Crossbow Camp set the South Wood ablaze.",
+      "ok_en": "Understood"
      }
     ]
    },
@@ -974,15 +1034,20 @@
         "ai": {
          "mode": "guard",
          "leash": 160
-        }
+        },
+        "name_en": "Qin Company"
        }
-      ]
+      ],
+      "text_en": "A Qin unit approaches from the east"
      },
      {
       "do": "lesson",
       "title": "第六课　合击",
       "text": "林火已起。凡战者，以正合，以奇胜。秦军一阵正自东而来。\n选中我军数阵，按 T（或“战术”）选一种，再点敌阵：\n两翼包抄：诸阵分左右两翼夹击。\n绕后夹击：离敌最近的一阵正面镇守，其余绕到敌后。\n侧翼包抄：一阵正面镇守，其余迂回侧翼。\n只选一阵也行，会自动分兵（主将亲卫与不足一千六的军阵不能分）。\n用一次战术，击破秦军。",
-      "ok": "领命"
+      "ok": "领命",
+      "title_en": "Lesson 6 · Envelopment",
+      "text_en": "The wood is burning. In battle, engage with the orthodox and win with the unexpected. A Qin unit is marching in from the east.\nSelect several of your units, press T (or Tactics), choose one, then click the enemy:\nDouble Envelopment: your units split into left and right wings and strike both sides.\nRear Assault: the unit nearest the enemy pins it from the front while the rest circle behind.\nFlanking Attack: one unit holds the front while the rest wheel onto a flank.\nA single unit works too — it splits itself (a general's guard, or a unit under 1,600 men, cannot split).\nUse one tactic and defeat the Qin.",
+      "ok_en": "Understood"
      }
     ]
    },
@@ -1004,7 +1069,8 @@
      {
       "do": "msg",
       "text": "合击之势已成",
-      "kind": "good"
+      "kind": "good",
+      "text_en": "The envelopment is in place"
      }
     ]
    }
@@ -1031,42 +1097,48 @@
     "done": {
      "type": "flag",
      "name": "一"
-    }
+    },
+    "text_en": "Lesson 1 · March: bring the Vanguard to the Command Platform"
    },
    {
     "text": "二　统众：全军齐至将台",
     "done": {
      "type": "flag",
      "name": "二"
-    }
+    },
+    "text_en": "Lesson 2 · Command: bring the whole army to the Command Platform"
    },
    {
     "text": "三　四阵：方、锋矢、圆、雁行各变一次",
     "done": {
      "type": "flag",
      "name": "三"
-    }
+    },
+    "text_en": "Lesson 3 · Formations: try Square, Arrowhead, Circle and Wild Goose"
    },
    {
     "text": "四　接战：击破靶阵",
     "done": {
      "type": "flag",
      "name": "四"
-    }
+    },
+    "text_en": "Lesson 4 · Engage: destroy the Target Company"
    },
    {
     "text": "五　火攻：弩营火烧南林",
     "done": {
      "type": "flag",
      "name": "五"
-    }
+    },
+    "text_en": "Lesson 5 · Fire: burn the South Wood with the Crossbow Camp"
    },
    {
     "text": "六　合击：用一次战术",
     "done": {
      "type": "used",
      "c": "tac"
-    }
+    },
+    "text_en": "Lesson 6 · Envelop: use one tactic"
    },
    {
     "text": "七　击破秦军",
@@ -1082,7 +1154,8 @@
        "tag": "敌"
       }
      ]
-    }
+    },
+    "text_en": "Lesson 7 · Defeat the Qin Company"
    },
    {
     "text": "余课（可选）：镇守、急行、分兵、合兵各试一次",
@@ -1094,8 +1167,28 @@
       "split",
       "merge"
      ]
-    }
+    },
+    "text_en": "Extra (optional): try Hold, Force March, Split and Merge once each"
    }
-  ]
+  ],
+  "en": {
+   "name": "Drill Ground",
+   "ord": "Training",
+   "role": "Zhao · Newly Appointed Lieutenant",
+   "line": "On the drill ground, learn to march, command, change formation, engage, burn and envelop — one lesson at a time.",
+   "brief": "Qin troops press on Shangdang, and Zhao is raising new levies. As a newly appointed lieutenant you report first to the drill ground outside Handan, to learn the banners and drums and the four formations before marching to Changping. Your instructor stands beside you: finish each lesson and he gives the next.",
+   "goals": [
+    "Follow the instructor's lessons one by one",
+    "Defeat the Qin unit east of the drill ground"
+   ],
+   "tips": [
+    "Mouse: left-click to select, drag a box for several, right-click to march or attack. Arrow keys or WASD pan the view, wheel zooms, middle-drag pans, click the minimap to jump.",
+    "Touch: tap a unit to select, tap ground to march, tap an enemy to attack; drag with one finger to pan, pinch to zoom.",
+    "Unit counters: halberdiers beat cavalry, cavalry beat crossbowmen, shieldmen beat halberdiers and crossbowmen. Cavalry are fastest but lose against halberds.",
+    "Other orders: Hold G (stand fast; hold long enough to entrench), Stop X, Force March R (fast but tiring), Split F, Merge C, Tower B, Siege E. Space pauses — you can always pause and give orders.",
+    "The orders list at top-left ticks off each lesson. Forgot something? Press Withdraw → Orders & Counsel to read these tips again."
+   ],
+   "winText": "The army is drilled: it advances and withdraws in good order. As the Sima Fa says, “Though the realm be at peace, to forget war is to court peril.” Your training is done — on to Changping."
+  }
  }
 ]

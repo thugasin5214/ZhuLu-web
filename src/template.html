@@ -6,7 +6,7 @@
 <title>长平之战 水墨兵戏</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#e6dfcc;--paper2:#f1ecdd;--ink:#1d1b19;--wash:#6f6b62;--zhu:#b3261e;--qing:#2f4d66;--zhe:#8f6a3f;
@@ -21,6 +21,7 @@
 :root[data-theme="dark"]{
   --paper:#1b1d20;--paper2:#25282c;--ink:#e3ddcc;--wash:#a39f93;--zhu:#d5493c;--qing:#86a9c2;--zhe:#c39d68;
   --line:rgba(227,221,204,.26);--panel:rgba(30,32,36,.93);--on-zhu:#fbf5e8;color-scheme:dark}
+:root[lang="en"]{--brush:"Cormorant Garamond","Ma Shan Zheng","STKaiti","KaiTi","Kaiti SC",serif}
 *,*::before,*::after{box-sizing:inherit}
 html,body{height:100%;margin:0}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -50,6 +51,11 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
 #mlist .ord{font-family:var(--brush);font-size:22px;color:var(--wash)}
 #mlist h3{font-family:var(--brush);font-weight:400;font-size:34px;line-height:1.1;margin:0}
 #mlist p{margin:0}
+#mlist h3 small{font-size:.62em;color:var(--wash);margin-left:.35em}
+@media (min-width:721px){:root[lang="en"] #mlist li{grid-template-columns:4.6rem 1fr auto}}
+:root[lang="en"] #mlist .ord{font-size:18px;line-height:1.15}
+:root[lang="en"] #title .sub{letter-spacing:.14em}
+:root[lang="en"] #diff label{grid-template-columns:minmax(5.5em,8.2em) 1fr 4.2em}
 .role{color:var(--wash);font-size:13px;letter-spacing:.08em}
 #diff{margin-top:1.3rem;display:grid;gap:.25rem}
 #diff .dh{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.2rem}
@@ -101,6 +107,8 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
 #quote.on{opacity:1}
 #qtext{font-family:var(--brush);font-size:clamp(24px,3.2vw,38px);line-height:1.3;letter-spacing:.1em}
 #qsrc{display:inline-block;font-family:var(--brush);font-size:15px;line-height:1.5;background:#b3261e;color:#f6f0e2;padding:.5em .15em;text-shadow:none;border-radius:2px;margin-top:.8em}
+#qen{writing-mode:horizontal-tb;position:absolute;top:100%;right:0;width:min(17rem,60vw);margin-top:.6rem;text-align:right;font-style:italic;font-size:14px;line-height:1.45}
+#qen:empty{display:none}
 #mini{position:absolute;right:.6rem;bottom:6.6rem;width:180px;height:114px;border:1px solid var(--ink);background:#e6dfcc;touch-action:none;cursor:pointer}
 #cmd{position:absolute;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:.35rem .8rem .5rem}
 #selinfo{font-size:13.5px;line-height:1.55;min-height:3.1em}
@@ -183,19 +191,19 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
 <section id="title">
   <div class="hd">
     <h1>长平</h1>
-    <p class="sub">周赧王五十五年　秦赵决于上党　<b>水墨兵戏</b></p>
+    <p class="sub" data-en="Changping, 260 BC　&lt;b&gt;An ink-wash war game&lt;/b&gt;">周赧王五十五年　秦赵决于上党　<b>水墨兵戏</b></p>
   </div>
   <div>
     <ol id="mlist"></ol>
-    <section id="diff" aria-label="难度与音量">
-      <div class="dh"><h2>难度</h2><div id="presets"><button data-p="0">初阵</button><button data-p="1">宿将</button><button data-p="2">名帅</button></div></div>
-      <label><span>敌军兵力</span><input type="range" id="d_force" min="50" max="170" step="5"><output id="o_force"></output></label>
-      <label><span>敌军战力</span><input type="range" id="d_might" min="70" max="140" step="5"><output id="o_might"></output></label>
-      <label><span>敌将谋略</span><input type="range" id="d_wit" min="1" max="3" step="1"><output id="o_wit"></output></label>
-      <label><span>粮草时限</span><input type="range" id="d_pace" min="70" max="130" step="5"><output id="o_pace"></output></label>
-      <label><span>音量</span><input type="range" id="d_vol" min="0" max="100" step="5"><output id="o_vol"></output></label>
+    <section id="diff" aria-label="难度与音量" data-en-label="Difficulty and volume">
+      <div class="dh"><h2 data-en="Difficulty">难度</h2><div id="presets"><button data-p="0" data-en="Recruit">初阵</button><button data-p="1" data-en="Veteran">宿将</button><button data-p="2" data-en="Master">名帅</button></div></div>
+      <label><span data-en="Enemy strength">敌军兵力</span><input type="range" id="d_force" min="50" max="170" step="5"><output id="o_force"></output></label>
+      <label><span data-en="Enemy might">敌军战力</span><input type="range" id="d_might" min="70" max="140" step="5"><output id="o_might"></output></label>
+      <label><span data-en="Enemy cunning">敌将谋略</span><input type="range" id="d_wit" min="1" max="3" step="1"><output id="o_wit"></output></label>
+      <label><span data-en="Supply time">粮草时限</span><input type="range" id="d_pace" min="70" max="130" step="5"><output id="o_pace"></output></label>
+      <label><span data-en="Volume">音量</span><input type="range" id="d_vol" min="0" max="100" step="5"><output id="o_vol"></output></label>
     </section>
-    <div class="foot"><button id="bcodex">兵法要览</button><button id="bedit">战役编辑器</button><span>知彼知己，百战不殆。</span></div>
+    <div class="foot"><button id="bcodex" data-en="Art of War Primer">兵法要览</button><button id="bedit" data-en="Campaign Editor">战役编辑器</button><button id="blang" lang="en">English</button><span>知彼知己，百战不殆。</span></div>
   </div>
   <svg class="mt" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
     <path fill="currentColor" opacity=".08" d="M0,200 C80,130 140,170 200,100 C240,60 280,130 340,95 C400,55 460,140 520,115 C600,75 680,160 760,125 C840,95 900,160 1000,135 L1000,300 L0,300Z"/>
@@ -211,40 +219,40 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
     <span class="t" id="wx"></span>
     <span id="force"></span>
     <span class="sp">
-      <button id="bsnd">有声</button><button id="bpause">暂停</button><button id="bspeed">快进</button><button id="bhelp">兵法</button><button id="bquit">收兵</button>
+      <button id="bsnd">有声</button><button id="bpause">暂停</button><button id="bspeed">快进</button><button id="bhelp" data-en="Primer">兵法</button><button id="bquit" data-en="Withdraw">收兵</button>
     </span>
   </header>
-  <aside id="obj"><button id="bobj" aria-label="展开或收起军令">军令</button><ul id="objlist"></ul></aside>
+  <aside id="obj"><button id="bobj" aria-label="展开或收起军令" data-en-label="Show or hide orders" data-en="Orders">军令</button><ul id="objlist"></ul></aside>
   <div id="log" aria-live="polite"></div>
-  <div id="quote" aria-live="polite"><span id="qtext"></span><span id="qsrc"></span></div>
-  <canvas id="mini" width="180" height="114" aria-label="小地图"></canvas>
+  <div id="quote" aria-live="polite"><span id="qtext"></span><span id="qsrc"></span><span id="qen"></span></div>
+  <canvas id="mini" width="180" height="114" aria-label="小地图" data-en-label="Minimap"></canvas>
   <footer id="cmd">
     <div id="selinfo"></div>
     <div id="tacmenu" class="submenu" hidden>
-      <button data-c="wings">两翼包抄</button><button data-c="rear">绕后夹击</button><button data-c="side">侧翼包抄</button>
-      <span>选一种，再点选敌军。单阵自动分兵；多阵则最近者为前军。</span>
+      <button data-c="wings" data-en="Double Envelopment">两翼包抄</button><button data-c="rear" data-en="Rear Assault">绕后夹击</button><button data-c="side" data-en="Flanking Attack">侧翼包抄</button>
+      <span data-en="Pick one, then click an enemy. A single unit splits itself; with several, the nearest becomes the front.">选一种，再点选敌军。单阵自动分兵；多阵则最近者为前军。</span>
     </div>
     <div id="siegemenu" hidden>
-      <button data-c="ram">冲车</button><button data-c="ladder">云梯</button><button data-c="cata">发石车</button><button data-c="nogear">弃器</button>
-      <span>冲车撞门，云梯翻墙，发石车远轰城垣、箭楼。造器须原地停驻。</span>
+      <button data-c="ram" data-en="Ram">冲车</button><button data-c="ladder" data-en="Ladders">云梯</button><button data-c="cata" data-en="Trebuchet">发石车</button><button data-c="nogear" data-en="Drop Engine">弃器</button>
+      <span data-en="Rams break gates, ladders scale walls, trebuchets batter walls and towers from afar. Units must stand still to build.">冲车撞门，云梯翻墙，发石车远轰城垣、箭楼。造器须原地停驻。</span>
     </div>
     <div id="btns">
-      <button data-c="hold">镇守<kbd>G</kbd></button>
-      <button data-c="stop">止步<kbd>X</kbd></button>
-      <button data-c="march">急行<kbd>R</kbd></button>
-      <button data-c="split">分兵<kbd>F</kbd></button>
-      <button data-c="merge">合兵<kbd>C</kbd></button>
-      <button data-c="fire">火攻<kbd>V</kbd></button>
-      <button data-c="build">筑楼<kbd>B</kbd></button>
-      <button data-c="siege">攻城器<kbd>E</kbd></button>
-      <button data-c="tac">战术<kbd>T</kbd></button>
+      <button data-c="hold" data-en="Hold&lt;kbd&gt;G&lt;/kbd&gt;">镇守<kbd>G</kbd></button>
+      <button data-c="stop" data-en="Stop&lt;kbd&gt;X&lt;/kbd&gt;">止步<kbd>X</kbd></button>
+      <button data-c="march" data-en="Force March&lt;kbd&gt;R&lt;/kbd&gt;">急行<kbd>R</kbd></button>
+      <button data-c="split" data-en="Split&lt;kbd&gt;F&lt;/kbd&gt;">分兵<kbd>F</kbd></button>
+      <button data-c="merge" data-en="Merge&lt;kbd&gt;C&lt;/kbd&gt;">合兵<kbd>C</kbd></button>
+      <button data-c="fire" data-en="Fire&lt;kbd&gt;V&lt;/kbd&gt;">火攻<kbd>V</kbd></button>
+      <button data-c="build" data-en="Tower&lt;kbd&gt;B&lt;/kbd&gt;">筑楼<kbd>B</kbd></button>
+      <button data-c="siege" data-en="Siege&lt;kbd&gt;E&lt;/kbd&gt;">攻城器<kbd>E</kbd></button>
+      <button data-c="tac" data-en="Tactics&lt;kbd&gt;T&lt;/kbd&gt;">战术<kbd>T</kbd></button>
       <span class="gap"></span>
-      <button data-c="fang">方阵<kbd>1</kbd></button>
-      <button data-c="feng">锋矢阵<kbd>2</kbd></button>
-      <button data-c="yuan">圆阵<kbd>3</kbd></button>
-      <button data-c="yan">雁行阵<kbd>4</kbd></button>
+      <button data-c="fang" data-en="Square&lt;kbd&gt;1&lt;/kbd&gt;">方阵<kbd>1</kbd></button>
+      <button data-c="feng" data-en="Arrowhead&lt;kbd&gt;2&lt;/kbd&gt;">锋矢阵<kbd>2</kbd></button>
+      <button data-c="yuan" data-en="Circle&lt;kbd&gt;3&lt;/kbd&gt;">圆阵<kbd>3</kbd></button>
+      <button data-c="yan" data-en="Wild Goose&lt;kbd&gt;4&lt;/kbd&gt;">雁行阵<kbd>4</kbd></button>
       <span class="gap"></span>
-      <button data-c="all">全选<kbd>Q</kbd></button>
+      <button data-c="all" data-en="All&lt;kbd&gt;Q&lt;/kbd&gt;">全选<kbd>Q</kbd></button>
     </div>
   </footer>
 </section>
@@ -315,6 +323,54 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
     <tr><th>围</th><td>四面合围，敌无路可退则殊死而战；留其一面，反易溃走。</td></tr>
     <tr><th>士气 体力</th><td>主将左近士气回升；伤亡、绝粮令士气跌落，过低则溃。以逸击劳者胜。</td></tr>
     <tr><th>昼夜 风雨</th><td>夜间、大雾目力大减，远处敌踪不显；顺风箭远，逆风箭近。</td></tr>
+  </table>
+</template>
+<template id="codex-en">
+  <h2>Art of War Primer <small lang="zh">兵法要览</small></h2>
+  <h3>Orders</h3>
+  <table>
+    <tr><th>Mouse</th><td>Left-click to select, drag a box for several, double-click to select every unit of that kind. Right-click ground to march, right-click an enemy to attack. Wheel to zoom; arrow keys or WASD to pan.</td></tr>
+    <tr><th>Touch</th><td>Tap a unit to select, tap ground to march, tap an enemy to attack. Drag with one finger to pan, pinch to zoom.</td></tr>
+    <tr><th>The field</th><td>A raised, oblique view: hills, cliffs, walls and towers have height, and units stand on top of them; tall things hide what lies behind. Selected soldiers raise their weapons and answer “诺”; given an order they reply “得令” (“As you command”).</td></tr>
+    <tr><th>Hold</th><td>Stand fast and do not pursue; take less damage. After a while the unit is entrenched and shrugs off charges. Holding in a forest makes an ambush: the enemy cannot see you, and the first strike hits twice as hard.</td></tr>
+    <tr><th>Split / Merge</th><td>Divide one unit into two to guard several roads or strike flanks; neighbouring units of the same kind can merge back into one.</td></tr>
+    <tr><th>Force March</th><td>Faster movement that drains stamina quickly. Tired troops fight far worse; use sparingly.</td></tr>
+    <tr><th>Tactics</th><td>Select units, press Tactics, pick one, then click an enemy. <b>Double Envelopment</b>: split into left and right wings that swing onto the enemy’s sides. <b>Rear Assault</b>: the front unit pins the enemy face-on while the rest loop wide behind it. <b>Flanking Attack</b>: the front unit holds while the rest wheel onto one flank. With one unit selected it splits in half automatically (needs 1,600 men; a general’s guard cannot split). With several selected, the nearest becomes the front and the others manoeuvre. Manoeuvring units show “抄” by their banner and attack once in place; any new order cancels it.</td></tr>
+    <tr><th>Tower</th><td>Infantry or crossbowmen build an arrow tower on the spot: about 14 s per storey, up to three, halted by combat. Standing on it raises their height — a great boon to crossbowmen.</td></tr>
+    <tr><th>Siege</th><td>Infantry build engines where they stand and then march more slowly. <b>Ram</b>: breaks gates five times faster. <b>Ladders</b>: climb straight over walls, though troops on the wall top suffer more. <b>Trebuchet</b> (crossbowmen can work it too): right-click or tap an enemy wall, gate or tower to bombard it from 300 paces; a collapsed wall leaves a breach.</td></tr>
+    <tr><th>Fire</th><td>Crossbowmen loose fire arrows to burn forests and enemy camps. Fire spreads with the wind and will not catch in rain.</td></tr>
+  </table>
+  <h3>Enemy Generals</h3>
+  <table>
+    <tr><th>Plodding</th><td>By the book: attacks in the scripted waves, holds its strongpoints, fights only what is near, never changes formation.</td></tr>
+    <tr><th>Orthodox</th><td>As Plodding, plus: cavalry hunt crossbowmen; formations change on contact — crossbowmen in Wild Goose, cavalry in Arrowhead, Arrowhead to chase routers and archers.</td></tr>
+    <tr><th>Cunning</th><td>As Orthodox, plus: picks fights it counters, gangs up on units already engaged and shaken; cavalry strike flanks and rear; crossbowmen fall back from melee to shoot again; surrounded units form a Circle; wavering units withdraw to regroup; on clear days it burns forests and camps with fire arrows.</td></tr>
+  </table>
+  <h3>Unit Counters</h3>
+  <table>
+    <tr><th>Halberdiers <span lang="zh">戟</span></th><td>Long polearms stop horses: they beat cavalry, but struggle when shieldmen close in.</td></tr>
+    <tr><th>Shieldmen <span lang="zh">盾</span></th><td>Great shields turn arrows; in melee they beat halberdiers and crossbowmen, but fear cavalry charges.</td></tr>
+    <tr><th>Crossbowmen <span lang="zh">弩</span></th><td>Deadly at range, farther from high ground; weak in melee and terrified of cavalry. Rain, fog and night all blunt them.</td></tr>
+    <tr><th>Cavalry <span lang="zh">骑</span></th><td>Swift as wind, charges shatter ranks; beats crossbowmen and supply trains. Charging halberds head-on is fatal; forest and marsh slow them; no charges in rain.</td></tr>
+  </table>
+  <h3>Formation Counters</h3>
+  <table>
+    <tr><th>Square <span lang="zh">方阵</span></th><td>Balanced attack and defence; its steadiness blunts the Arrowhead.</td></tr>
+    <tr><th>Arrowhead <span lang="zh">锋矢阵</span></th><td>Strong, fast attack with weak defence; breaks the Wild Goose, but cannot shake a Circle.</td></tr>
+    <tr><th>Circle <span lang="zh">圆阵</span></th><td>Solid defence but slow; immune to flank and rear attacks. Packed tight, it suffers from arrows.</td></tr>
+    <tr><th>Wild Goose <span lang="zh">雁行阵</span></th><td>Wings spread wide: crossbowmen shoot farther and harder. Thin in melee; fears the Arrowhead.</td></tr>
+  </table>
+  <h3>Terrain and Season</h3>
+  <table>
+    <tr><th>Height</th><td>Plains are 0; hills rise from 1 at the foot to 3 at the top; your own wall top is 2; each tower storey adds 1. Every level up gives +12% melee damage, −10% damage taken, +10% bow range and damage, and wider sight; attacking uphill is the reverse. Charging downhill adds momentum; cavalry charging uphill gain nothing. Climbing is slow.</td></tr>
+    <tr><th>Passes</th><td>Cliffs cannot be crossed. A gap one or two tiles wide between cliffs, walls or water is a pass (so are gates, breaches and narrow fords): only 2,000–3,400 men per unit can fight there, big armies move through slowly, and troops inside take heavier arrow fire, especially from above. One unit holding a pass can defeat many.</td></tr>
+    <tr><th>Ambush</th><td>Hold for a moment in forest or on high ground (height 2+) to become hidden; the enemy only notices you up close, and your first strike hits twice as hard.</td></tr>
+    <tr><th>Hard going</th><td>Cavalry crossing forest, marsh or steep slopes (height 2+) lose horses along the way — more than double when force-marching, and galloping in rain also hurts. Roads and plains are safe.</td></tr>
+    <tr><th>Fords</th><td>Troops wading take double casualties: strike them halfway across.</td></tr>
+    <tr><th>Flank &amp; rear</th><td>Hit an enemy in the side or back while it is engaged elsewhere for heavier casualties and morale damage. Three units on one does the same.</td></tr>
+    <tr><th>Encirclement</th><td>Surrounded on all sides with no way out, an enemy fights to the death; leave one side open and it breaks more easily.</td></tr>
+    <tr><th>Morale &amp; stamina</th><td>Morale recovers near your general; losses and hunger drain it, and too low means rout. The rested beat the weary.</td></tr>
+    <tr><th>Day, night, weather</th><td>Night and heavy fog shrink sight, hiding distant enemies. Arrows fly farther downwind, shorter into the wind.</td></tr>
   </table>
 </template>
 <script type="application/json" id="levels">/*__LEVELS__*/</script>

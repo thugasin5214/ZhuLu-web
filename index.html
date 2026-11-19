@@ -6,7 +6,7 @@
 <title>长平之战 水墨兵戏</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#e6dfcc;--paper2:#f1ecdd;--ink:#1d1b19;--wash:#6f6b62;--zhu:#b3261e;--qing:#2f4d66;--zhe:#8f6a3f;
@@ -21,6 +21,7 @@
 :root[data-theme="dark"]{
   --paper:#1b1d20;--paper2:#25282c;--ink:#e3ddcc;--wash:#a39f93;--zhu:#d5493c;--qing:#86a9c2;--zhe:#c39d68;
   --line:rgba(227,221,204,.26);--panel:rgba(30,32,36,.93);--on-zhu:#fbf5e8;color-scheme:dark}
+:root[lang="en"]{--brush:"Cormorant Garamond","Ma Shan Zheng","STKaiti","KaiTi","Kaiti SC",serif}
 *,*::before,*::after{box-sizing:inherit}
 html,body{height:100%;margin:0}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -50,6 +51,11 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
 #mlist .ord{font-family:var(--brush);font-size:22px;color:var(--wash)}
 #mlist h3{font-family:var(--brush);font-weight:400;font-size:34px;line-height:1.1;margin:0}
 #mlist p{margin:0}
+#mlist h3 small{font-size:.62em;color:var(--wash);margin-left:.35em}
+@media (min-width:721px){:root[lang="en"] #mlist li{grid-template-columns:4.6rem 1fr auto}}
+:root[lang="en"] #mlist .ord{font-size:18px;line-height:1.15}
+:root[lang="en"] #title .sub{letter-spacing:.14em}
+:root[lang="en"] #diff label{grid-template-columns:minmax(5.5em,8.2em) 1fr 4.2em}
 .role{color:var(--wash);font-size:13px;letter-spacing:.08em}
 #diff{margin-top:1.3rem;display:grid;gap:.25rem}
 #diff .dh{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.2rem}
@@ -101,6 +107,8 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
 #quote.on{opacity:1}
 #qtext{font-family:var(--brush);font-size:clamp(24px,3.2vw,38px);line-height:1.3;letter-spacing:.1em}
 #qsrc{display:inline-block;font-family:var(--brush);font-size:15px;line-height:1.5;background:#b3261e;color:#f6f0e2;padding:.5em .15em;text-shadow:none;border-radius:2px;margin-top:.8em}
+#qen{writing-mode:horizontal-tb;position:absolute;top:100%;right:0;width:min(17rem,60vw);margin-top:.6rem;text-align:right;font-style:italic;font-size:14px;line-height:1.45}
+#qen:empty{display:none}
 #mini{position:absolute;right:.6rem;bottom:6.6rem;width:180px;height:114px;border:1px solid var(--ink);background:#e6dfcc;touch-action:none;cursor:pointer}
 #cmd{position:absolute;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line);padding:.35rem .8rem .5rem}
 #selinfo{font-size:13.5px;line-height:1.55;min-height:3.1em}
@@ -183,19 +191,19 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
 <section id="title">
   <div class="hd">
     <h1>长平</h1>
-    <p class="sub">周赧王五十五年　秦赵决于上党　<b>水墨兵戏</b></p>
+    <p class="sub" data-en="Changping, 260 BC　&lt;b&gt;An ink-wash war game&lt;/b&gt;">周赧王五十五年　秦赵决于上党　<b>水墨兵戏</b></p>
   </div>
   <div>
     <ol id="mlist"></ol>
-    <section id="diff" aria-label="难度与音量">
-      <div class="dh"><h2>难度</h2><div id="presets"><button data-p="0">初阵</button><button data-p="1">宿将</button><button data-p="2">名帅</button></div></div>
-      <label><span>敌军兵力</span><input type="range" id="d_force" min="50" max="170" step="5"><output id="o_force"></output></label>
-      <label><span>敌军战力</span><input type="range" id="d_might" min="70" max="140" step="5"><output id="o_might"></output></label>
-      <label><span>敌将谋略</span><input type="range" id="d_wit" min="1" max="3" step="1"><output id="o_wit"></output></label>
-      <label><span>粮草时限</span><input type="range" id="d_pace" min="70" max="130" step="5"><output id="o_pace"></output></label>
-      <label><span>音量</span><input type="range" id="d_vol" min="0" max="100" step="5"><output id="o_vol"></output></label>
+    <section id="diff" aria-label="难度与音量" data-en-label="Difficulty and volume">
+      <div class="dh"><h2 data-en="Difficulty">难度</h2><div id="presets"><button data-p="0" data-en="Recruit">初阵</button><button data-p="1" data-en="Veteran">宿将</button><button data-p="2" data-en="Master">名帅</button></div></div>
+      <label><span data-en="Enemy strength">敌军兵力</span><input type="range" id="d_force" min="50" max="170" step="5"><output id="o_force"></output></label>
+      <label><span data-en="Enemy might">敌军战力</span><input type="range" id="d_might" min="70" max="140" step="5"><output id="o_might"></output></label>
+      <label><span data-en="Enemy cunning">敌将谋略</span><input type="range" id="d_wit" min="1" max="3" step="1"><output id="o_wit"></output></label>
+      <label><span data-en="Supply time">粮草时限</span><input type="range" id="d_pace" min="70" max="130" step="5"><output id="o_pace"></output></label>
+      <label><span data-en="Volume">音量</span><input type="range" id="d_vol" min="0" max="100" step="5"><output id="o_vol"></output></label>
     </section>
-    <div class="foot"><button id="bcodex">兵法要览</button><button id="bedit">战役编辑器</button><span>知彼知己，百战不殆。</span></div>
+    <div class="foot"><button id="bcodex" data-en="Art of War Primer">兵法要览</button><button id="bedit" data-en="Campaign Editor">战役编辑器</button><button id="blang" lang="en">English</button><span>知彼知己，百战不殆。</span></div>
   </div>
   <svg class="mt" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
     <path fill="currentColor" opacity=".08" d="M0,200 C80,130 140,170 200,100 C240,60 280,130 340,95 C400,55 460,140 520,115 C600,75 680,160 760,125 C840,95 900,160 1000,135 L1000,300 L0,300Z"/>
@@ -211,40 +219,40 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
     <span class="t" id="wx"></span>
     <span id="force"></span>
     <span class="sp">
-      <button id="bsnd">有声</button><button id="bpause">暂停</button><button id="bspeed">快进</button><button id="bhelp">兵法</button><button id="bquit">收兵</button>
+      <button id="bsnd">有声</button><button id="bpause">暂停</button><button id="bspeed">快进</button><button id="bhelp" data-en="Primer">兵法</button><button id="bquit" data-en="Withdraw">收兵</button>
     </span>
   </header>
-  <aside id="obj"><button id="bobj" aria-label="展开或收起军令">军令</button><ul id="objlist"></ul></aside>
+  <aside id="obj"><button id="bobj" aria-label="展开或收起军令" data-en-label="Show or hide orders" data-en="Orders">军令</button><ul id="objlist"></ul></aside>
   <div id="log" aria-live="polite"></div>
-  <div id="quote" aria-live="polite"><span id="qtext"></span><span id="qsrc"></span></div>
-  <canvas id="mini" width="180" height="114" aria-label="小地图"></canvas>
+  <div id="quote" aria-live="polite"><span id="qtext"></span><span id="qsrc"></span><span id="qen"></span></div>
+  <canvas id="mini" width="180" height="114" aria-label="小地图" data-en-label="Minimap"></canvas>
   <footer id="cmd">
     <div id="selinfo"></div>
     <div id="tacmenu" class="submenu" hidden>
-      <button data-c="wings">两翼包抄</button><button data-c="rear">绕后夹击</button><button data-c="side">侧翼包抄</button>
-      <span>选一种，再点选敌军。单阵自动分兵；多阵则最近者为前军。</span>
+      <button data-c="wings" data-en="Double Envelopment">两翼包抄</button><button data-c="rear" data-en="Rear Assault">绕后夹击</button><button data-c="side" data-en="Flanking Attack">侧翼包抄</button>
+      <span data-en="Pick one, then click an enemy. A single unit splits itself; with several, the nearest becomes the front.">选一种，再点选敌军。单阵自动分兵；多阵则最近者为前军。</span>
     </div>
     <div id="siegemenu" hidden>
-      <button data-c="ram">冲车</button><button data-c="ladder">云梯</button><button data-c="cata">发石车</button><button data-c="nogear">弃器</button>
-      <span>冲车撞门，云梯翻墙，发石车远轰城垣、箭楼。造器须原地停驻。</span>
+      <button data-c="ram" data-en="Ram">冲车</button><button data-c="ladder" data-en="Ladders">云梯</button><button data-c="cata" data-en="Trebuchet">发石车</button><button data-c="nogear" data-en="Drop Engine">弃器</button>
+      <span data-en="Rams break gates, ladders scale walls, trebuchets batter walls and towers from afar. Units must stand still to build.">冲车撞门，云梯翻墙，发石车远轰城垣、箭楼。造器须原地停驻。</span>
     </div>
     <div id="btns">
-      <button data-c="hold">镇守<kbd>G</kbd></button>
-      <button data-c="stop">止步<kbd>X</kbd></button>
-      <button data-c="march">急行<kbd>R</kbd></button>
-      <button data-c="split">分兵<kbd>F</kbd></button>
-      <button data-c="merge">合兵<kbd>C</kbd></button>
-      <button data-c="fire">火攻<kbd>V</kbd></button>
-      <button data-c="build">筑楼<kbd>B</kbd></button>
-      <button data-c="siege">攻城器<kbd>E</kbd></button>
-      <button data-c="tac">战术<kbd>T</kbd></button>
+      <button data-c="hold" data-en="Hold&lt;kbd&gt;G&lt;/kbd&gt;">镇守<kbd>G</kbd></button>
+      <button data-c="stop" data-en="Stop&lt;kbd&gt;X&lt;/kbd&gt;">止步<kbd>X</kbd></button>
+      <button data-c="march" data-en="Force March&lt;kbd&gt;R&lt;/kbd&gt;">急行<kbd>R</kbd></button>
+      <button data-c="split" data-en="Split&lt;kbd&gt;F&lt;/kbd&gt;">分兵<kbd>F</kbd></button>
+      <button data-c="merge" data-en="Merge&lt;kbd&gt;C&lt;/kbd&gt;">合兵<kbd>C</kbd></button>
+      <button data-c="fire" data-en="Fire&lt;kbd&gt;V&lt;/kbd&gt;">火攻<kbd>V</kbd></button>
+      <button data-c="build" data-en="Tower&lt;kbd&gt;B&lt;/kbd&gt;">筑楼<kbd>B</kbd></button>
+      <button data-c="siege" data-en="Siege&lt;kbd&gt;E&lt;/kbd&gt;">攻城器<kbd>E</kbd></button>
+      <button data-c="tac" data-en="Tactics&lt;kbd&gt;T&lt;/kbd&gt;">战术<kbd>T</kbd></button>
       <span class="gap"></span>
-      <button data-c="fang">方阵<kbd>1</kbd></button>
-      <button data-c="feng">锋矢阵<kbd>2</kbd></button>
-      <button data-c="yuan">圆阵<kbd>3</kbd></button>
-      <button data-c="yan">雁行阵<kbd>4</kbd></button>
+      <button data-c="fang" data-en="Square&lt;kbd&gt;1&lt;/kbd&gt;">方阵<kbd>1</kbd></button>
+      <button data-c="feng" data-en="Arrowhead&lt;kbd&gt;2&lt;/kbd&gt;">锋矢阵<kbd>2</kbd></button>
+      <button data-c="yuan" data-en="Circle&lt;kbd&gt;3&lt;/kbd&gt;">圆阵<kbd>3</kbd></button>
+      <button data-c="yan" data-en="Wild Goose&lt;kbd&gt;4&lt;/kbd&gt;">雁行阵<kbd>4</kbd></button>
       <span class="gap"></span>
-      <button data-c="all">全选<kbd>Q</kbd></button>
+      <button data-c="all" data-en="All&lt;kbd&gt;Q&lt;/kbd&gt;">全选<kbd>Q</kbd></button>
     </div>
   </footer>
 </section>
@@ -317,19 +325,70 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
     <tr><th>昼夜 风雨</th><td>夜间、大雾目力大减，远处敌踪不显；顺风箭远，逆风箭近。</td></tr>
   </table>
 </template>
-<script type="application/json" id="levels">[{"id":"julu","name":"破釜","ord":"别传","role":"楚 上将军项羽","line":"渡漳水，断秦军甬道，三日粮尽之前击破王离。","brief":"秦二世三年，王离围赵于巨鹿，章邯筑甬道输粟以济之。诸侯军救赵者十余壁，莫敢纵兵。项羽引兵渡漳水，皆沉船，破釜甑，烧庐舍，持三日粮，以示士卒必死，无一还心。","goals":["夺取并守住“甬道”，断王离军粮","斩王离，或击溃秦军","赶在军粮耗尽之前","项羽不可阵亡"],"tips":["我军只带三日粮，不会再有补给：粮尽则士气日衰，务必速战。","死士（楚军戟兵的精锐）克制秦军战车，让他们顶在前面。","先分兵取西边的甬道：秦军断粮后士气跌落，再合击王离本阵。","北岸渡口有秦军把守，半渡而击的是我军——可先用弩手隔水压制，或从东渡口绕行。"],"winText":"楚战士无不一以当十，呼声动天。九战，绝其甬道，大破之，虏王离。诸侯将入辕门，无不膝行而前，莫敢仰视。","seed":19,"hour0":4,"hourLen":60,"face":{"1":-1.5708,"2":1.5708},"cam":[28,29],"weather":{"type":"sun","wind":-1.5708,"str":1},"draw":[{"op":"river","pts":[[0,27],[14,29],[30,26],[44,28],[59,26]]},{"op":"road","pts":[[28,37],[28,30],[29,22],[31,15],[33,12]]},{"op":"road","pts":[[48,37],[48,30],[47,22],[41,15],[37,12]]},{"op":"road","pts":[[0,9],[14,9],[24,10],[31,11]]},{"op":"hill","x":12,"y":18,"r":4},{"op":"hill","x":52,"y":18,"r":3.5},{"op":"hill","x":21,"y":3,"r":3},{"op":"hill","x":44,"y":33,"r":3},{"op":"forest","x":8,"y":32,"r":3.5},{"op":"forest","x":38,"y":21,"r":3},{"op":"forest","x":52,"y":7,"r":3},{"op":"forest","x":19,"y":15,"r":2.5},{"op":"marsh","x":17,"y":23,"r":2.5}],"camps":[{"x0":29,"y0":7,"x1":40,"y1":14,"side":2}],"points":[{"x":13.5,"y":9.5,"side":2,"name":"甬道","time":10}],"labels":[{"t":"漳水","x":8,"y":25.2,"s":32},{"t":"秦营","x":41.6,"y":8,"s":26},{"t":"甬道","x":18,"y":7.2,"s":22}],"units":[{"side":1,"type":"sishi","n":4000,"x":28,"y":33,"general":true,"name":"项羽亲卫"},{"side":1,"type":"sishi","n":5000,"x":25,"y":33},{"side":1,"type":"sishi","n":5000,"x":31,"y":33},{"side":1,"type":"dun","n":4000,"x":30,"y":35},{"side":1,"type":"nu","n":4000,"x":27,"y":35},{"side":1,"type":"qi","n":3500,"x":22,"y":34},{"side":1,"type":"qi","n":3500,"x":34,"y":34},{"side":2,"type":"dun","n":5000,"x":34,"y":10,"general":true,"name":"王离亲卫","ai":{"mode":"stay"}},{"side":2,"type":"ji","n":6000,"x":31,"y":16,"ai":{"mode":"guard","leash":240}},{"side":2,"type":"ji","n":6000,"x":38,"y":16,"ai":{"mode":"guard","leash":240}},{"side":2,"type":"nu","n":4000,"x":34,"y":13,"ai":{"mode":"stay"}},{"side":2,"type":"che","n":3000,"x":26,"y":13,"tag":"车","ai":{"mode":"guard","leash":320,"pref":"nu"}},{"side":2,"type":"che","n":3000,"x":43,"y":13,"tag":"车","ai":{"mode":"guard","leash":320,"pref":"nu"}},{"side":2,"type":"ji","n":4000,"x":28,"y":23,"ai":{"mode":"guard","leash":160}},{"side":2,"type":"nu","n":3000,"x":30,"y":22,"ai":{"mode":"stay"},"fm":"yan"},{"side":2,"type":"ji","n":3500,"x":14,"y":10,"ai":{"mode":"guard","leash":180}},{"side":2,"type":"ji","n":4000,"x":36,"y":12,"ai":{"mode":"guard","leash":200}}],"unitTypes":{"sishi":{"name":"死士","ch":"死","base":"ji","spd":50,"atk":1.25,"def":0.95,"weapon":"长铍","charge":1.2,"counters":{"qi":1.6,"che":1.8,"dun":0.95}},"che":{"name":"战车","ch":"车","base":"qi","spd":74,"atk":1.35,"def":1.15,"weapon":"驷马战车","charge":1.25,"counters":{"nu":1.6,"dun":1.3,"ji":0.75,"sishi":0.7},"weakTo":{"ji":1.7}}},"grain":[{"side":1,"start":60,"drain":0.11},{"side":2,"start":100,"drain":0.6,"regen":0.05,"cutBy":0}],"events":[{"t":3,"do":"msg","text":"楚军尽渡漳水，沉船破釜，只余三日之粮","kind":"warn"},{"t":100,"do":"spawn","text":"章邯遣军沿甬道来援！","units":[{"side":2,"type":"ji","n":4000,"x":1,"y":9,"ai":{"mode":"assault","point":0}},{"side":2,"type":"qi","n":2500,"x":1,"y":11,"ai":{"mode":"assault","point":0,"pref":"nu"}}]},{"t":150,"do":"weather","type":"sun","wind":-1.5708,"str":2,"text":"大南风起，顺风而射者利"}],"triggers":[{"when":{"type":"point","i":0,"side":1},"do":[{"do":"msg","text":"甬道已绝，王离军乏食！","kind":"good"},{"do":"retask","tag":"车","ai":{"mode":"assault","point":0,"pref":"nu"},"text":"秦军战车驰援甬道"}]},{"when":{"type":"strength","side":2,"below":50},"do":[{"do":"msg","text":"秦军已折其半，诸侯军在壁上观望","kind":"good"}]}],"win":[{"type":"dead","side":2},{"type":"strength","side":2,"below":35}],"lose":[{"when":{"type":"grain","side":1,"below":0},"text":"三日粮尽，军心溃散"},{"when":{"type":"dead","side":1},"text":"项羽阵亡"}],"objectives":[{"text":"断秦军甬道（敌粮 {grain2}）","done":{"type":"point","i":0,"side":1}},{"text":"斩王离或击溃秦军（敌尚存 {enemy}%）","done":{"type":"dead","side":2}},{"text":"军粮耗尽之前取胜（军粮 {grain1}）","fail":{"type":"grain","side":1,"below":0}},{"text":"项羽无恙","fail":{"type":"dead","side":1}}],"music":{"scale":"shang","gap":[1.2,3.4],"vol":0.32,"drum":0.34},"sfx":{"horn":[["tone",110,117,1.3,"sawtooth",0.08,0],["tone",165,172,1.3,"sawtooth",0.04,0.04],["tone",55,58,1.3,"sine",0.12,0]]}},{"id":"jiangwu","first":true,"name":"讲武","ord":"教习","role":"赵 新拜裨将","line":"校场讲武：行军、统众、变阵、接战、火攻、合击，一一习之。","brief":"秦兵压上党，赵国征发新军。新拜裨将者，先赴邯郸城外校场，习旌旗金鼓之令、四阵进退之法，然后从军长平。校尉在侧，每成一课，即授下一课。","goals":["依校尉教示，逐课习之","击破校场东面的秦军"],"tips":["电脑：左键点选、拖框多选，右键行军或进攻；方向键或 WASD 移动视野，滚轮缩放，中键拖动画面，点小地图可跳转。","手机：轻点军阵选中，轻点地面行军，轻点敌阵进攻；单指拖动画面，双指缩放。","兵种相克：戟克骑，骑克弩，盾克戟与弩。骑兵行军最快，但撞上戟兵吃亏。","其余号令：镇守 G（就地固守，久守成深沟高垒）、止步 X、急行 R（快但耗体力）、分兵 F、合兵 C、筑楼 B、攻城器 E。空格暂停，可随时暂停再下令。","左上角军令一课一勾。忘了要领，可点“收兵”→“军令与献策”重看这些献策。"],"winText":"三军既习，进退有度。《司马法》曰：“天下虽安，忘战必危。”校场讲武已毕，可赴长平。","seed":11,"hour0":4,"hourLen":200,"face":{"1":0,"2":3.1416},"cam":[17,20],"weather":{"type":"sun","wind":0,"str":2},"draw":[{"op":"road","pts":[[0,19],[20,19],[40,18],[59,18]]},{"op":"hill","x":24,"y":9,"r":3.5},{"op":"forest","x":38,"y":28,"r":3.6},{"op":"forest","x":5,"y":31,"r":2.5},{"op":"marsh","x":30,"y":33,"r":2}],"camps":[{"x0":4,"y0":15,"x1":14,"y1":24,"side":1}],"points":[{"x":22,"y":19,"side":1,"name":"将台","time":8}],"labels":[{"t":"校场","x":6,"y":13.5,"s":30},{"t":"南林","x":37,"y":24.2,"s":26}],"units":[{"side":1,"type":"dun","n":3000,"x":10,"y":19,"name":"中军","general":true},{"side":1,"type":"ji","n":3000,"x":13,"y":17,"name":"前军"},{"side":1,"type":"ji","n":2400,"x":13,"y":21,"name":"左军"},{"side":1,"type":"nu","n":2500,"x":8,"y":22,"name":"弩营"},{"side":1,"type":"qi","n":2000,"x":8,"y":16,"name":"骑营"},{"side":2,"type":"nu","n":1200,"x":38,"y":28,"name":"伏兵","tag":"伏","ambush":true,"ai":{"mode":"stay"}}],"events":[{"t":0.6,"do":"lesson","title":"第一课　行军","text":"此为讲武校场。先学行军。\n电脑：左键点选一阵，右键点地面，军阵即开往该处。\n手机：轻点军阵选中，再轻点地面。\n视野：方向键或 WASD 移动，滚轮缩放（手机单指拖动、双指缩放），点右下小地图可跳转。\n令“前军”（戟兵）开到东面“将台”旗下。","ok":"领命"}],"triggers":[{"when":{"type":"near","x":22,"y":19,"r":2.2},"do":[{"do":"flag","name":"一"},{"do":"lesson","title":"第二课　统众","text":"善。一将不能独战，再学统领诸阵。\n按 Q（或下方“全选”）选中全军；也可按住左键拖框圈选多阵；按住 Shift 点选可增减；双击一阵，选中同种全部军阵。\n多阵同时右键一处，会排成方块齐进。\n令全军开到将台。","ok":"领命"}]},{"when":{"type":"all","of":[{"type":"flag","name":"一"},{"type":"used","c":"multi"},{"type":"near","x":22,"y":19,"r":3.5,"n":4}]},"do":[{"do":"flag","name":"二"},{"do":"lesson","title":"第三课　四阵","text":"阵者，兵之形也。选中军阵，按数字键或下方按钮变阵：\n1 方阵：攻守平均，常备之阵，锋矢冲来也能稳住。\n2 锋矢阵：攻击加三成、行军更快，但防御减弱；冲阵破敌用之，最克雁行阵，撞上圆阵则钝。\n3 圆阵：防御加四成，不惧侧背夹击，但行动迟缓；被围或待援时用之。\n4 雁行阵：箭矢杀伤加三成、射程更远；弩手专用之阵。\n选中全军，四阵各变一次。","ok":"领命"}]},{"when":{"type":"all","of":[{"type":"flag","name":"二"},{"type":"used","c":["fang","feng","yuan","yan"]}]},"do":[{"do":"flag","name":"三"},{"do":"spawn","units":[{"side":2,"type":"ji","n":1500,"x":31,"y":19,"name":"靶阵","tag":"靶","ai":{"mode":"stay"}}]},{"do":"lesson","title":"第四课　接战","text":"东面来了一阵敌军（“靶阵”）。\n选中我军，右键点敌阵即进攻（手机：轻点敌阵）。\n兵种相克：戟克骑，骑克弩，盾克戟与弩。靶阵是戟兵，以盾兵当之最好，切莫让骑兵去撞。\n侧背受击的敌阵伤亡、士气损失大增；士气崩溃则溃走。\n击破靶阵。","ok":"领命"}]},{"when":{"type":"all","of":[{"type":"flag","name":"三"},{"type":"tagDead","tag":"靶"}]},"do":[{"do":"flag","name":"四"},{"do":"lesson","title":"第五课　火攻","text":"斥候报：东南“南林”中藏有伏兵。\n火攻须用弩手：选中弩营，按 V（或“火攻”），再点林地或敌营，即发火箭。弩手须进到射程之内；放过一次火，要二十余息才能再发。\n火借风势：右上角可见风向，今日大西风，火向东烧，人要站在上风。雨天不可火攻。\n令弩营火烧南林。","ok":"领命"}]},{"when":{"type":"all","of":[{"type":"flag","name":"四"},{"type":"used","c":"fire"}]},"do":[{"do":"flag","name":"五"},{"do":"spawn","text":"秦军一阵自东而来","units":[{"side":2,"type":"ji","n":3500,"x":46,"y":17,"name":"秦军","tag":"敌","ai":{"mode":"guard","leash":160}}]},{"do":"lesson","title":"第六课　合击","text":"林火已起。凡战者，以正合，以奇胜。秦军一阵正自东而来。\n选中我军数阵，按 T（或“战术”）选一种，再点敌阵：\n两翼包抄：诸阵分左右两翼夹击。\n绕后夹击：离敌最近的一阵正面镇守，其余绕到敌后。\n侧翼包抄：一阵正面镇守，其余迂回侧翼。\n只选一阵也行，会自动分兵（主将亲卫与不足一千六的军阵不能分）。\n用一次战术，击破秦军。","ok":"领命"}]},{"when":{"type":"all","of":[{"type":"flag","name":"五"},{"type":"used","c":"tac"}]},"do":[{"do":"msg","text":"合击之势已成","kind":"good"}]}],"win":[{"type":"all","of":[{"type":"flag","name":"五"},{"type":"tagDead","tag":"敌"}]}],"lose":[],"objectives":[{"text":"一　行军：前军开到将台","done":{"type":"flag","name":"一"}},{"text":"二　统众：全军齐至将台","done":{"type":"flag","name":"二"}},{"text":"三　四阵：方、锋矢、圆、雁行各变一次","done":{"type":"flag","name":"三"}},{"text":"四　接战：击破靶阵","done":{"type":"flag","name":"四"}},{"text":"五　火攻：弩营火烧南林","done":{"type":"flag","name":"五"}},{"text":"六　合击：用一次战术","done":{"type":"used","c":"tac"}},{"text":"七　击破秦军","done":{"type":"all","of":[{"type":"flag","name":"五"},{"type":"tagDead","tag":"敌"}]}},{"text":"余课（可选）：镇守、急行、分兵、合兵各试一次","done":{"type":"used","c":["hold","march","split","merge"]}}]}]</script>
+<template id="codex-en">
+  <h2>Art of War Primer <small lang="zh">兵法要览</small></h2>
+  <h3>Orders</h3>
+  <table>
+    <tr><th>Mouse</th><td>Left-click to select, drag a box for several, double-click to select every unit of that kind. Right-click ground to march, right-click an enemy to attack. Wheel to zoom; arrow keys or WASD to pan.</td></tr>
+    <tr><th>Touch</th><td>Tap a unit to select, tap ground to march, tap an enemy to attack. Drag with one finger to pan, pinch to zoom.</td></tr>
+    <tr><th>The field</th><td>A raised, oblique view: hills, cliffs, walls and towers have height, and units stand on top of them; tall things hide what lies behind. Selected soldiers raise their weapons and answer “诺”; given an order they reply “得令” (“As you command”).</td></tr>
+    <tr><th>Hold</th><td>Stand fast and do not pursue; take less damage. After a while the unit is entrenched and shrugs off charges. Holding in a forest makes an ambush: the enemy cannot see you, and the first strike hits twice as hard.</td></tr>
+    <tr><th>Split / Merge</th><td>Divide one unit into two to guard several roads or strike flanks; neighbouring units of the same kind can merge back into one.</td></tr>
+    <tr><th>Force March</th><td>Faster movement that drains stamina quickly. Tired troops fight far worse; use sparingly.</td></tr>
+    <tr><th>Tactics</th><td>Select units, press Tactics, pick one, then click an enemy. <b>Double Envelopment</b>: split into left and right wings that swing onto the enemy’s sides. <b>Rear Assault</b>: the front unit pins the enemy face-on while the rest loop wide behind it. <b>Flanking Attack</b>: the front unit holds while the rest wheel onto one flank. With one unit selected it splits in half automatically (needs 1,600 men; a general’s guard cannot split). With several selected, the nearest becomes the front and the others manoeuvre. Manoeuvring units show “抄” by their banner and attack once in place; any new order cancels it.</td></tr>
+    <tr><th>Tower</th><td>Infantry or crossbowmen build an arrow tower on the spot: about 14 s per storey, up to three, halted by combat. Standing on it raises their height — a great boon to crossbowmen.</td></tr>
+    <tr><th>Siege</th><td>Infantry build engines where they stand and then march more slowly. <b>Ram</b>: breaks gates five times faster. <b>Ladders</b>: climb straight over walls, though troops on the wall top suffer more. <b>Trebuchet</b> (crossbowmen can work it too): right-click or tap an enemy wall, gate or tower to bombard it from 300 paces; a collapsed wall leaves a breach.</td></tr>
+    <tr><th>Fire</th><td>Crossbowmen loose fire arrows to burn forests and enemy camps. Fire spreads with the wind and will not catch in rain.</td></tr>
+  </table>
+  <h3>Enemy Generals</h3>
+  <table>
+    <tr><th>Plodding</th><td>By the book: attacks in the scripted waves, holds its strongpoints, fights only what is near, never changes formation.</td></tr>
+    <tr><th>Orthodox</th><td>As Plodding, plus: cavalry hunt crossbowmen; formations change on contact — crossbowmen in Wild Goose, cavalry in Arrowhead, Arrowhead to chase routers and archers.</td></tr>
+    <tr><th>Cunning</th><td>As Orthodox, plus: picks fights it counters, gangs up on units already engaged and shaken; cavalry strike flanks and rear; crossbowmen fall back from melee to shoot again; surrounded units form a Circle; wavering units withdraw to regroup; on clear days it burns forests and camps with fire arrows.</td></tr>
+  </table>
+  <h3>Unit Counters</h3>
+  <table>
+    <tr><th>Halberdiers <span lang="zh">戟</span></th><td>Long polearms stop horses: they beat cavalry, but struggle when shieldmen close in.</td></tr>
+    <tr><th>Shieldmen <span lang="zh">盾</span></th><td>Great shields turn arrows; in melee they beat halberdiers and crossbowmen, but fear cavalry charges.</td></tr>
+    <tr><th>Crossbowmen <span lang="zh">弩</span></th><td>Deadly at range, farther from high ground; weak in melee and terrified of cavalry. Rain, fog and night all blunt them.</td></tr>
+    <tr><th>Cavalry <span lang="zh">骑</span></th><td>Swift as wind, charges shatter ranks; beats crossbowmen and supply trains. Charging halberds head-on is fatal; forest and marsh slow them; no charges in rain.</td></tr>
+  </table>
+  <h3>Formation Counters</h3>
+  <table>
+    <tr><th>Square <span lang="zh">方阵</span></th><td>Balanced attack and defence; its steadiness blunts the Arrowhead.</td></tr>
+    <tr><th>Arrowhead <span lang="zh">锋矢阵</span></th><td>Strong, fast attack with weak defence; breaks the Wild Goose, but cannot shake a Circle.</td></tr>
+    <tr><th>Circle <span lang="zh">圆阵</span></th><td>Solid defence but slow; immune to flank and rear attacks. Packed tight, it suffers from arrows.</td></tr>
+    <tr><th>Wild Goose <span lang="zh">雁行阵</span></th><td>Wings spread wide: crossbowmen shoot farther and harder. Thin in melee; fears the Arrowhead.</td></tr>
+  </table>
+  <h3>Terrain and Season</h3>
+  <table>
+    <tr><th>Height</th><td>Plains are 0; hills rise from 1 at the foot to 3 at the top; your own wall top is 2; each tower storey adds 1. Every level up gives +12% melee damage, −10% damage taken, +10% bow range and damage, and wider sight; attacking uphill is the reverse. Charging downhill adds momentum; cavalry charging uphill gain nothing. Climbing is slow.</td></tr>
+    <tr><th>Passes</th><td>Cliffs cannot be crossed. A gap one or two tiles wide between cliffs, walls or water is a pass (so are gates, breaches and narrow fords): only 2,000–3,400 men per unit can fight there, big armies move through slowly, and troops inside take heavier arrow fire, especially from above. One unit holding a pass can defeat many.</td></tr>
+    <tr><th>Ambush</th><td>Hold for a moment in forest or on high ground (height 2+) to become hidden; the enemy only notices you up close, and your first strike hits twice as hard.</td></tr>
+    <tr><th>Hard going</th><td>Cavalry crossing forest, marsh or steep slopes (height 2+) lose horses along the way — more than double when force-marching, and galloping in rain also hurts. Roads and plains are safe.</td></tr>
+    <tr><th>Fords</th><td>Troops wading take double casualties: strike them halfway across.</td></tr>
+    <tr><th>Flank &amp; rear</th><td>Hit an enemy in the side or back while it is engaged elsewhere for heavier casualties and morale damage. Three units on one does the same.</td></tr>
+    <tr><th>Encirclement</th><td>Surrounded on all sides with no way out, an enemy fights to the death; leave one side open and it breaks more easily.</td></tr>
+    <tr><th>Morale &amp; stamina</th><td>Morale recovers near your general; losses and hunger drain it, and too low means rout. The rested beat the weary.</td></tr>
+    <tr><th>Day, night, weather</th><td>Night and heavy fog shrink sight, hiding distant enemies. Arrows fly farther downwind, shorter into the wind.</td></tr>
+  </table>
+</template>
+<script type="application/json" id="levels">[{"id":"julu","name":"破釜","ord":"别传","role":"楚 上将军项羽","line":"渡漳水，断秦军甬道，三日粮尽之前击破王离。","brief":"秦二世三年，王离围赵于巨鹿，章邯筑甬道输粟以济之。诸侯军救赵者十余壁，莫敢纵兵。项羽引兵渡漳水，皆沉船，破釜甑，烧庐舍，持三日粮，以示士卒必死，无一还心。","goals":["夺取并守住“甬道”，断王离军粮","斩王离，或击溃秦军","赶在军粮耗尽之前","项羽不可阵亡"],"tips":["我军只带三日粮，不会再有补给：粮尽则士气日衰，务必速战。","死士（楚军戟兵的精锐）克制秦军战车，让他们顶在前面。","先分兵取西边的甬道：秦军断粮后士气跌落，再合击王离本阵。","北岸渡口有秦军把守，半渡而击的是我军——可先用弩手隔水压制，或从东渡口绕行。"],"winText":"楚战士无不一以当十，呼声动天。九战，绝其甬道，大破之，虏王离。诸侯将入辕门，无不膝行而前，莫敢仰视。","seed":19,"hour0":4,"hourLen":60,"face":{"1":-1.5708,"2":1.5708},"cam":[28,29],"weather":{"type":"sun","wind":-1.5708,"str":1},"draw":[{"op":"river","pts":[[0,27],[14,29],[30,26],[44,28],[59,26]]},{"op":"road","pts":[[28,37],[28,30],[29,22],[31,15],[33,12]]},{"op":"road","pts":[[48,37],[48,30],[47,22],[41,15],[37,12]]},{"op":"road","pts":[[0,9],[14,9],[24,10],[31,11]]},{"op":"hill","x":12,"y":18,"r":4},{"op":"hill","x":52,"y":18,"r":3.5},{"op":"hill","x":21,"y":3,"r":3},{"op":"hill","x":44,"y":33,"r":3},{"op":"forest","x":8,"y":32,"r":3.5},{"op":"forest","x":38,"y":21,"r":3},{"op":"forest","x":52,"y":7,"r":3},{"op":"forest","x":19,"y":15,"r":2.5},{"op":"marsh","x":17,"y":23,"r":2.5}],"camps":[{"x0":29,"y0":7,"x1":40,"y1":14,"side":2}],"points":[{"x":13.5,"y":9.5,"side":2,"name":"甬道","time":10}],"labels":[{"t":"漳水","x":8,"y":25.2,"s":32},{"t":"秦营","x":41.6,"y":8,"s":26},{"t":"甬道","x":18,"y":7.2,"s":22}],"units":[{"side":1,"type":"sishi","n":4000,"x":28,"y":33,"general":true,"name":"项羽亲卫","name_en":"Xiang Yu's Guard"},{"side":1,"type":"sishi","n":5000,"x":25,"y":33},{"side":1,"type":"sishi","n":5000,"x":31,"y":33},{"side":1,"type":"dun","n":4000,"x":30,"y":35},{"side":1,"type":"nu","n":4000,"x":27,"y":35},{"side":1,"type":"qi","n":3500,"x":22,"y":34},{"side":1,"type":"qi","n":3500,"x":34,"y":34},{"side":2,"type":"dun","n":5000,"x":34,"y":10,"general":true,"name":"王离亲卫","ai":{"mode":"stay"},"name_en":"Wang Li's Guard"},{"side":2,"type":"ji","n":6000,"x":31,"y":16,"ai":{"mode":"guard","leash":240}},{"side":2,"type":"ji","n":6000,"x":38,"y":16,"ai":{"mode":"guard","leash":240}},{"side":2,"type":"nu","n":4000,"x":34,"y":13,"ai":{"mode":"stay"}},{"side":2,"type":"che","n":3000,"x":26,"y":13,"tag":"车","ai":{"mode":"guard","leash":320,"pref":"nu"}},{"side":2,"type":"che","n":3000,"x":43,"y":13,"tag":"车","ai":{"mode":"guard","leash":320,"pref":"nu"}},{"side":2,"type":"ji","n":4000,"x":28,"y":23,"ai":{"mode":"guard","leash":160}},{"side":2,"type":"nu","n":3000,"x":30,"y":22,"ai":{"mode":"stay"},"fm":"yan"},{"side":2,"type":"ji","n":3500,"x":14,"y":10,"ai":{"mode":"guard","leash":180}},{"side":2,"type":"ji","n":4000,"x":36,"y":12,"ai":{"mode":"guard","leash":200}}],"unitTypes":{"sishi":{"name":"死士","ch":"死","base":"ji","spd":50,"atk":1.25,"def":0.95,"weapon":"长铍","charge":1.2,"counters":{"qi":1.6,"che":1.8,"dun":0.95},"name_en":"Death-Sworn","weapon_en":"long pike"},"che":{"name":"战车","ch":"车","base":"qi","spd":74,"atk":1.35,"def":1.15,"weapon":"驷马战车","charge":1.25,"counters":{"nu":1.6,"dun":1.3,"ji":0.75,"sishi":0.7},"weakTo":{"ji":1.7},"name_en":"Chariots","weapon_en":"four-horse chariot"}},"grain":[{"side":1,"start":60,"drain":0.11},{"side":2,"start":100,"drain":0.6,"regen":0.05,"cutBy":0}],"events":[{"t":3,"do":"msg","text":"楚军尽渡漳水，沉船破釜，只余三日之粮","kind":"warn","text_en":"Chu has crossed the Zhang, sunk its boats and broken its pots: three days of grain remain"},{"t":100,"do":"spawn","text":"章邯遣军沿甬道来援！","units":[{"side":2,"type":"ji","n":4000,"x":1,"y":9,"ai":{"mode":"assault","point":0}},{"side":2,"type":"qi","n":2500,"x":1,"y":11,"ai":{"mode":"assault","point":0,"pref":"nu"}}],"text_en":"Zhang Han sends troops down the corridor to relieve Wang Li!"},{"t":150,"do":"weather","type":"sun","wind":-1.5708,"str":2,"text":"大南风起，顺风而射者利","text_en":"A strong south wind rises: those who shoot downwind have the edge"}],"triggers":[{"when":{"type":"point","i":0,"side":1},"do":[{"do":"msg","text":"甬道已绝，王离军乏食！","kind":"good","text_en":"The corridor is cut: Wang Li's army goes hungry!"},{"do":"retask","tag":"车","ai":{"mode":"assault","point":0,"pref":"nu"},"text":"秦军战车驰援甬道","text_en":"Qin chariots race to retake the corridor"}]},{"when":{"type":"strength","side":2,"below":50},"do":[{"do":"msg","text":"秦军已折其半，诸侯军在壁上观望","kind":"good","text_en":"Half the Qin army is gone; the allied armies watch from their walls"}]}],"win":[{"type":"dead","side":2},{"type":"strength","side":2,"below":35}],"lose":[{"when":{"type":"grain","side":1,"below":0},"text":"三日粮尽，军心溃散","text_en":"Three days of grain are gone, and the army falls apart"},{"when":{"type":"dead","side":1},"text":"项羽阵亡","text_en":"Xiang Yu has fallen"}],"objectives":[{"text":"断秦军甬道（敌粮 {grain2}）","done":{"type":"point","i":0,"side":1},"text_en":"Cut the Qin corridor (enemy grain {grain2})"},{"text":"斩王离或击溃秦军（敌尚存 {enemy}%）","done":{"type":"dead","side":2},"text_en":"Kill Wang Li or rout the Qin (enemy at {enemy}%)"},{"text":"军粮耗尽之前取胜（军粮 {grain1}）","fail":{"type":"grain","side":1,"below":0},"text_en":"Win before the grain runs out (grain {grain1})"},{"text":"项羽无恙","fail":{"type":"dead","side":1},"text_en":"Xiang Yu unharmed"}],"music":{"scale":"shang","gap":[1.2,3.4],"vol":0.32,"drum":0.34},"sfx":{"horn":[["tone",110,117,1.3,"sawtooth",0.08,0],["tone",165,172,1.3,"sawtooth",0.04,0.04],["tone",55,58,1.3,"sine",0.12,0]]},"en":{"name":"Sink the Boats","ord":"Side Tale","role":"Chu · Supreme General Xiang Yu","line":"Cross the Zhang River, cut the Qin supply corridor, and break Wang Li before your three days of grain run out.","brief":"207 BC. Wang Li besieges Zhao at Julu, fed by grain that Zhang Han ships down a walled supply corridor. More than ten allied armies have come to rescue Zhao, yet none dares to fight. Xiang Yu leads his men across the Zhang River, then sinks the boats, smashes the cooking pots, burns the huts, and carries only three days of grain — to show every soldier there is no way home.","goals":["Seize and hold the Supply Corridor (甬道) to starve Wang Li's army","Kill Wang Li, or rout the Qin army","Before your grain runs out","Xiang Yu must survive"],"tips":["You carry only three days of grain and will get no more: when it runs out morale falls daily. Fight fast.","Death-Sworn (死士, Chu's elite halberdiers) counter Qin chariots — put them in front.","Detach troops to take the corridor in the west first: once Qin is cut off its morale sinks; then converge on Wang Li's main body.","Qin guards the north-bank crossing, so it is you who will be hit halfway across. Pin them with crossbowmen from across the river, or go around by the eastern ford."],"winText":"Every Chu warrior fought as ten, and their war cries shook the heavens. In nine battles they cut the corridor, crushed the Qin and captured Wang Li. When the allied generals came through the camp gate, every one of them advanced on his knees, and none dared look up."}},{"id":"jiangwu","first":true,"name":"讲武","ord":"教习","role":"赵 新拜裨将","line":"校场讲武：行军、统众、变阵、接战、火攻、合击，一一习之。","brief":"秦兵压上党，赵国征发新军。新拜裨将者，先赴邯郸城外校场，习旌旗金鼓之令、四阵进退之法，然后从军长平。校尉在侧，每成一课，即授下一课。","goals":["依校尉教示，逐课习之","击破校场东面的秦军"],"tips":["电脑：左键点选、拖框多选，右键行军或进攻；方向键或 WASD 移动视野，滚轮缩放，中键拖动画面，点小地图可跳转。","手机：轻点军阵选中，轻点地面行军，轻点敌阵进攻；单指拖动画面，双指缩放。","兵种相克：戟克骑，骑克弩，盾克戟与弩。骑兵行军最快，但撞上戟兵吃亏。","其余号令：镇守 G（就地固守，久守成深沟高垒）、止步 X、急行 R（快但耗体力）、分兵 F、合兵 C、筑楼 B、攻城器 E。空格暂停，可随时暂停再下令。","左上角军令一课一勾。忘了要领，可点“收兵”→“军令与献策”重看这些献策。"],"winText":"三军既习，进退有度。《司马法》曰：“天下虽安，忘战必危。”校场讲武已毕，可赴长平。","seed":11,"hour0":4,"hourLen":200,"face":{"1":0,"2":3.1416},"cam":[17,20],"weather":{"type":"sun","wind":0,"str":2},"draw":[{"op":"road","pts":[[0,19],[20,19],[40,18],[59,18]]},{"op":"hill","x":24,"y":9,"r":3.5},{"op":"forest","x":38,"y":28,"r":3.6},{"op":"forest","x":5,"y":31,"r":2.5},{"op":"marsh","x":30,"y":33,"r":2}],"camps":[{"x0":4,"y0":15,"x1":14,"y1":24,"side":1}],"points":[{"x":22,"y":19,"side":1,"name":"将台","time":8}],"labels":[{"t":"校场","x":6,"y":13.5,"s":30},{"t":"南林","x":37,"y":24.2,"s":26}],"units":[{"side":1,"type":"dun","n":3000,"x":10,"y":19,"name":"中军","general":true,"name_en":"Centre"},{"side":1,"type":"ji","n":3000,"x":13,"y":17,"name":"前军","name_en":"Vanguard"},{"side":1,"type":"ji","n":2400,"x":13,"y":21,"name":"左军","name_en":"Left Wing"},{"side":1,"type":"nu","n":2500,"x":8,"y":22,"name":"弩营","name_en":"Crossbow Camp"},{"side":1,"type":"qi","n":2000,"x":8,"y":16,"name":"骑营","name_en":"Horse Camp"},{"side":2,"type":"nu","n":1200,"x":38,"y":28,"name":"伏兵","tag":"伏","ambush":true,"ai":{"mode":"stay"},"name_en":"Ambushers"}],"events":[{"t":0.6,"do":"lesson","title":"第一课　行军","text":"此为讲武校场。先学行军。\n电脑：左键点选一阵，右键点地面，军阵即开往该处。\n手机：轻点军阵选中，再轻点地面。\n视野：方向键或 WASD 移动，滚轮缩放（手机单指拖动、双指缩放），点右下小地图可跳转。\n令“前军”（戟兵）开到东面“将台”旗下。","ok":"领命","title_en":"Lesson 1 · Marching","text_en":"This is the drill ground. First, learn to march.\nMouse: left-click a unit to select it, then right-click the ground and it marches there.\nTouch: tap a unit to select it, then tap the ground.\nView: arrow keys or WASD to pan, mouse wheel to zoom (on touch, drag with one finger and pinch). Click the minimap at bottom-right to jump.\nMarch the Vanguard (halberdiers) to the Command Platform flag (将台) to the east.","ok_en":"Understood"}],"triggers":[{"when":{"type":"near","x":22,"y":19,"r":2.2},"do":[{"do":"flag","name":"一"},{"do":"lesson","title":"第二课　统众","text":"善。一将不能独战，再学统领诸阵。\n按 Q（或下方“全选”）选中全军；也可按住左键拖框圈选多阵；按住 Shift 点选可增减；双击一阵，选中同种全部军阵。\n多阵同时右键一处，会排成方块齐进。\n令全军开到将台。","ok":"领命","title_en":"Lesson 2 · Commanding the Army","text_en":"Well done. One general cannot fight alone — now learn to lead many units.\nPress Q (or the All button) to select your whole army. You can also drag a box around several units, Shift-click to add or remove one, or double-click a unit to select every unit of that kind.\nRight-click one spot with several units selected and they march there in a block.\nBring the whole army to the Command Platform.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"一"},{"type":"used","c":"multi"},{"type":"near","x":22,"y":19,"r":3.5,"n":4}]},"do":[{"do":"flag","name":"二"},{"do":"lesson","title":"第三课　四阵","text":"阵者，兵之形也。选中军阵，按数字键或下方按钮变阵：\n1 方阵：攻守平均，常备之阵，锋矢冲来也能稳住。\n2 锋矢阵：攻击加三成、行军更快，但防御减弱；冲阵破敌用之，最克雁行阵，撞上圆阵则钝。\n3 圆阵：防御加四成，不惧侧背夹击，但行动迟缓；被围或待援时用之。\n4 雁行阵：箭矢杀伤加三成、射程更远；弩手专用之阵。\n选中全军，四阵各变一次。","ok":"领命","title_en":"Lesson 3 · The Four Formations","text_en":"Formation is the shape of an army. Select units and press a number key or the buttons below:\n1 Square: balanced attack and defence; the standard formation, steady even against an Arrowhead charge.\n2 Arrowhead: +30% attack and faster marching, but weaker defence. Use it to smash enemy lines; it crushes the Wild Goose but blunts itself on a Circle.\n3 Circle: +40% defence and immune to flank and rear attacks, but slow. Use it when surrounded or waiting for help.\n4 Wild Goose: +30% missile damage and longer range — the crossbowmen's formation.\nSelect the whole army and try each of the four formations once.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"二"},{"type":"used","c":["fang","feng","yuan","yan"]}]},"do":[{"do":"flag","name":"三"},{"do":"spawn","units":[{"side":2,"type":"ji","n":1500,"x":31,"y":19,"name":"靶阵","tag":"靶","ai":{"mode":"stay"},"name_en":"Target Company"}]},{"do":"lesson","title":"第四课　接战","text":"东面来了一阵敌军（“靶阵”）。\n选中我军，右键点敌阵即进攻（手机：轻点敌阵）。\n兵种相克：戟克骑，骑克弩，盾克戟与弩。靶阵是戟兵，以盾兵当之最好，切莫让骑兵去撞。\n侧背受击的敌阵伤亡、士气损失大增；士气崩溃则溃走。\n击破靶阵。","ok":"领命","title_en":"Lesson 4 · Engaging","text_en":"An enemy unit has appeared to the east: the Target Company (靶阵).\nSelect your troops and right-click the enemy to attack (touch: tap the enemy).\nCounters: halberdiers beat cavalry, cavalry beat crossbowmen, shieldmen beat halberdiers and crossbowmen. The target is halberdiers, so meet them with shieldmen — and keep your cavalry away.\nEnemies hit in the flank or rear take far heavier losses and morale damage; when morale breaks, they rout.\nDestroy the Target Company.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"三"},{"type":"tagDead","tag":"靶"}]},"do":[{"do":"flag","name":"四"},{"do":"lesson","title":"第五课　火攻","text":"斥候报：东南“南林”中藏有伏兵。\n火攻须用弩手：选中弩营，按 V（或“火攻”），再点林地或敌营，即发火箭。弩手须进到射程之内；放过一次火，要二十余息才能再发。\n火借风势：右上角可见风向，今日大西风，火向东烧，人要站在上风。雨天不可火攻。\n令弩营火烧南林。","ok":"领命","title_en":"Lesson 5 · Fire Attack","text_en":"Scouts report an ambush hidden in the South Wood (南林) to the southeast.\nFire needs crossbowmen: select the Crossbow Camp, press V (or the Fire button), then click a forest or enemy camp to loose fire arrows. The crossbowmen must be within range; after each volley it takes over twenty seconds to ready another.\nFire follows the wind: the top-right corner shows the wind. Today a strong west wind blows the fire east, so stand upwind. Fire will not catch in rain.\nHave the Crossbow Camp set the South Wood ablaze.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"四"},{"type":"used","c":"fire"}]},"do":[{"do":"flag","name":"五"},{"do":"spawn","text":"秦军一阵自东而来","units":[{"side":2,"type":"ji","n":3500,"x":46,"y":17,"name":"秦军","tag":"敌","ai":{"mode":"guard","leash":160},"name_en":"Qin Company"}],"text_en":"A Qin unit approaches from the east"},{"do":"lesson","title":"第六课　合击","text":"林火已起。凡战者，以正合，以奇胜。秦军一阵正自东而来。\n选中我军数阵，按 T（或“战术”）选一种，再点敌阵：\n两翼包抄：诸阵分左右两翼夹击。\n绕后夹击：离敌最近的一阵正面镇守，其余绕到敌后。\n侧翼包抄：一阵正面镇守，其余迂回侧翼。\n只选一阵也行，会自动分兵（主将亲卫与不足一千六的军阵不能分）。\n用一次战术，击破秦军。","ok":"领命","title_en":"Lesson 6 · Envelopment","text_en":"The wood is burning. In battle, engage with the orthodox and win with the unexpected. A Qin unit is marching in from the east.\nSelect several of your units, press T (or Tactics), choose one, then click the enemy:\nDouble Envelopment: your units split into left and right wings and strike both sides.\nRear Assault: the unit nearest the enemy pins it from the front while the rest circle behind.\nFlanking Attack: one unit holds the front while the rest wheel onto a flank.\nA single unit works too — it splits itself (a general's guard, or a unit under 1,600 men, cannot split).\nUse one tactic and defeat the Qin.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"五"},{"type":"used","c":"tac"}]},"do":[{"do":"msg","text":"合击之势已成","kind":"good","text_en":"The envelopment is in place"}]}],"win":[{"type":"all","of":[{"type":"flag","name":"五"},{"type":"tagDead","tag":"敌"}]}],"lose":[],"objectives":[{"text":"一　行军：前军开到将台","done":{"type":"flag","name":"一"},"text_en":"Lesson 1 · March: bring the Vanguard to the Command Platform"},{"text":"二　统众：全军齐至将台","done":{"type":"flag","name":"二"},"text_en":"Lesson 2 · Command: bring the whole army to the Command Platform"},{"text":"三　四阵：方、锋矢、圆、雁行各变一次","done":{"type":"flag","name":"三"},"text_en":"Lesson 3 · Formations: try Square, Arrowhead, Circle and Wild Goose"},{"text":"四　接战：击破靶阵","done":{"type":"flag","name":"四"},"text_en":"Lesson 4 · Engage: destroy the Target Company"},{"text":"五　火攻：弩营火烧南林","done":{"type":"flag","name":"五"},"text_en":"Lesson 5 · Fire: burn the South Wood with the Crossbow Camp"},{"text":"六　合击：用一次战术","done":{"type":"used","c":"tac"},"text_en":"Lesson 6 · Envelop: use one tactic"},{"text":"七　击破秦军","done":{"type":"all","of":[{"type":"flag","name":"五"},{"type":"tagDead","tag":"敌"}]},"text_en":"Lesson 7 · Defeat the Qin Company"},{"text":"余课（可选）：镇守、急行、分兵、合兵各试一次","done":{"type":"used","c":["hold","march","split","merge"]},"text_en":"Extra (optional): try Hold, Force March, Split and Merge once each"}],"en":{"name":"Drill Ground","ord":"Training","role":"Zhao · Newly Appointed Lieutenant","line":"On the drill ground, learn to march, command, change formation, engage, burn and envelop — one lesson at a time.","brief":"Qin troops press on Shangdang, and Zhao is raising new levies. As a newly appointed lieutenant you report first to the drill ground outside Handan, to learn the banners and drums and the four formations before marching to Changping. Your instructor stands beside you: finish each lesson and he gives the next.","goals":["Follow the instructor's lessons one by one","Defeat the Qin unit east of the drill ground"],"tips":["Mouse: left-click to select, drag a box for several, right-click to march or attack. Arrow keys or WASD pan the view, wheel zooms, middle-drag pans, click the minimap to jump.","Touch: tap a unit to select, tap ground to march, tap an enemy to attack; drag with one finger to pan, pinch to zoom.","Unit counters: halberdiers beat cavalry, cavalry beat crossbowmen, shieldmen beat halberdiers and crossbowmen. Cavalry are fastest but lose against halberds.","Other orders: Hold G (stand fast; hold long enough to entrench), Stop X, Force March R (fast but tiring), Split F, Merge C, Tower B, Siege E. Space pauses — you can always pause and give orders.","The orders list at top-left ticks off each lesson. Forgot something? Press Withdraw → Orders & Counsel to read these tips again."],"winText":"The army is drilled: it advances and withdraws in good order. As the Sima Fa says, “Though the realm be at peace, to forget war is to court peril.” Your training is done — on to Changping."}}]</script>
 <script>
 'use strict';
 (()=>{
 const TS=40,MW=60,MH=38,WW=MW*TS,WH=MH*TS,PI=Math.PI,TAU=PI*2;
 const PLAIN=0,HILL=1,FOREST=2,RIVER=3,FORD=4,ROAD=5,WALL=6,GATE=7,CAMP=8,BURNT=9,MARSH=10,CLIFF=11,RUBBLE=12;
-const TNAME=['平地','山丘','林地','河流','浅滩','道路','城垣','垒门','营垒','焦土','沮泽','绝壁','残垣'];
-const TNOTE=['无险可守，利骑兵驰突','地势越高，攻守越利，弩矢越远；陡处战马易伤','镇守可设伏；骑兵难行且折损，畏火攻','','半渡受击，伤亡倍增','行军迅捷','','','守军依垒，矢石难伤','草木已尽','泥淖难行，战马陷足，折损最重','','城垣崩缺，可由此突入'];
+const TNAME_ZH=['平地','山丘','林地','河流','浅滩','道路','城垣','垒门','营垒','焦土','沮泽','绝壁','残垣'];
+const TNAME_EN=['Plain','Hill','Forest','River','Ford','Road','Wall','Gate','Camp','Scorched','Marsh','Cliff','Breach'];
+const TNOTE_EN=['Open ground; favors cavalry charges','Higher ground: stronger in melee, longer bow range; steep slopes injure horses','Hold here to lie in ambush; slows and wears cavalry; burns','','Troops wading take double casualties','Fast marching','','','Defenders behind ramparts shrug off missiles','Burnt out','Mud: very slow, horses bog down, heaviest attrition','','Collapsed wall; troops can storm through'];
+const TNAME=TNAME_ZH.slice();
+const TNOTE_ZH=['无险可守，利骑兵驰突','地势越高，攻守越利，弩矢越远；陡处战马易伤','镇守可设伏；骑兵难行且折损，畏火攻','','半渡受击，伤亡倍增','行军迅捷','','','守军依垒，矢石难伤','草木已尽','泥淖难行，战马陷足，折损最重','','城垣崩缺，可由此突入'];const TNOTE=TNOTE_ZH.slice();
 const SPD=[1,.65,.7,0,.45,1.3,.12,1,1,.9,.5,0,.6];
-const GN={ram:'冲车',ladder:'云梯',cata:'发石车'},GT={ram:12,ladder:9,cata:18},GS={ram:.75,ladder:.9,cata:.6};
-const HN='子丑寅卯辰巳午未申酉戌亥',GAN='甲乙丙丁戊己庚辛壬癸';
+const GN_ZH={ram:'冲车',ladder:'云梯',cata:'发石车'},GN_EN={ram:'battering ram',ladder:'scaling ladders',cata:'trebuchet'},GN=Object.assign({},GN_ZH),GT={ram:12,ladder:9,cata:18},GS={ram:.75,ladder:.9,cata:.6};
+const HN='子丑寅卯辰巳午未申酉戌亥',HNP=['Zi','Chou','Yin','Mao','Chen','Si','Wu','Wei','Shen','You','Xu','Hai'],GAN_ZH='甲乙丙丁戊己庚辛壬癸';let GAN=GAN_ZH;
 const INK='#1d1b19',QING='#2f4d66',ZHU='#b3261e',ZHE='#8f6a3f',PAPER='#e6dfcc';
-const BRUSH='"Ma Shan Zheng","STKaiti","KaiTi","Kaiti SC",serif';
+const BRUSH_ZH='"Ma Shan Zheng","STKaiti","KaiTi","Kaiti SC",serif';let BRUSH=BRUSH_ZH;
 const UT={
  ji:{name:'戟兵',ch:'戟',spd:46,atk:1,def:1,range:0},
  dun:{name:'盾兵',ch:'盾',spd:42,atk:.9,def:1.25,range:0},
@@ -342,15 +401,17 @@ const FM={
  feng:{name:'锋矢阵',atk:1.3,def:.8,spd:1.15},
  yuan:{name:'圆阵',atk:.75,def:1.4,spd:.6,noflank:true},
  yan:{name:'雁行阵',atk:.9,def:.85,spd:1,shot:1.3,rng:1.1}};
+const UT_EN={ji:'Halberdiers',dun:'Shieldmen',nu:'Crossbowmen',qi:'Cavalry',liang:'Supply Train'},UT_ZH={};for(const k in UT)UT_ZH[k]=UT[k].name;
+const FM_EN={fang:'Square',feng:'Arrowhead',yuan:'Circle',yan:'Wild Goose'},FM_ZH={};for(const k in FM)FM_ZH[k]=FM[k].name;
 const FMC={feng:{yan:1.25,yuan:.85},fang:{feng:1.1},yan:{},yuan:{}};
 const QUOTES={
- flank:['出其不意，攻其无备','计篇'],high:['凡军好高而恶下','行军篇'],ford:['令半济而击之，利','行军篇'],
- rest:['以近待远，以佚待劳','军争篇'],ai:['隘形者，我先居之，必盈之以待敌','地形篇'],siege:['攻城之法，为不得已','谋攻篇'],shi:['如转圆石于千仞之山者，势也','势篇'],marsh:['绝斥泽，惟亟去无留','行军篇'],terrain:['夫地形者，兵之助也','地形篇'],fire:['发火有时，起火有日','火攻篇'],wind:['火发上风，无攻下风','火攻篇'],
- ambush:['兵者，诡道也','计篇'],death:['围师必阙，穷寇勿迫','军争篇'],rout:['三军可夺气，将军可夺心','军争篇'],
- supply:['军无辎重则亡，无粮食则亡','军争篇'],speed:['兵之情主速，乘人之不及','九地篇'],
- dig:['先为不可胜，以待敌之可胜','形篇'],night:['夜战多火鼓，昼战多旌旗','军争篇'],
- mass:['我专为一，敌分为十','虚实篇'],rain:['上雨，水沫至，欲涉者，待其定也','行军篇'],
- fog:['难知如阴，动如雷震','军争篇'],qi:['凡战者，以正合，以奇胜','势篇'],march:['其疾如风，其徐如林','军争篇']};
+ flank:['出其不意，攻其无备','计篇','Attack where he is unprepared; appear where you are not expected.'],high:['凡军好高而恶下','行军篇','An army prefers high ground and dislikes the low.'],ford:['令半济而击之，利','行军篇','Let half the enemy cross the river, then strike.'],
+ rest:['以近待远，以佚待劳','军争篇','Close to the field, await the distant foe; rested, await the weary.'],ai:['隘形者，我先居之，必盈之以待敌','地形篇','In a narrow pass, occupy it first, hold it in strength, and await the enemy.'],siege:['攻城之法，为不得已','谋攻篇','Attacking walled cities is the last resort.'],shi:['如转圆石于千仞之山者，势也','势篇','Like round stones rolled down a mountain a thousand fathoms high: that is momentum.'],marsh:['绝斥泽，惟亟去无留','行军篇','Cross salt marshes quickly; do not linger.'],terrain:['夫地形者，兵之助也','地形篇','The lie of the land is the soldier\'s best ally.'],fire:['发火有时，起火有日','火攻篇','There is a season for fire, and days for kindling it.'],wind:['火发上风，无攻下风','火攻篇','Set fire from upwind; never attack from downwind.'],
+ ambush:['兵者，诡道也','计篇','All warfare is based on deception.'],death:['围师必阙，穷寇勿迫','军争篇','Leave a surrounded army a way out; do not press a desperate foe.'],rout:['三军可夺气，将军可夺心','军争篇','An army can be robbed of its spirit, a general of his resolve.'],
+ supply:['军无辎重则亡，无粮食则亡','军争篇','An army without baggage train or provisions is lost.'],speed:['兵之情主速，乘人之不及','九地篇','Speed is the essence of war: strike where the enemy is unready.'],
+ dig:['先为不可胜，以待敌之可胜','形篇','First make yourself invincible, then wait for the enemy to become vulnerable.'],night:['夜战多火鼓，昼战多旌旗','军争篇','Fight at night with many fires and drums; by day with many banners.'],
+ mass:['我专为一，敌分为十','虚实篇','We concentrate into one; the enemy divides into ten.'],rain:['上雨，水沫至，欲涉者，待其定也','行军篇','When rain upstream sends foam downriver, wait until it settles before fording.'],
+ fog:['难知如阴，动如雷震','军争篇','Be as unknowable as darkness; move like thunder.'],qi:['凡战者，以正合，以奇胜','势篇','Engage with the orthodox; win with the unexpected.'],march:['其疾如风，其徐如林','军争篇','Swift as the wind, steady as the forest.']};
 
 const $=id=>document.getElementById(id);
 const cl=(v,a,b)=>v<a?a:v>b?b:v;
@@ -360,17 +421,23 @@ const angDiff=(a,b)=>{let d=(b-a)%TAU;if(d>PI)d-=TAU;if(d<-PI)d+=TAU;return d;};
 const turn=(a,b,mx)=>{const d=angDiff(a,b);return Math.abs(d)<=mx?b:a+Math.sign(d)*mx;};
 const tileIdx=(x,y)=>cl(y/TS|0,0,MH-1)*MW+cl(x/TS|0,0,MW-1);
 const cen=i=>({x:(i%MW+.5)*TS,y:((i/MW|0)+.5)*TS});
+/* ---------- 语言：zh / en。孙子语录、士卒呼喝、旗上字、地图题字始终用中文 ---------- */
+let LANG='zh';
+try{LANG=localStorage.getItem('changping-lang')||(typeof navigator!=='undefined'&&!/^zh/i.test(navigator.language||'zh')?'en':'zh');}catch(e){}
+if(typeof window!=='undefined'&&window.__TEST)LANG=window.__LANG||'zh';
+const EN=()=>LANG==='en';
+const tr=(zh,en)=>LANG==='en'&&en!=null?en:zh;
 function rng32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 
 let G=null;
 /* ---------- 难度 ---------- */
 const PRESET=[{force:75,might:85,wit:1,pace:80},{force:100,might:100,wit:2,pace:100},{force:125,might:110,wit:3,pace:115}];
-const WIT=['守拙','常法','善谋'];
+const WIT_ZH=['守拙','常法','善谋'],WIT_EN=['Plodding','Orthodox','Cunning'];let WIT=WIT_ZH;
 const D={force:100,might:100,wit:2,pace:100,vol:70,snd:true};
 try{Object.assign(D,JSON.parse(localStorage.getItem('changping-set')||'{}'));}catch(e){}
 const saveD=()=>{try{localStorage.setItem('changping-set',JSON.stringify(D));}catch(e){}};
-const paceName=v=>v<=85?'宽裕':v>=115?'紧迫':'如常';
-const diffLine=()=>'敌军兵力 '+D.force+'%，战力 '+D.might+'%，敌将'+WIT[D.wit-1]+'，粮草时限'+paceName(D.pace);
+const paceName=v=>v<=85?tr('宽裕','ample'):v>=115?tr('紧迫','tight'):tr('如常','normal');
+const diffLine=()=>tr('敌军兵力 '+D.force+'%，战力 '+D.might+'%，敌将'+WIT[D.wit-1]+'，粮草时限'+paceName(D.pace),'enemy strength '+D.force+'%, might '+D.might+'%, enemy general '+WIT[D.wit-1]+', supply time '+paceName(D.pace));
 /* ---------- 音效（全部即时合成，无外部文件） ---------- */
 const SND={ctx:null,master:null,buf:null,last:{},rain:null};
 const GAP={hail:220,hoof:300,clash:120,arrow:260,thud:380,gong:2500,horn:2600,pluck:280,tick:40,move:120,fire:600,drum:160,crash:500,fall:700};
@@ -516,22 +583,23 @@ function spawn(side,type,n,tx,ty,opt){
   hold:false,holdT:0,march:false,state:'idle',cd:Math.random()*2,fireCd:0,hidden:false,vis:side===1,visA:side===1?1:0,ambushT:0,lastHit:-99,lastAtk:-99,
   chargeT:0,runT:0,death:false,alive:true,thinkT:Math.random()*.4,repT:0,general:false,auto:false,ai:null,siege:null,routT:0,r:20,hitT:0,contact:null,cd2:0,atkN:0,atkP:0,had:false,tag:''};
  if(opt)Object.assign(u,opt);
- if(!u.name)u.name=UT[kind].name+GAN[G.nameIdx[k]++%10]+'阵';
+ if(EN()&&u.nameEn)u.name=u.nameEn;
+ if(!u.name)u.name=EN()?UT[kind].name+' '+GAN[G.nameIdx[k]++%10]:UT[kind].name+GAN[G.nameIdx[k]++%10]+'阵';
  u.home=u.home||{x:u.x,y:u.y};
  G.units.push(u);return u;
 }
 function removeUnit(u){u.alive=false;}
 function kill(u){
  if(!u.alive)return;u.alive=false;stain(u.x,u.y,u.r);sfx('fall',u.x,u.y);
- if(u.type==='liang'){G.convLost++;msg('粮队被劫，辎重尽失！','warn');return;}
- if(u.general){msg((u.side===1?'我军主将':'敌将')+u.name.replace('亲卫','')+'阵亡！',u.side===1?'warn':'good');
+ if(u.type==='liang'){G.convLost++;msg(tr('粮队被劫，辎重尽失！','A supply train has been captured!'),'warn');return;}
+ if(u.general){msg(tr((u.side===1?'我军主将':'敌将')+u.name.replace('亲卫','')+'阵亡！',(u.side===1?'Our general ':'Enemy general ')+u.name.replace(/[’']s Guard$/,'')+' has fallen!'),u.side===1?'warn':'good');
   for(const o of G.units)if(o.side===u.side&&o.alive&&!o.death)o.morale-=30;}
- else msg((u.side===1?'我军':'敌军')+u.name+'覆没',u.side===1?'warn':'good');
+ else msg(tr((u.side===1?'我军':'敌军')+u.name+'覆没',(u.side===1?'Our ':'Enemy ')+u.name+' destroyed'),u.side===1?'warn':'good');
 }
 function rout(u){
  sfx('gong');u.state='rout';u.target=null;u.ordered=false;u.hold=false;u.march=false;u.routT=0;u.path=findPath(u,u.home.x,u.home.y);
  for(const o of G.units)if(o!==u&&o.side===u.side&&o.alive&&!o.death&&dist(o,u)<220)o.morale-=6;
- if(u.side===2){msg('敌'+u.name+'溃走','good');quote('rout');}else msg('我军'+u.name+'溃退！','warn');
+ if(u.side===2){msg(tr('敌'+u.name+'溃走','Enemy '+u.name+' routs'),'good');quote('rout');}else msg(tr('我军'+u.name+'溃退！','Our '+u.name+' is routing!'),'warn');
 }
 function surrounded(u){let q=0;for(const e of G.units){if(e.side===u.side||!e.alive||e.state==='rout'||e.type==='liang')continue;const dx=e.x-u.x,dy=e.y-u.y;if(dx*dx+dy*dy>190*190)continue;q|=1<<((dx>0?1:0)+(dy>0?2:0));}
  return((q&1)+(q>>1&1)+(q>>2&1)+(q>>3&1))>=3;}
@@ -609,7 +677,7 @@ function fight(u,dt){
    else if(!u.ordered||!tg){let bd=1e9;for(const e of G.units){if(e.side===u.side||!e.alive||!canSee(u,e))continue;const d=dist(u,e);if(d<bd&&d<=rangeTo(u,e)){bd=d;t2=e;}}}
    if(t2){if(u.hidden){u.ambushT=6;u.hidden=false;quote('ambush');}
     u.cd=2.2;hurt(t2,11*2.2*Math.pow(u.n/1000,.7)*rangedMult(u,t2)*(u.side===2?D.might/100:1),1);volley(u,t2,false);sfx('arrow',u.x,u.y);G.heat=Math.min(3,(G.heat||0)+.3);
-    if(u.side===2&&D.wit>=3&&u.fireCd<=0&&G.weather!=='rain'){const fi=tileIdx(t2.x,t2.y);if(flam(fi)&&G.own[fi]!==2&&startFire(fi)){u.fireCd=40;volley(u,t2,true);msg('敌军发火箭'+(G.map[fi]===FOREST?'焚林':'烧营')+'！','warn');}}u.face=ang(u,t2);u.lastAtk=G.t;u.stam-=.6;}
+    if(u.side===2&&D.wit>=3&&u.fireCd<=0&&G.weather!=='rain'){const fi=tileIdx(t2.x,t2.y);if(flam(fi)&&G.own[fi]!==2&&startFire(fi)){u.fireCd=40;volley(u,t2,true);msg(tr('敌军发火箭'+(G.map[fi]===FOREST?'焚林':'烧营')+'！','Enemy fire arrows set the '+(G.map[fi]===FOREST?'forest':'camp')+' ablaze!'),'warn');}}u.face=ang(u,t2);u.lastAtk=G.t;u.stam-=.6;}
    else u.cd=.25;}
  }
  if(u.siege){const g=u.siege;if(g.hp>0){const raw=3*(UT[u.kind].gate||1)*Math.pow(u.n/1000,.7)*(u.type==='nu'?.3:u.type==='qi'?.5:1)*dt;u.lastAtk=G.t;
@@ -623,11 +691,11 @@ function fight(u,dt){
    if(u.bcd<=0){u.bcd=3;const dm=70*Math.sqrt(u.n/3000);G.arrows.push({x0:u.x,y0:u.y,x1:p.x+(Math.random()-.5)*14,y1:p.y+(Math.random()-.5)*14,t:0,d:.9,stone:true});sfx('thud',u.x,u.y);u.lastAtk=G.t;u.stam-=1;
     if(t===GATE){g.hp-=dm;if(g.hp<=0)breakGate(g);}
     else if(t===WALL){const h=(G.shp[i]===undefined?600:G.shp[i])-dm;G.shp[i]=h;if(h<=0)breach(i);}
-    else{const k='t'+i,h=(G.shp[k]===undefined?260:G.shp[k])-dm;G.shp[k]=h;if(h<=0){G.tower[i]--;delete G.shp[k];sfx('crash',p.x,p.y);msg('箭楼被砸塌一层','good');}}}}}
+    else{const k='t'+i,h=(G.shp[k]===undefined?260:G.shp[k])-dm;G.shp[k]=h;if(h<=0){G.tower[i]--;delete G.shp[k];sfx('crash',p.x,p.y);msg(tr('箭楼被砸塌一层','A tower storey collapses'),'good');}}}}}
 }
 const bombR=u=>300*(1+.05*elevOf(u));
-function breach(i){const p=cen(i);G.map[i]=RUBBLE;delete G.shp[i];G.elev[i]=0;sfx('crash',p.x,p.y);msg('城垣崩塌，缺口已开！','good');paintRubble(i);computeGap();}
-function breakGate(g){sfx('crash',g.x,g.y);g.hp=0;G.map[g.i]=ROAD;msg(g.side===1?'我军垒门被攻破！':'敌垒门已破！',g.side===1?'warn':'good');stain(g.x,g.y,16);}
+function breach(i){const p=cen(i);G.map[i]=RUBBLE;delete G.shp[i];G.elev[i]=0;sfx('crash',p.x,p.y);msg(tr('城垣崩塌，缺口已开！','The wall collapses: a breach is open!'),'good');paintRubble(i);computeGap();}
+function breakGate(g){sfx('crash',g.x,g.y);g.hp=0;G.map[g.i]=ROAD;msg(g.side===1?tr('我军垒门被攻破！','Our gate has been broken!'):tr('敌垒门已破！','The enemy gate is broken!'),g.side===1?'warn':'good');stain(g.x,g.y,16);}
 
 /* ---------- 行军 ---------- */
 function stepUnit(u,dt){
@@ -659,7 +727,7 @@ function stepUnit(u,dt){
  u.stam-=dt*(fast?2.6:.3);
  if(u.type==='qi'&&u.state!=='rout'){const e=G.elev[ni];let k=t===MARSH?1:t===FOREST?.6:t===HILL&&e>=2?(e>=3?.8:.5):G.weather==='rain'&&fast&&(t===PLAIN||t===BURNT)?.25:0;
   if(k){const loss=Math.min(u.n,u.n*k/100*(fast?2.2:1)*dt);u.n-=loss;if(u.side===1)G.stats.loss+=loss;else G.stats.kill+=loss;u.runT=0;
-   if(u.side===1&&G.t-(u.wornT||-99)>25){u.wornT=G.t;msg(u.name+(t===MARSH?'陷于沮泽':t===FOREST?'穿行密林':t===HILL?'攀行险坡':'雨中疾驰')+'，战马折损','warn');quote(t===MARSH?'marsh':'terrain');}}}
+   if(u.side===1&&G.t-(u.wornT||-99)>25){u.wornT=G.t;msg(tr(u.name+(t===MARSH?'陷于沮泽':t===FOREST?'穿行密林':t===HILL?'攀行险坡':'雨中疾驰')+'，战马折损',u.name+(t===MARSH?' bogged in marsh':t===FOREST?' pushing through forest':t===HILL?' climbing steep slopes':' galloping in rain')+': horses lost'),'warn');quote(t===MARSH?'marsh':'terrain');}}}
  // 看护：两息之内几乎未动，则重新寻路并稍作侧移
  u.stT=(u.stT||0)+dt;if(u.stT>2){if(u.path.length&&Math.hypot(u.x-(u.sx||0),u.y-(u.sy||0))<5&&!u.contact){const f=u.path[u.path.length-1];u.path=findPath(u,f.x,f.y);const a=u.face+(Math.random()<.5?1.57:-1.57);tryMove(u,Math.cos(a)*8,Math.sin(a)*8);}u.sx=u.x;u.sy=u.y;u.stT=0;}
 }
@@ -742,10 +810,10 @@ function upkeep(u,dt){
  u.stam=cl(u.stam,0,100);
  if(u.hold)u.holdT+=dt;else u.holdT=0;
  if(u.make){if(!u.hold||u.state==='rout')u.make=null;else if(!u.contact){u.make.t+=dt*Math.sqrt(u.n/3000)/GT[u.make.g];if(Math.random()<dt*1.6)sfx('thud',u.x,u.y);
-   if(u.make.t>=1){u.gear=u.make.g;u.make=null;sfx('drum',u.x,u.y);if(u.side===1)msg(u.name+'造成'+GN[u.gear]+(u.gear==='cata'?'：右键（或轻点）敌方城垣、垒门、箭楼即可轰击':u.gear==='ladder'?'：可直接翻越城垣':'：撞门如摧枯'),'good');}}}
+   if(u.make.t>=1){u.gear=u.make.g;u.make=null;sfx('drum',u.x,u.y);if(u.side===1)msg(tr(u.name+'造成'+GN[u.gear]+(u.gear==='cata'?'：右键（或轻点）敌方城垣、垒门、箭楼即可轰击':u.gear==='ladder'?'：可直接翻越城垣':'：撞门如摧枯'),u.name+' has built a '+GN[u.gear]+(u.gear==='cata'?': right-click (or tap) an enemy wall, gate or tower to bombard':u.gear==='ladder'?': can climb straight over walls':': smashes gates with ease')),'good');}}}
  if(u.build){const bi=u.build.i;if(!u.hold||u.state==='rout'||tileIdx(u.x,u.y)!==bi||G.tower[bi]>=3)u.build=null;
   else if(!u.contact){u.build.t+=dt*Math.sqrt(u.n/3000)/14;if(Math.random()<dt*1.6)sfx('thud',u.x,u.y);
-   if(u.build.t>=1){G.tower[bi]++;u.build=G.tower[bi]<3&&u.buildMore?{i:bi,t:0}:null;sfx('drum',u.x,u.y);msg(u.name+'筑成箭楼'+'一二三'[G.tower[bi]-1]+'层，地势 '+elevOf(u),'good');}}}
+   if(u.build.t>=1){G.tower[bi]++;u.build=G.tower[bi]<3&&u.buildMore?{i:bi,t:0}:null;sfx('drum',u.x,u.y);msg(tr(u.name+'筑成箭楼'+'一二三'[G.tower[bi]-1]+'层，地势 '+elevOf(u),u.name+' raised a tower to storey '+G.tower[bi]+', height '+elevOf(u)),'good');}}}
  if(u.type==='liang'){if(u.n<300)kill(u);return;}
  if(calm&&!starve)u.morale+=dt*2;
  const gen=G.gen[u.side];if(gen&&gen.alive&&!starve&&dist(u,gen)<280)u.morale+=dt;
@@ -754,10 +822,10 @@ function upkeep(u,dt){
  u.morale=cl(u.morale,0,100);
  u.hidden=u.hold&&u.holdT>3&&!u.make&&!u.build&&(G.map[fi]===FOREST||(G.map[fi]===HILL&&G.elev[fi]>=2))&&G.t-u.lastHit>4&&G.t-u.lastAtk>4&&!u.contact&&u.ambushT<=0;
  if(u.n<Math.max(120,u.nMax*.08)){kill(u);return;}
- if(starve&&u.morale<15){removeUnit(u);msg((u.side===2?'敌':'我军')+u.name+(u.side===2?'弃甲请降':'粮尽而散'),u.side===2?'good':'warn');if(u.side===2)G.stats.surr+=u.n;return;}
+ if(starve&&u.morale<15){removeUnit(u);msg(tr((u.side===2?'敌':'我军')+u.name+(u.side===2?'弃甲请降':'粮尽而散'),u.side===2?'Enemy '+u.name+' throws down its arms and surrenders':'Our '+u.name+' starves and scatters'),u.side===2?'good':'warn');if(u.side===2)G.stats.surr+=u.n;return;}
  if(u.state==='rout'){u.routT+=dt;let near=false;for(const e of G.units)if(e.side!==u.side&&e.alive&&dist(e,u)<230){near=true;break;}
   if((u.routT>8&&!near)||u.routT>16){u.state='idle';u.morale=Math.max(u.morale,42);u.path=[];}}
-  else if(u.morale<15&&!u.death){if(surrounded(u)){u.death=true;u.morale=50;if(u.side===2)quote('death');msg((u.side===2?'敌':'我军')+u.name+'身陷重围，殊死而战',u.side===2?'warn':'');}else rout(u);}
+  else if(u.morale<15&&!u.death){if(surrounded(u)){u.death=true;u.morale=50;if(u.side===2)quote('death');msg(tr((u.side===2?'敌':'我军')+u.name+'身陷重围，殊死而战',(u.side===2?'Enemy ':'Our ')+u.name+' is surrounded and fights to the death'),u.side===2?'warn':'');}else rout(u);}
 }
 
 /* ---------- 火 ---------- */
@@ -812,23 +880,23 @@ function order(wx,wy){
  {const ti=tileIdx(wx,wy),tt=G.map[ti],gg=G.gateIdx[ti],cat=s.filter(u=>u.gear==='cata');
   if(cat.length&&(tt===WALL&&G.own[ti]!==1||(tt===GATE&&gg&&gg.hp>0&&gg.side!==1)||(G.tower[ti]>0&&G.own[ti]===2))){
    for(const u of cat){u.bomb={i:ti};u.bcd=1;u.target=null;u.ordered=false;u.hold=false;u.state='idle';u.path=[];u.repT=0;}
-   const p=cen(ti);ring(p.x,p.y,ZHU);ack(cat,'轰');msg('发石车轰击'+(tt===WALL?'城垣':tt===GATE?'垒门':'箭楼'));s=s.filter(u=>u.gear!=='cata');if(!s.length)return;}}
+   const p=cen(ti);ring(p.x,p.y,ZHU);ack(cat,'轰');msg(tr('发石车轰击'+(tt===WALL?'城垣':tt===GATE?'垒门':'箭楼'),'Trebuchets bombard the '+(tt===WALL?'wall':tt===GATE?'gate':'tower')));s=s.filter(u=>u.gear!=='cata');if(!s.length)return;}}
  for(const u of s)u.bomb=null;
  const k=s.length,cols=Math.ceil(Math.sqrt(k)),rows=Math.ceil(k/cols);let bad=0;
  s.forEach((u,i)=>{const ox=((i%cols)-(cols-1)/2)*66,oy=((i/cols|0)-(rows-1)/2)*66;const p=findPath(u,wx+ox,wy+oy);
   if(!p.length){bad++;return;}u.path=p;u.state='move';u.target=null;u.ordered=false;u.hold=false;});
- if(bad===k)msg('此处不可至');else{ring(wx,wy,INK);ack(s,'得令');use('move');}
+ if(bad===k)msg(tr('此处不可至','Cannot reach that spot'));else{ring(wx,wy,INK);ack(s,'得令');use('move');}
 }
-function splitOff(u){if(u.n<1600||u.general){msg(u.general?'主将亲卫不可分兵':'兵力不足一千六，不可再分');return null;}
+function splitOff(u){if(u.n<1600||u.general){msg(u.general?tr('主将亲卫不可分兵','The general’s guard cannot be split'):tr('兵力不足一千六，不可再分','Too few men to split (needs 1,600)'));return null;}
  const h=u.n/2;u.n=h;u.nMax/=2;const a=u.face+PI/2;
  const v=spawn(1,u.kind,h,u.x/TS,u.y/TS,{fm:u.fm,morale:u.morale,stam:u.stam,face:u.face,hold:u.hold,gear:u.gear});
  v.nMax=u.nMax;v.r=u.r;v.x=u.x+Math.cos(a)*18;v.y=u.y+Math.sin(a)*18;u.x-=Math.cos(a)*18;u.y-=Math.sin(a)*18;
  if(!pass(tileIdx(v.x,v.y))){v.x=u.x;v.y=u.y;}return v;}
 function split(u){const v=splitOff(u);if(v)G.sel.push(v);}
 /* ---------- 列阵战术：两翼包抄、绕后夹击、侧翼包抄 ---------- */
-const TAC={wings:'两翼包抄',rear:'绕后夹击',side:'侧翼包抄'};
+const TAC_ZH={wings:'两翼包抄',rear:'绕后夹击',side:'侧翼包抄'},TAC_EN={wings:'Double Envelopment',rear:'Rear Assault',side:'Flanking Attack'},TAC=Object.assign({},TAC_ZH);
 function tactic(mode,e){
- let s=selOK().filter(u=>u.type!=='liang');if(!s.length){msg('先点选我军军阵');return;}
+ let s=selOK().filter(u=>u.type!=='liang');if(!s.length){msg(tr('先点选我军军阵','Select one of your units first'));return;}
  s.sort((a,b)=>dist(a,e)-dist(b,e));let front=null,mv;
  if(s.length===1){const u=s[0],v=splitOff(u);if(!v)return;G.sel.push(v);if(mode==='wings')mv=[u,v];else{front=u;mv=[v];}}
  else if(mode==='wings')mv=s;else{front=s[0];mv=s.slice(1);}
@@ -842,18 +910,18 @@ function tactic(mode,e){
  if(front){front.path=[];front.target=null;front.ordered=false;front.march=false;front.bomb=null;
   if(dist(front,e)>e.r+front.r+60){front.hold=false;front.state='move';front.man={tg:e,a,pts:[{da:0,R:-10}],hold:true};}else{front.man=null;front.hold=true;front.state='idle';front.face=ang(front,e);}ack([front],'守');}
  ack(mv,mode==='wings'?'包抄':mode==='rear'?'绕后':'侧击');sfx('move');ring(e.x,e.y,ZHU);
- use('tac',mode);msg(TAC[mode]+'：'+(front?front.name+'逼近敌前镇守，':'')+(mode==='wings'?'分兵左右两翼':mode==='rear'?'后军绕出敌后':'后军迂回侧翼')+'，合击敌'+e.name);}
-function tacAt(w){const mode=G.tacMode;G.tacMode=null;const e=pickUnit(w.x,w.y,2);if(!e){msg('须点选一支看得见的敌军');return;}tactic(mode,e);}
-function merge(s){if(s.length<2){msg('合兵需选中两阵以上同种军阵');return;}const a=s[0];let done=0;
+ use('tac',mode);msg(tr(TAC[mode]+'：'+(front?front.name+'逼近敌前镇守，':'')+(mode==='wings'?'分兵左右两翼':mode==='rear'?'后军绕出敌后':'后军迂回侧翼')+'，合击敌'+e.name,TAC[mode]+': '+(front?front.name+' pins the enemy front; ':'')+(mode==='wings'?'wings swing out left and right':mode==='rear'?'the rest circle behind':'the rest wheel onto the flank')+' to strike '+e.name));}
+function tacAt(w){const mode=G.tacMode;G.tacMode=null;const e=pickUnit(w.x,w.y,2);if(!e){msg(tr('须点选一支看得见的敌军','Pick a visible enemy unit'));return;}tactic(mode,e);}
+function merge(s){if(s.length<2){msg(tr('合兵需选中两阵以上同种军阵','To merge, select two or more units of the same kind'));return;}const a=s[0];let done=0;
  for(const b of s.slice(1)){if(b.kind!==a.kind||b.general||dist(a,b)>150)continue;const t=a.n+b.n;a.morale=(a.morale*a.n+b.morale*b.n)/t;a.stam=(a.stam*a.n+b.stam*b.n)/t;a.n=t;a.nMax+=b.nMax;b.alive=false;done++;}
- if(!done)msg('需同种军阵且相距不远，方可合兵');else{G.units=G.units.filter(u=>u.alive);G.sel=[a];}}
+ if(!done)msg(tr('需同种军阵且相距不远，方可合兵','Only nearby units of the same kind can merge'));else{G.units=G.units.filter(u=>u.alive);G.sel=[a];}}
 function fireAt(w){
  G.fireMode=false;const arch=selOK().filter(u=>u.type==='nu');
- if(!arch.length){msg('火攻需选中弩手');return;}
- if(G.weather==='rain'){msg('雨中火不可发');return;}
- const i=tileIdx(w.x,w.y);if(!flam(i)){msg('此地无草木营帐可燃（林地、敌营可火攻）');return;}
+ if(!arch.length){msg(tr('火攻需选中弩手','Fire attacks need crossbowmen selected'));return;}
+ if(G.weather==='rain'){msg(tr('雨中火不可发','Fire will not catch in the rain'));return;}
+ const i=tileIdx(w.x,w.y);if(!flam(i)){msg(tr('此地无草木营帐可燃（林地、敌营可火攻）','Nothing to burn here (target forest or an enemy camp)'));return;}
  for(const u of arch){if(u.fireCd>0||Math.hypot(u.x-w.x,u.y-w.y)>rangeOf(u)*1.3)continue;u.fireCd=25;volley(u,w,true);startFire(i);use('fire');quote(G.windStr>1?'wind':'fire');return;}
- msg('弩手距离太远，或火箭尚未备妥');
+ msg(tr('弩手距离太远，或火箭尚未备妥','Crossbowmen out of range, or fire arrows not ready'));
 }
 function cmd(c){
  if(!G||G.over)return;const s=selOK();sfx('tick');
@@ -862,25 +930,25 @@ function cmd(c){
  if(c==='siege'){$('siegemenu').hidden=!$('siegemenu').hidden;$('tacmenu').hidden=true;return;}
  if(c==='tac'){if(G.tacMode){G.tacMode=null;return;}$('tacmenu').hidden=!$('tacmenu').hidden;$('siegemenu').hidden=true;return;}
  if(c==='speed'){G.speed=G.speed===1?2:1;return;}
- if(!s.length){msg('先点选我军军阵');return;}
+ if(!s.length){msg(tr('先点选我军军阵','Select one of your units first'));return;}
  if(c==='hold'){const on=!s.every(u=>u.hold);for(const u of s){u.man=null;u.hold=on;if(on){u.path=[];u.target=null;u.ordered=false;u.state='idle';u.march=false;}}}
  else if(c==='stop')for(const u of s){u.man=null;u.bomb=null;u.make=null;u.build=null;u.path=[];u.target=null;u.ordered=false;u.state='idle';u.march=false;}
  else if(c==='split')s.forEach(split);
  else if(c==='merge')merge(s);
  else if(c==='march'){const on=!s.every(u=>u.march);for(const u of s)u.march=on&&u.stam>10;if(on)quote('march');}
  else if(c==='ram'||c==='ladder'||c==='cata'){let n=0;for(const u of s){
-   if(u.type==='qi'){msg('骑兵不能携攻城器');continue;}if(c!=='cata'&&u.type==='nu'){msg('弩手只可操发石车');continue;}
+   if(u.type==='qi'){msg(tr('骑兵不能携攻城器','Cavalry cannot carry siege engines'));continue;}if(c!=='cata'&&u.type==='nu'){msg(tr('弩手只可操发石车','Crossbowmen can only work trebuchets'));continue;}
    u.hold=true;u.path=[];u.target=null;u.ordered=false;u.state='idle';u.march=false;u.build=null;u.bomb=null;u.gear=null;u.make={g:c,t:0};n++;}
-  if(n)msg('就地赶造'+GN[c]+'，约'+GT[c]+'息');}
- else if(TAC[c]){G.tacMode=c;G.fireMode=false;msg(TAC[c]+'：'+(touchy?'轻点':'点选')+'要合击的敌军');}
+  if(n)msg(tr('就地赶造'+GN[c]+'，约'+GT[c]+'息','Building a '+GN[c]+' on the spot, about '+GT[c]+' s'));}
+ else if(TAC[c]){G.tacMode=c;G.fireMode=false;msg(tr(TAC[c]+'：'+(touchy?'轻点':'点选')+'要合击的敌军',TAC[c]+': '+(touchy?'tap':'click')+' the enemy to strike'));}
  else if(c==='nogear'){for(const u of s){u.gear=null;u.make=null;u.bomb=null;}}
  else if(c==='build'){for(const u of s){const i=tileIdx(u.x,u.y),t=G.map[i];
-   if(u.type==='qi'){msg('骑兵不可筑楼');continue;}
-   if(!(t===PLAIN||t===CAMP||t===BURNT||t===HILL||t===ROAD)){msg(TNAME[t]+'之上不可筑楼');continue;}
-   if(G.tower[i]>=3){msg('此处箭楼已有三层');continue;}
+   if(u.type==='qi'){msg(tr('骑兵不可筑楼','Cavalry cannot build towers'));continue;}
+   if(!(t===PLAIN||t===CAMP||t===BURNT||t===HILL||t===ROAD)){msg(tr(TNAME[t]+'之上不可筑楼','Cannot build a tower on '+TNAME[t]));continue;}
+   if(G.tower[i]>=3){msg(tr('此处箭楼已有三层','This tower already has three storeys'));continue;}
    u.hold=true;u.path=[];u.target=null;u.ordered=false;u.state='idle';u.march=false;u.build={i,t:0};}
-  if(s.some(u=>u.build))msg('就地筑楼：每层约十四息，遇敌接战则停工');}
- else if(c==='fire'){G.fireMode=!G.fireMode;if(G.fireMode)msg('点选林地或敌营，发火箭');}
+  if(s.some(u=>u.build))msg(tr('就地筑楼：每层约十四息，遇敌接战则停工','Building a tower: about 14 s per storey; work stops in combat'));}
+ else if(c==='fire'){G.fireMode=!G.fireMode;if(G.fireMode)msg(tr('点选林地或敌营，发火箭','Click a forest or enemy camp to loose fire arrows'));}
  else if(FM[c])for(const u of s)u.fm=c;
  if(c!=='fire'&&!TAC[c])use(c);
 }
@@ -1142,8 +1210,8 @@ function render(){
   for(const u of g.units)if(u.side===1)hole(u.x,u.y,visionOf(u),.8);for(const[i]of g.fires){const p=cen(i);hole(p.x,p.y,130,.7);}
   c.drawImage(nc,0,0,W,H);}
  if(drag&&drag.mode==='box'&&drag.moved){c.strokeStyle=ZHU;c.lineWidth=1.2;c.setLineDash([5,4]);c.strokeRect(drag.sx,drag.sy,drag.x-drag.sx,drag.y-drag.sy);c.setLineDash([]);}
- if(g.tacMode){c.fillStyle=ZHU;c.font='20px '+BRUSH;c.textAlign='center';c.fillText(TAC[g.tacMode]+'：点选敌军',W/2,H-150);}
- if(g.fireMode){c.fillStyle=ZHU;c.font='20px '+BRUSH;c.textAlign='center';c.fillText('火攻：点选林地或敌营',W/2,H-150);}
+ if(g.tacMode){c.fillStyle=ZHU;c.font='20px '+BRUSH;c.textAlign='center';c.fillText(tr(TAC[g.tacMode]+'：点选敌军',TAC[g.tacMode]+': pick an enemy'),W/2,H-150);}
+ if(g.fireMode){c.fillStyle=ZHU;c.font='20px '+BRUSH;c.textAlign='center';c.fillText(tr('火攻：点选林地或敌营','Fire attack: pick a forest or enemy camp'),W/2,H-150);}
 }
 function drawMini(){const c=mctx,g=G;c.clearRect(0,0,180,114);c.drawImage(g.mini,0,0);const s=180/WW;
  for(const p of g.points){c.fillStyle=p.side===1?ZHU:QING;c.fillRect(p.x*s-2,p.y*s-5,4,7);}
@@ -1151,41 +1219,41 @@ function drawMini(){const c=mctx,g=G;c.clearRect(0,0,180,114);c.drawImage(g.mini
  c.strokeStyle=INK;c.lineWidth=1;c.strokeRect(cam.x*s,Math.max(0,cam.y)*s,W/cam.z*s,Math.min(WH,H/cam.z/K)*s);}
 
 /* ---------- 军报、兵法题句、界面 ---------- */
-function msg(t,kind){const box=$('log');if(!box)return;const d=document.createElement('div');d.className='ln '+(kind||'');d.textContent=t;box.appendChild(d);if(kind==='warn')sfx('horn');else if(kind==='good')sfx('pluck');G.msgN=(G.msgN||0)+1;
+function msg(t,kind){if(typeof window!=='undefined'&&window.__onMsg)window.__onMsg(t,kind);const box=$('log');if(!box)return;const d=document.createElement('div');d.className='ln '+(kind||'');d.textContent=t;box.appendChild(d);if(kind==='warn')sfx('horn');else if(kind==='good')sfx('pluck');G.msgN=(G.msgN||0)+1;
  setTimeout(()=>{try{d.remove();}catch(e){}},6500);}
 let qTimer=0;
 function quote(k){if(!G||G.t-(G.qt[k]||-999)<75||G.t-G.qLast<8)return;G.qt[k]=G.t;G.qLast=G.t;const q=QUOTES[k],el=$('quote');
- sfx('qin');$('qtext').textContent=q[0];$('qsrc').textContent='孙子 '+q[1];el.classList.add('on');clearTimeout(qTimer);qTimer=setTimeout(()=>el.classList.remove('on'),5200);}
+ sfx('qin');$('qtext').textContent=q[0];$('qsrc').textContent='孙子 '+q[1];try{$('qen').textContent=EN()?q[2]||'':'';}catch(e){}el.classList.add('on');clearTimeout(qTimer);qTimer=setTimeout(()=>el.classList.remove('on'),5200);}
 function setWeather(w,wind,str){G.weather=w;if(wind!==undefined)G.wind=wind;G.windStr=str||1;if(w==='rain'){quote('rain');}if(w==='fog')quote('fog');}
-const WN={sun:'晴',rain:'雨',fog:'雾'},WD=['西','西北','北','东北','东','东南','南','西南'];
+const WN_ZH={sun:'晴',rain:'雨',fog:'雾'},WN_EN={sun:'Clear',rain:'Rain',fog:'Fog'},WD_ZH=['西','西北','北','东北','东','东南','南','西南'],WD_EN=['W','NW','N','NE','E','SE','S','SW'];let WN=WN_ZH,WD=WD_ZH;
 let hudCache={};
 function setH(id,html){if(hudCache[id]!==html){hudCache[id]=html;$(id).innerHTML=html;}}
 function hud(){
  const g=G,h=hourOf(),d=dark();
- setH('clock',HN[h|0]+'时<small>'+(d>.5?'夜':d>0?'昏':'昼')+'</small>');
+ setH('clock',EN()?HN[h|0]+' '+HNP[h|0]+'<small>'+(d>.5?'night':d>0?'dusk':'day')+'</small>':HN[h|0]+'时<small>'+(d>.5?'夜':d>0?'昏':'昼')+'</small>');
  const wi=((Math.round(g.wind/(PI/4))%8)+8)%8;
- setH('wx',WN[g.weather]+'<small>'+(g.windStr>1?'大':'')+WD[wi]+'风</small>');
- let gr='';if(g.grain[1]!==null)gr+='军粮 '+Math.ceil(g.grain[1]);if(g.grain[2]!==null)gr+=(gr?'　':'')+'敌粮 '+Math.ceil(g.grain[2]);
+ setH('wx',WN[g.weather]+'<small>'+tr((g.windStr>1?'大':'')+WD[wi]+'风',(g.windStr>1?'gale ':'wind ')+'from '+WD[wi])+'</small>');
+ let gr='';if(g.grain[1]!==null)gr+=tr('军粮 ','Grain ')+Math.ceil(g.grain[1]);if(g.grain[2]!==null)gr+=(gr?'　':'')+tr('敌粮 ','Enemy grain ')+Math.ceil(g.grain[2]);
  let tot=0;for(const u of g.units)if(u.side===1&&u.type!=='liang')tot+=u.n;
- setH('force',(gr?gr+'　':'')+'我军 '+Math.round(tot/100)/10+' 千');
+ setH('force',(gr?gr+'　':'')+tr('我军 '+Math.round(tot/100)/10+' 千','Our army '+Math.round(tot/100)/10+'k'));
  setH('objlist',g.M.obj(g).map(o=>'<li class="'+(o[1]>0?'ok':o[1]<0?'bad':'')+'">'+o[0]+'</li>').join(''));
  const s=selOK();let info;
- if(!s.length)info='点选我军军阵以下令。'+(touchy?'轻点地面行军，轻点敌阵进攻。':'右键行军或进攻，拖框多选。');
- else if(s.length===1){const u=s[0],t=tAtU(u);info='<b>'+u.name+'</b>　兵 '+Math.round(u.n)+'　士气 '+Math.round(u.morale)+'　体力 '+Math.round(u.stam)+'　'+FM[u.fm].name+(UT[u.kind].weapon?'　'+UT[u.kind].weapon:'')+'　地势 '+elevOf(u)+(u.gear?'　'+GN[u.gear]:'')+(G.gap[tileIdx(u.x,u.y)]?'　<i>隘口</i>':'')+
-  (u.hidden?'　<i>伏</i>':u.hold?(u.holdT>8?'　<i>深沟高垒</i>':'　<i>镇守</i>'):'')+(u.death?'　<i>死战</i>':'')+'<br><small>'+TNAME[t]+(TNOTE[t]?'：'+TNOTE[t]:'')+(G.gap[tileIdx(u.x,u.y)]?'　隘口：每阵至多 '+frontage(G.gap[tileIdx(u.x,u.y)])+' 人接战，大军施展不开':'')+'</small>';}
- else{let n=0;for(const u of s)n+=u.n;info='<b>'+s.length+' 阵</b>　共 '+Math.round(n)+' 人';}
+ if(!s.length)info=tr('点选我军军阵以下令。'+(touchy?'轻点地面行军，轻点敌阵进攻。':'右键行军或进攻，拖框多选。'),'Select a unit to give orders. '+(touchy?'Tap ground to march, tap an enemy to attack.':'Right-click to march or attack; drag a box to select several.'));
+ else if(s.length===1){const u=s[0],t=tAtU(u);info='<b>'+u.name+'</b>　'+tr('兵 ','Men ')+Math.round(u.n)+'　'+tr('士气 ','Morale ')+Math.round(u.morale)+'　'+tr('体力 ','Stamina ')+Math.round(u.stam)+'　'+FM[u.fm].name+(UT[u.kind].weapon?'　'+UT[u.kind].weapon:'')+'　'+tr('地势 ','Height ')+elevOf(u)+(u.gear?'　'+GN[u.gear]:'')+(G.gap[tileIdx(u.x,u.y)]?'　<i>'+tr('隘口','Pass')+'</i>':'')+
+  (u.hidden?'　<i>'+tr('伏','Ambush')+'</i>':u.hold?(u.holdT>8?'　<i>'+tr('深沟高垒','Entrenched')+'</i>':'　<i>'+tr('镇守','Holding')+'</i>'):'')+(u.death?'　<i>'+tr('死战','Last stand')+'</i>':'')+'<br><small>'+TNAME[t]+(TNOTE[t]?tr('：',': ')+TNOTE[t]:'')+(G.gap[tileIdx(u.x,u.y)]?tr('　隘口：每阵至多 '+frontage(G.gap[tileIdx(u.x,u.y)])+' 人接战，大军施展不开','　Pass: at most '+frontage(G.gap[tileIdx(u.x,u.y)])+' men per unit can fight; large armies are cramped'):'')+'</small>';}
+ else{let n=0;for(const u of s)n+=u.n;info=tr('<b>'+s.length+' 阵</b>　共 '+Math.round(n)+' 人','<b>'+s.length+' units</b>　'+Math.round(n)+' men');}
  setH('selinfo',info);
  const bs=$('btns').children;for(let i=0;i<bs.length;i++){const b=bs[i],c=b.dataset.c;let on=false;
   if(s.length){if(c==='hold')on=s.every(u=>u.hold);else if(c==='build')on=s.every(u=>u.build);else if(c==='siege')on=s.every(u=>u.gear||u.make);else if(c==='march')on=s.every(u=>u.march);else if(FM[c])on=s.every(u=>u.fm===c);}
   if(c==='fire')on=!!g.fireMode;if(c==='tac')on=!!g.tacMode||(s.length>0&&s.some(u=>u.man));b.classList.toggle('on',on);}
- setH('bsnd',D.snd?'有声':'静音');ambient();
- setH('bpause',g.paused?'继续':'暂停');setH('bspeed',g.speed===2?'缓行':'快进');
+ setH('bsnd',D.snd?tr('有声','Sound'):tr('静音','Muted'));ambient();
+ setH('bpause',g.paused?tr('继续','Resume'):tr('暂停','Pause'));setH('bspeed',g.speed===2?tr('缓行','Normal'):tr('快进','Fast'));
 }
 
 /* ---------- 战役 ---------- */
 const pt=(tx,ty,side,name,time)=>({x:tx*TS,y:ty*TS,side,name,r:85,prog:0,time:time||8});
 const MISSIONS=[
-{name:'坚壁',ord:'其一',role:'赵 上将军廉颇',seed:11,hour0:5,hourLen:40,face:{1:PI,2:0},cam:[36,18],
+{en:{"name": "Hold the Walls", "ord": "I", "role": "Zhao · Supreme General Lian Po", "line": "Hold the ramparts on the Dan River, guard the northeast supply road, and bring the grain trains in.", "brief": "262 BC. The Qin general Wang He has seized Shangdang and drives on Changping. After early defeats, Lian Po has fallen back to the east bank of the Dan River and fortified his camp. Qin has marched far and wants a quick battle. Our grain comes down from the Old Pass in the northeast — when it arrives, the army's heart is steady.", "goals": ["Hold the command banner in the main camp", "Bring at least two of the three supply trains into camp", "Lian Po must survive"], "tips": ["Crossbowmen already man the towers beside the west gate: the higher they stand, the farther and harder they shoot. Order infantry to Build Tower to raise them further.", "Strike the Qin troops while they wade the fords — hit them halfway across.", "Qin cavalry raiding the grain must pass the North Pass (北隘) above the camp. Hold it with a unit of halberdiers and the enemy cannot deploy — few can beat many. The hill east of the pass is a fine hiding place for crossbowmen.", "Rain comes in the afternoon and weakens crossbows; lead with halberds and shields. After nightfall, sight drops sharply."], "win": "Lian Po stayed behind his walls and would not come out; the Qin army stalled beneath them for three years. But the King of Zhao kept rebuking him for cowardice, and in the end replaced him with Zhao Kuo."},name:'坚壁',ord:'其一',role:'赵 上将军廉颇',seed:11,hour0:5,hourLen:40,face:{1:PI,2:0},cam:[36,18],
  line:'守丹水壁垒，护住东北粮道，撑到粮队入营。',
  brief:'周赧王五十三年，秦左庶长王龁夺上党，兵锋直指长平。赵军初战不利，廉颇退守丹水东岸，筑垒坚壁。秦军远来，利在速战；我军粮草自东北故关而来，粮至则军心定。',
  goals:['守住大营帅旗','三支粮队至少两支入营','廉颇不可阵亡'],
@@ -1199,30 +1267,30 @@ const MISSIONS=[
   b.cliff([[44,0],[44,10]],1);b.blob(30,4,4.5,HILL);b.blob(31,33,4.5,HILL);b.blob(56,26,4,HILL);b.blob(47,6,3,HILL);b.blob(8,18,3,HILL);
   b.blob(28,15,3,FOREST);b.blob(30,22,3,FOREST);b.blob(10,5,3.5,FOREST);b.blob(11,33,3.5,FOREST);b.blob(56,13,3,FOREST);b.blob(14,20,2.5,MARSH);
   g.points.push(pt(43.5,19,1,'帅旗'));g.grain[1]=70;g.convArr=0;g.convLost=0;
-  g.gen[1]=spawn(1,'dun',4000,43,18,{general:true,name:'廉颇亲卫',hold:true});
+  g.gen[1]=spawn(1,'dun',4000,43,18,{general:true,name:'廉颇亲卫',nameEn:"Lian Po's Guard",hold:true});
   spawn(1,'nu',4000,39,17,{hold:true});spawn(1,'nu',4000,39,19,{hold:true});
   spawn(1,'ji',5000,34,17);spawn(1,'ji',5000,34,20);spawn(1,'dun',5000,35,18);spawn(1,'ji',4000,36,22);
   spawn(1,'qi',3000,51,13);spawn(1,'qi',3000,50,16);
   setWeather('sun',0,1);},
  events:[
-  {t:4,f:g=>msg('斥候来报：秦军前锋已至丹水西岸','warn')},
+  {t:4,f:g=>msg(tr('斥候来报：秦军前锋已至丹水西岸',"Scouts report: the Qin vanguard has reached the west bank of the Dan"),'warn')},
   {t:12,f:g=>wave(g,[['ji',5000,1,26],['dun',4000,1,28],['nu',3000,0,27]])},
-  {t:55,f:g=>{msg('秦骑自北浅滩渡河，直扑东北粮道！','warn');spawn(2,'qi',3000,1,9,{ai:aslt(53.5*TS,8*TS,{pref:'liang',aggro:300,focus:true})});}},
+  {t:55,f:g=>{msg(tr('秦骑自北浅滩渡河，直扑东北粮道！',"Qin cavalry are fording in the north, making straight for the northeast supply road!"),'warn');spawn(2,'qi',3000,1,9,{ai:aslt(53.5*TS,8*TS,{pref:'liang',aggro:300,focus:true})});}},
   {t:95,f:g=>convoy(g)},
-  {t:110,f:g=>{setWeather('rain',PI*.25,1);msg('天降大雨，弩弦受潮，道路泥泞');}},
+  {t:110,f:g=>{setWeather('rain',PI*.25,1);msg(tr('天降大雨，弩弦受潮，道路泥泞',"Heavy rain: bowstrings are damp, roads turn to mud"));}},
   {t:125,f:g=>wave(g,[['ji',5000,1,9],['ji',5000,1,11],['nu',4000,0,10],['qi',3000,2,8]])},
-  {t:178,f:g=>{setWeather('sun',0,1);msg('雨歇');}},
-  {t:185,f:g=>{msg('又一队秦骑绕向粮道','warn');spawn(2,'qi',3000,1,8,{ai:aslt(54*TS,7*TS,{pref:'liang',aggro:300,focus:true})});spawn(2,'qi',2500,1,10,{ai:aslt(52.5*TS,15*TS,{pref:'liang',aggro:300,focus:true})});}},
+  {t:178,f:g=>{setWeather('sun',0,1);msg(tr('雨歇',"The rain stops"));}},
+  {t:185,f:g=>{msg(tr('又一队秦骑绕向粮道',"Another band of Qin cavalry swings toward the supply road"),'warn');spawn(2,'qi',3000,1,8,{ai:aslt(54*TS,7*TS,{pref:'liang',aggro:300,focus:true})});spawn(2,'qi',2500,1,10,{ai:aslt(52.5*TS,15*TS,{pref:'liang',aggro:300,focus:true})});}},
   {t:215,f:g=>convoy(g)},
-  {t:235,f:g=>{msg('暮色四合，秦军倾营来攻','warn');wave(g,[['ji',6000,1,26],['dun',5000,1,28],['ji',4000,1,10],['nu',4000,0,27],['qi',3000,2,25]]);}},
-  {t:290,f:g=>{msg('夜色中又有秦骑潜向粮道','warn');spawn(2,'qi',3000,1,9,{ai:aslt(54*TS,8*TS,{pref:'liang',aggro:300,focus:true})});}},
+  {t:235,f:g=>{msg(tr('暮色四合，秦军倾营来攻',"Dusk falls; the whole Qin army attacks"),'warn');wave(g,[['ji',6000,1,26],['dun',5000,1,28],['ji',4000,1,10],['nu',4000,0,27],['qi',3000,2,25]]);}},
+  {t:290,f:g=>{msg(tr('夜色中又有秦骑潜向粮道',"Under cover of night, more Qin cavalry creep toward the supply road"),'warn');spawn(2,'qi',3000,1,9,{ai:aslt(54*TS,8*TS,{pref:'liang',aggro:300,focus:true})});}},
   {t:325,f:g=>convoy(g)}],
  tick(g,dt){g.grain[1]=Math.max(0,g.grain[1]-dt*.2*D.pace/100);
-  for(const u of g.units)if(u.type==='liang'&&u.alive&&(dist(u,g.points[0])<90||!u.path.length)){if(dist(u,g.points[0])<160){u.alive=false;g.convArr++;g.grain[1]=Math.min(100,g.grain[1]+35);g.flags.st=0;msg('粮队入营，军心大定','good');for(const o of g.units)if(o.side===1)o.morale=Math.min(100,o.morale+12);}else{u.path=findPath(u,g.points[0].x+40,g.points[0].y);}}if(g.grain[1]<=0&&!g.flags.st){g.flags.st=1;msg('军中粮尽，士卒饥疲','warn');quote('supply');}},
- obj(g){return[['守住大营帅旗',g.points[0].side===1?0:-1],['粮队入营 '+g.convArr+'/2（已失 '+g.convLost+'）',g.convArr>=2?1:g.convLost>=2?-1:0],['廉颇无恙',g.gen[1].alive?0:-1]];},
- check(g){if(!g.gen[1].alive)return['lose','廉颇阵亡，赵军无主'];if(g.points[0].side!==1)return['lose','帅旗被夺，壁垒已破'];if(g.convLost>=2)return['lose','粮道断绝，军无粮食则亡'];
+  for(const u of g.units)if(u.type==='liang'&&u.alive&&(dist(u,g.points[0])<90||!u.path.length)){if(dist(u,g.points[0])<160){u.alive=false;g.convArr++;g.grain[1]=Math.min(100,g.grain[1]+35);g.flags.st=0;msg(tr('粮队入营，军心大定',"Supply train in camp: the army takes heart"),'good');for(const o of g.units)if(o.side===1)o.morale=Math.min(100,o.morale+12);}else{u.path=findPath(u,g.points[0].x+40,g.points[0].y);}}if(g.grain[1]<=0&&!g.flags.st){g.flags.st=1;msg(tr('军中粮尽，士卒饥疲',"Our grain is gone; the soldiers grow hungry and weak"),'warn');quote('supply');}},
+ obj(g){return[[tr('守住大营帅旗','Hold the camp banner'),g.points[0].side===1?0:-1],[tr('粮队入营 '+g.convArr+'/2（已失 '+g.convLost+'）','Supply trains in '+g.convArr+'/2 (lost '+g.convLost+')'),g.convArr>=2?1:g.convLost>=2?-1:0],[tr('廉颇无恙','Lian Po unharmed'),g.gen[1].alive?0:-1]];},
+ check(g){if(!g.gen[1].alive)return['lose',tr('廉颇阵亡，赵军无主','Lian Po has fallen; the Zhao army is leaderless')];if(g.points[0].side!==1)return['lose',tr('帅旗被夺，壁垒已破','The command banner is taken; the ramparts have fallen')];if(g.convLost>=2)return['lose',tr('粮道断绝，军无粮食则亡','The supply road is cut, and an army without food is lost')];
   if(g.convArr>=2&&g.convArr+g.convLost>=3)return['win'];return null;}},
-{name:'拔垒',ord:'其二',role:'秦 左庶长王龁',seed:23,hour0:3.7,hourLen:85,paceTime:true,face:{1:0,2:PI},cam:[12,19],
+{en:{"name": "Storm the Fort", "ord": "II", "role": "Qin · Left Chief Wang He", "line": "Cross the Dan, break the gates, and take the Zhao Western Fort before sunset.", "brief": "The Zhao army stays behind its walls and ignores every challenge. Wang He resolves to storm them, beginning with the Western Fort (西垒壁) on the east bank of the Dan. The fort stands before the hills; its west gate is thick, its south gate new and weak. Crossbowmen hold the high ground at the northern ford, and the southern road runs through deep woods where an ambush may lie.", "goals": ["Take the Western Fort banner before the Hour of Xu (sunset): stand beneath it and clear out the defenders", "Wang He must survive"], "tips": ["Cross while the morning fog lingers — enemy crossbow range is greatly reduced. Towers flank the gate and attacking uphill is costly; let shieldmen soak up the arrows first.", "Have crossbowmen set fire to the dense woods on the southern road to flush out the ambush. A strong west wind rises in the afternoon and carries fire east.", "The walls are thick: have infantry build siege engines — rams for gates, ladders for walls, trebuchets to batter walls and towers from afar.", "The southern road passes the Valley Road (谷道), whose mouth is held by shieldmen; a large army cannot deploy there. Go around, or shoot down on them from high ground.", "Use Tactics: split one unit into a double envelopment, or have the front unit pin the enemy while the rest circle behind. Enemies struck in the flank or rear suffer far heavier losses and morale damage."], "win": "Qin stormed the fort, captured two Zhao commandants, broke their ranks, and took the Western Fort. The Zhao army fell back and dared not come out again."},name:'拔垒',ord:'其二',role:'秦 左庶长王龁',seed:23,hour0:3.7,hourLen:85,paceTime:true,face:{1:0,2:PI},cam:[12,19],
  line:'渡丹水，破垒门，日落前夺下赵军西垒壁。',
  brief:'赵军坚壁不出，秦军屡挑不战。王龁决意强攻，先拔丹水东岸的西垒壁。垒在山前，西门坚厚，南门新筑未固；北渡口有弩手据高而守，南路林深，恐有伏兵。',
  goals:['戌时（日落）之前夺取西垒壁帅旗：驻军旗下，肃清守军','王龁不可阵亡'],
@@ -1236,10 +1304,10 @@ const MISSIONS=[
   b.cliff([[32,28.2],[41,28.2]],1);b.cliff([[32,31.8],[42,31.8]],1);b.blob(20,7,3,HILL);b.blob(46,6,5,HILL);b.blob(57,18,3.5,HILL);b.blob(33,22,2.5,HILL);b.blob(6,5,3,HILL);
   b.blob(25,30,4.5,FOREST);b.blob(31,14,2.5,FOREST);b.blob(7,19,3,FOREST);b.blob(55,32,4,FOREST);b.blob(33,35,2.5,MARSH);
   g.points.push(pt(46.5,18.5,2,'帅旗',9));
-  g.gen[1]=spawn(1,'dun',4000,6,19,{general:true,name:'王龁亲卫'});
+  g.gen[1]=spawn(1,'dun',4000,6,19,{general:true,name:'王龁亲卫',nameEn:"Wang He's Guard"});
   spawn(1,'ji',6000,9,16);spawn(1,'ji',6000,9,22);spawn(1,'dun',5000,10,18);spawn(1,'dun',5000,10,20);
   spawn(1,'nu',4000,7,16);spawn(1,'nu',4000,7,22);spawn(1,'qi',4000,5,14);spawn(1,'qi',4000,5,24);
-  g.gen[2]=spawn(2,'dun',3500,46,19,{general:true,name:'赵都尉亲卫',ai:guard(46,19,200)});
+  g.gen[2]=spawn(2,'dun',3500,46,19,{general:true,name:'赵都尉亲卫',nameEn:"Zhao Commandant's Guard",ai:guard(46,19,200)});
   spawn(2,'ji',4000,42,18,{ai:guard(42,18,150)});
   spawn(2,'nu',3000,41,17,{ai:guard(41,17,0,{stay:true}),hold:true});spawn(2,'nu',2500,45,24,{ai:guard(45,24,0,{stay:true}),hold:true});
   spawn(2,'ji',3000,46,23,{ai:guard(46,23,150)});
@@ -1248,14 +1316,14 @@ const MISSIONS=[
   spawn(2,'qi',3000,55,10,{ai:guard(55,10,200),tag:'sortie'});spawn(2,'qi',3000,55,27,{ai:guard(55,27,200),tag:'sortie'});
   setWeather('fog',0,1);},
  events:[
-  {t:3,f:g=>msg('拂晓，晨雾弥漫，正宜渡河')},
-  {t:85,f:g=>{setWeather('sun',0,1);msg('雾散日出');}},
-  {t:170,f:g=>{setWeather('sun',0,2);msg('大西风起，火攻正当其时','good');}},
-  {t:180,f:g=>{msg('赵军骑兵出垒逆袭！','warn');const p=g.gen[1];for(const u of g.units)if(u.tag==='sortie')u.ai=aslt(p.x,p.y,{pref:'nu',aggro:300});}},
-  {t:330,f:g=>msg('日已西斜，须速破垒','warn')}],
- obj(g){const left=Math.max(0,(10-g.hour0)*g.hourLen-g.t);return[['夺取西垒壁帅旗',g.points[0].side===1?1:0],['日落之前（尚余 '+(left/g.hourLen).toFixed(1)+' 时辰）',left>0?0:-1],['王龁无恙',g.gen[1].alive?0:-1]];},
- check(g){if(!g.gen[1].alive)return['lose','王龁阵亡'];if(g.points[0].side===1||!g.units.some(u=>u.side===2))return['win'];if(g.t>(10-g.hour0)*g.hourLen)return['lose','日落垒未下，师老兵疲'];return null;}},
-{name:'合围',ord:'其三',role:'秦 武安君白起',seed:37,hour0:4,hourLen:50,face:{1:0,2:PI},cam:[16,18],
+  {t:3,f:g=>msg(tr('拂晓，晨雾弥漫，正宜渡河',"Dawn, and thick fog: a fine time to cross"))},
+  {t:85,f:g=>{setWeather('sun',0,1);msg(tr('雾散日出',"The fog lifts and the sun rises"));}},
+  {t:170,f:g=>{setWeather('sun',0,2);msg(tr('大西风起，火攻正当其时',"A strong west wind rises: the time for fire has come"),'good');}},
+  {t:180,f:g=>{msg(tr('赵军骑兵出垒逆袭！',"Zhao cavalry sally out to counterattack!"),'warn');const p=g.gen[1];for(const u of g.units)if(u.tag==='sortie')u.ai=aslt(p.x,p.y,{pref:'nu',aggro:300});}},
+  {t:330,f:g=>msg(tr('日已西斜，须速破垒',"The sun is sinking; take the fort quickly"),'warn')}],
+ obj(g){const left=Math.max(0,(10-g.hour0)*g.hourLen-g.t);return[[tr('夺取西垒壁帅旗','Take the Western Fort banner'),g.points[0].side===1?1:0],[tr('日落之前（尚余 '+(left/g.hourLen).toFixed(1)+' 时辰）','Before sunset ('+(left/g.hourLen).toFixed(1)+' double-hours left)'),left>0?0:-1],[tr('王龁无恙','Wang He unharmed'),g.gen[1].alive?0:-1]];},
+ check(g){if(!g.gen[1].alive)return['lose',tr('王龁阵亡','Wang He has fallen')];if(g.points[0].side===1||!g.units.some(u=>u.side===2))return['win'];if(g.t>(10-g.hour0)*g.hourLen)return['lose',tr('日落垒未下，师老兵疲','Sunset, and the fort still stands; the army is spent')];return null;}},
+{en:{"name": "The Encirclement", "ord": "III", "role": "Qin · Lord Wu'an, Bai Qi", "line": "Hold the Qin fort with your main force, cut the supply road with raiders, and destroy Zhao Kuo's army.", "brief": "Taken in by a Qin ruse, the King of Zhao has replaced Lian Po with Zhao Kuo, who has thrown his entire army across the Dan. The King of Qin has secretly made Bai Qi supreme commander — death to anyone who reveals it. Bai Qi feigns defeat and falls back into the Qin fort, while raiders slip around behind the Zhao army to cut its supply road.", "goals": ["Hold the Qin fort banner", "Have your raiders seize and hold the northeast Supply Road (粮道) until Zhao runs out of grain", "Kill Zhao Kuo, or force the Zhao army to break and surrender"], "tips": ["Keep the main force inside the walls, holding — let the enemy wear itself out. Crossbowmen already stand on the gate towers, shooting from height.", "Raiders lie hidden in the northern and southern woods (units holding in forest cannot be seen). Follow the mountain paths east to take the supply road; keep cavalry on the paths — forests and steep slopes cost horses.", "Once the road is cut, Zhao will turn back to fight its way out. South of the road is a pass between two hills: hold it with one unit and, however many come, only two or three thousand Zhao troops can engage at once.", "Without grain, Zhao morale falls day by day until they throw down their arms and surrender."], "win": "Cut off from grain for forty-six days, Zhao Kuo led his best troops out in a desperate fight and was shot dead by Qin archers. His army broke, and four hundred thousand men surrendered to Lord Wu'an."},name:'合围',ord:'其三',role:'秦 武安君白起',seed:37,hour0:4,hourLen:50,face:{1:0,2:PI},cam:[16,18],
  line:'正兵守秦壁，奇兵绝粮道，围歼赵括大军。',
  brief:'赵王中反间之计，以赵括代廉颇。赵括尽起大军渡丹水来攻。秦王密令白起为上将军，军中敢泄者斩。白起佯败退入秦壁，另遣奇兵绕出赵军之后，断其营垒粮道。',
  goals:['守住秦壁帅旗','奇兵夺取东北“粮道”并坚守，待赵军粮尽','斩赵括，或迫赵军溃降'],
@@ -1270,13 +1338,13 @@ const MISSIONS=[
   b.cliff([[43,7],[49,7],[51,10]],1);b.cliff([[59,11],[56,9.6],[54.4,12.6]],1.3);b.blob(20,3,4,HILL);b.blob(36,6,3,HILL);b.blob(46,10,2.5,HILL);b.blob(20,34,4,HILL);b.blob(40,32,3,HILL);b.blob(57,7,2,HILL);b.blob(57,30,3.5,HILL);
   b.blob(27,5,3.5,FOREST);b.blob(28,33,3.5,FOREST);b.blob(42,27,2.6,FOREST);b.blob(40,10,2.5,FOREST);b.blob(22,25,2.5,MARSH);
   g.points.push(pt(10,19,1,'帅旗'));g.points.push(pt(55.5,7.5,2,'粮道',12));g.grain[2]=100;
-  g.gen[1]=spawn(1,'dun',5000,9,18,{general:true,name:'白起亲卫',hold:true});
+  g.gen[1]=spawn(1,'dun',5000,9,18,{general:true,name:'白起亲卫',nameEn:"Bai Qi's Guard",hold:true});
   spawn(1,'nu',5000,13,17,{hold:true});spawn(1,'nu',5000,13,19,{hold:true});
   spawn(1,'ji',6000,17,17);spawn(1,'ji',6000,17,20);spawn(1,'dun',5000,16,18);
-  spawn(1,'qi',5000,27,6,{hold:true,holdT:10,name:'奇兵骑甲阵'});spawn(1,'ji',5000,26,6,{hold:true,holdT:10,name:'奇兵戟甲阵'});spawn(1,'nu',3000,28,5,{hold:true,holdT:10,name:'奇兵弩甲阵'});
-  spawn(1,'ji',6000,27,32,{hold:true,holdT:10,name:'奇兵戟乙阵'});spawn(1,'nu',3000,27,31,{hold:true,holdT:10,name:'奇兵弩乙阵'});spawn(1,'dun',5000,29,32,{hold:true,holdT:10,name:'奇兵盾甲阵'});spawn(1,'qi',2500,28,31,{hold:true,holdT:10,name:'奇兵骑乙阵'});
+  spawn(1,'qi',5000,27,6,{hold:true,holdT:10,name:'奇兵骑甲阵',nameEn:"Raider Cavalry A"});spawn(1,'ji',5000,26,6,{hold:true,holdT:10,name:'奇兵戟甲阵',nameEn:"Raider Halberds A"});spawn(1,'nu',3000,28,5,{hold:true,holdT:10,name:'奇兵弩甲阵',nameEn:"Raider Crossbows A"});
+  spawn(1,'ji',6000,27,32,{hold:true,holdT:10,name:'奇兵戟乙阵',nameEn:"Raider Halberds B"});spawn(1,'nu',3000,27,31,{hold:true,holdT:10,name:'奇兵弩乙阵',nameEn:"Raider Crossbows B"});spawn(1,'dun',5000,29,32,{hold:true,holdT:10,name:'奇兵盾甲阵',nameEn:"Raider Shields A"});spawn(1,'qi',2500,28,31,{hold:true,holdT:10,name:'奇兵骑乙阵',nameEn:"Raider Cavalry B"});
   const f=g.points[0];
-  g.gen[2]=spawn(2,'dun',5000,27,18,{general:true,name:'赵括亲卫',ai:guard(27,18,200)});
+  g.gen[2]=spawn(2,'dun',5000,27,18,{general:true,name:'赵括亲卫',nameEn:"Zhao Kuo's Guard",ai:guard(27,18,200)});
   spawn(2,'ji',6000,22,16,{ai:aslt(f.x,f.y),gear:D.wit>=3?'ram':null});spawn(2,'ji',6000,22,21,{ai:aslt(f.x,f.y)});spawn(2,'dun',5000,23,18,{ai:aslt(f.x,f.y)});spawn(2,'nu',4000,25,17,{ai:aslt(18*TS,18*TS)});
   for(const[t,n,x,y]of[['ji',6000,28,15],['ji',6000,28,22],['dun',5000,29,19],['nu',4000,29,16],['qi',3500,27,13],['qi',3500,27,24]])spawn(2,t,n,x,y,{ai:guard(x,y,160),tag:'second'});
   spawn(2,'ji',4000,50,19,{ai:guard(50,19,220),tag:'camp'});spawn(2,'nu',3000,50,16,{ai:guard(50,16,0,{stay:true}),hold:true});
@@ -1284,28 +1352,30 @@ const MISSIONS=[
   g.e0=0;for(const u of g.units)if(u.side===2)g.e0+=u.n;
   setWeather('sun',PI,1);},
  events:[
-  {t:3,f:g=>msg('赵括全军渡水来攻，前锋已近秦壁','warn')},
-  {t:70,f:g=>{msg('赵军后队压上','warn');const f=g.points[0];for(const u of g.units)if(u.tag==='second'){u.ai=aslt(f.x,f.y,u.type==='qi'?{pref:'nu'}:null);u.hold=false;}}},
-  {t:260,f:g=>{setWeather('fog',PI,1);msg('暮霭沉沉，夜雾四起');}},
+  {t:3,f:g=>msg(tr('赵括全军渡水来攻，前锋已近秦壁',"Zhao Kuo's whole army fords the river; the vanguard nears the Qin fort"),'warn')},
+  {t:70,f:g=>{msg(tr('赵军后队压上',"The Zhao rear echelon presses forward"),'warn');const f=g.points[0];for(const u of g.units)if(u.tag==='second'){u.ai=aslt(f.x,f.y,u.type==='qi'?{pref:'nu'}:null);u.hold=false;}}},
+  {t:260,f:g=>{setWeather('fog',PI,1);msg(tr('暮霭沉沉，夜雾四起',"Evening haze thickens into night fog"));}},
   {t:400,f:g=>{setWeather('sun',PI,1);}}],
  tick(g,dt){const p=g.points[1];
   if(p.side===1)g.grain[2]=Math.max(0,g.grain[2]-dt*.7*100/D.pace);else g.grain[2]=Math.min(100,g.grain[2]+dt*.08);
-  if(g.grain[2]<45&&!g.flags.brk){g.flags.brk=1;msg('赵军乏粮，赵括亲率锐卒回师突围！','warn');quote('supply');
+  if(g.grain[2]<45&&!g.flags.brk){g.flags.brk=1;msg(tr('赵军乏粮，赵括亲率锐卒回师突围！',"Zhao is short of grain! Zhao Kuo leads his best troops back to break out!"),'warn');quote('supply');
    for(const u of g.units)if(u.side===2&&u.ai&&!u.ai.stay){u.ai=aslt(p.x,p.y);u.hold=false;u.path=[];}}},
  onPoint(g,p){if(p.name!=='粮道')return;
-  if(p.side===1){msg('奇兵已断赵军粮道！','good');quote('qi');for(const u of g.units)if(u.side===2&&(u.tag==='camp'||(u.type==='qi'&&u.ai&&u.ai.mode))){u.ai=aslt(p.x,p.y);u.hold=false;u.path=[];}}
-  else msg('赵军夺回粮道，粮草复通','warn');},
+  if(p.side===1){msg(tr('奇兵已断赵军粮道！',"Our raiders have cut the Zhao supply road!"),'good');quote('qi');for(const u of g.units)if(u.side===2&&(u.tag==='camp'||(u.type==='qi'&&u.ai&&u.ai.mode))){u.ai=aslt(p.x,p.y);u.hold=false;u.path=[];}}
+  else msg(tr('赵军夺回粮道，粮草复通',"Zhao retakes the supply road; grain flows again"),'warn');},
  obj(g){let e=0;for(const u of g.units)if(u.side===2)e+=u.n;
-  return[['守住秦壁帅旗',g.points[0].side===1?0:-1],['断赵军粮道（敌粮 '+Math.ceil(g.grain[2])+'）',g.points[1].side===1?1:0],['斩赵括或迫其溃降（敌尚存 '+Math.round(e/g.e0*100)+'%）',g.gen[2].alive?0:1],['白起无恙',g.gen[1].alive?0:-1]];},
- check(g){if(!g.gen[1].alive)return['lose','白起阵亡'];if(g.points[0].side!==1)return['lose','秦壁失守'];
+  return[[tr('守住秦壁帅旗','Hold the Qin fort banner'),g.points[0].side===1?0:-1],[tr('断赵军粮道（敌粮 '+Math.ceil(g.grain[2])+'）','Cut the Zhao supply road (enemy grain '+Math.ceil(g.grain[2])+')'),g.points[1].side===1?1:0],[tr('斩赵括或迫其溃降（敌尚存 '+Math.round(e/g.e0*100)+'%）','Kill Zhao Kuo or force a surrender (enemy at '+Math.round(e/g.e0*100)+'%)'),g.gen[2].alive?0:1],[tr('白起无恙','Bai Qi unharmed'),g.gen[1].alive?0:-1]];},
+ check(g){if(!g.gen[1].alive)return['lose',tr('白起阵亡','Bai Qi has fallen')];if(g.points[0].side!==1)return['lose',tr('秦壁失守','The Qin fort has fallen')];
   let e=0;for(const u of g.units)if(u.side===2)e+=u.n;if(!g.gen[2].alive||e<g.e0*.2)return['win'];return null;}}
 ];
-function wave(g,list){sfx('drums');const f=g.points[0];let ram=D.wit>=3;for(const[t,n,x,y]of list)spawn(2,t,n,x,y,{gear:ram&&t==='ji'?(ram=false,'ram'):null,ai:aslt(f.x,f.y,t==='qi'?{pref:'nu'}:null),home:{x:60,y:(y+.5)*TS}});msg('秦军渡水来攻','warn');}
-function convoy(g){const u=spawn(1,'liang',1800,58,3,{auto:true,name:'粮队',morale:100});const f=g.points[0];u.path=findPath(u,f.x+40,f.y);u.state='move';msg('粮队已过故关，正沿东北大道入营','good');}
+function wave(g,list){sfx('drums');const f=g.points[0];let ram=D.wit>=3;for(const[t,n,x,y]of list)spawn(2,t,n,x,y,{gear:ram&&t==='ji'?(ram=false,'ram'):null,ai:aslt(f.x,f.y,t==='qi'?{pref:'nu'}:null),home:{x:60,y:(y+.5)*TS}});msg(tr('秦军渡水来攻',"Qin troops ford the river to attack"),'warn');}
+function convoy(g){const u=spawn(1,'liang',1800,58,3,{auto:true,name:'粮队',nameEn:'Supply Train',morale:100});const f=g.points[0];u.path=findPath(u,f.x+40,f.y);u.state='move';msg(tr('粮队已过故关，正沿东北大道入营',"A supply train has passed the Old Pass and is coming down the northeast road"),'good');}
 
 /* ---------- 流程 ---------- */
 let done=[];try{done=JSON.parse(localStorage.getItem('changping-done')||'[]');}catch(e){}
-let fromEd=false;const exitName=()=>fromEd?'回编辑器':'回到卷首';
+let fromEd=false;const exitName=()=>fromEd?tr('回编辑器','Back to Editor'):tr('回到卷首','Back to Title');
+const mt=(M,k)=>EN()&&M.en&&M.en[k]!=null&&M.en[k]!==''?M.en[k]:M[k];
+const briefHtml=M=>'<p class="ord">'+mt(M,'ord')+'</p><h2>'+mt(M,'name')+'</h2><p class="role">'+mt(M,'role')+'</p><p>'+mt(M,'brief')+'</p><h3>'+tr('军令','Orders')+'</h3><ul>'+mt(M,'goals').map(x=>'<li>'+x+'</li>').join('')+'</ul><h3>'+tr('帐下献策','Counsel from Your Officers')+'</h3><ul>'+mt(M,'tips').map(x=>'<li>'+x+'</li>').join('')+'</ul>';
 function exitGame(){if(!fromEd)return toTitle();closeModal();running=false;G=null;ambient();$('game').hidden=true;$('editor').hidden=false;edResize();}
 let running=false,last=0,hudT=0,miniT=0,touchy=false,drag=null;
 const keys={};
@@ -1324,28 +1394,28 @@ function newGame(mi){
 function showBrief(mi,ed){
  fromEd=!!ed;newGame(mi);const M=G.M;$('title').hidden=true;$('game').hidden=false;resize();$('log').innerHTML='';
  cam.x=M.cam[0]*TS-W/cam.z/2;cam.y=M.cam[1]*TS-H/cam.z/K/2;
- modal('<p class="ord">'+M.ord+'</p><h2>'+M.name+'</h2><p class="role">'+M.role+'</p><p>'+M.brief+'</p><h3>军令</h3><ul>'+M.goals.map(x=>'<li>'+x+'</li>').join('')+'</ul><h3>帐下献策</h3><ul>'+M.tips.map(x=>'<li>'+x+'</li>').join('')+'</ul><p class="role">难度：'+diffLine()+'。可回卷首调整。</p>',
-  [['开战',()=>{closeModal();G.paused=false;sfx('drums');}],['兵法要览',()=>showCodex(()=>showBriefAgain())],[exitName(),exitGame]]);
+ modal(briefHtml(M)+'<p class="role">'+tr('难度：'+diffLine()+'。可回卷首调整。','Difficulty: '+diffLine()+'. Adjust it on the title screen.')+'</p>',
+  [[tr('开战','To Battle'),()=>{closeModal();G.paused=false;sfx('drums');}],[tr('兵法要览','Art of War Primer'),()=>showCodex(()=>showBriefAgain())],[exitName(),exitGame]]);
  running=true;hud();
 }
-function showBriefAgain(){const M=G.M;modal('<p class="ord">'+M.ord+'</p><h2>'+M.name+'</h2><p class="role">'+M.role+'</p><p>'+M.brief+'</p><h3>军令</h3><ul>'+M.goals.map(x=>'<li>'+x+'</li>').join('')+'</ul><h3>帐下献策</h3><ul>'+M.tips.map(x=>'<li>'+x+'</li>').join('')+'</ul>',
-  [[G.t>0?'继续':'开战',()=>{closeModal();G.paused=false;}],[exitName(),exitGame]]);}
+function showBriefAgain(){const M=G.M;modal(briefHtml(M),
+  [[G.t>0?tr('继续','Resume'):tr('开战','To Battle'),()=>{closeModal();G.paused=false;}],[exitName(),exitGame]]);}
 function endGame(r){
  if(G.over)return;G.over=r;const win=r[0]==='win',M=G.M;sfx(win?'win':'lose');
  if(win&&G.mi>=0&&!done.includes(G.mi)){done.push(G.mi);try{localStorage.setItem('changping-done',JSON.stringify(done));}catch(e){}}
- const st='歼敌 '+Math.round(G.stats.kill)+(G.stats.surr?'　受降 '+Math.round(G.stats.surr):'')+'　折损 '+Math.round(G.stats.loss)+'　历时 '+(G.t/G.hourLen).toFixed(1)+' 时辰';
- const btn=[];if(win&&G.mi>=0&&G.mi<MISSIONS.length-1)btn.push(['下一战',()=>showBrief(G.mi+1)]);btn.push(['再战此役',()=>showBrief(G.mi>=0?G.mi:mkMission(G.M.data),fromEd)]);btn.push([exitName(),exitGame]);
- modal('<p class="seal '+(win?'':'lost')+'">'+(win?'捷':'败')+'</p><h2>'+M.name+(win?'　大捷':'　兵败')+'</h2><p>'+(win?M.win:r[1]+'。')+'</p><p class="role">'+st+'</p>',btn);
+ const st=tr('歼敌 ','Enemy slain ')+Math.round(G.stats.kill)+(G.stats.surr?tr('　受降 ','　Surrendered ')+Math.round(G.stats.surr):'')+tr('　折损 ','　Our losses ')+Math.round(G.stats.loss)+tr('　历时 ','　Duration ')+(G.t/G.hourLen).toFixed(1)+tr(' 时辰',' double-hours');
+ const btn=[];if(win&&G.mi>=0&&G.mi<MISSIONS.length-1)btn.push([tr('下一战','Next Battle'),()=>showBrief(G.mi+1)]);btn.push([tr('再战此役','Fight Again'),()=>showBrief(G.mi>=0?G.mi:mkMission(G.M.data),fromEd)]);btn.push([exitName(),exitGame]);
+ modal('<p class="seal '+(win?'':'lost')+'">'+(win?'捷':'败')+'</p><h2>'+mt(M,'name')+(win?tr('　大捷',' — Victory'):tr('　兵败',' — Defeat'))+'</h2><p>'+(win?mt(M,'win'):r[1]+tr('。','.'))+'</p><p class="role">'+st+'</p>',btn);
 }
 function toTitle(){fromEd=false;closeModal();running=false;G=null;ambient();$('game').hidden=true;$('editor').hidden=true;$('title').hidden=false;buildTitle();}
 function modal(html,btns){const m=$('modal');$('mbody').innerHTML=html;const f=$('mbtns');f.innerHTML='';
  btns.forEach(([t,fn],i)=>{const b=document.createElement('button');b.textContent=t;if(i===0)b.className='pri';b.addEventListener('click',fn);f.appendChild(b);});m.hidden=false;if(G)G.wasPaused=G.paused,G.paused=true;}
 function closeModal(){$('modal').hidden=true;}
-function showCodex(back){modal($('codex').innerHTML,[['合上兵书',()=>{closeModal();if(back)back();else if(G&&!G.over)G.paused=G.wasP2;}]]);}
+function showCodex(back){modal($(EN()?'codex-en':'codex').innerHTML,[[tr('合上兵书','Close the Book'),()=>{closeModal();if(back)back();else if(G&&!G.over)G.paused=G.wasP2;}]]);}
 function buildTitle(){const box=$('mlist');box.innerHTML='';
- const add=(M,ord,won,play,edit)=>{const li=document.createElement('li');li.innerHTML='<span class="ord">'+ord+'</span><div><h3>'+M.name+(won?'<em class="seal sm">捷</em>':'')+'</h3><p class="role">'+M.role+'</p><p>'+M.line+'</p></div>';
-  const sp=document.createElement('span');sp.className='acts';const b=document.createElement('button');b.textContent='入阵';b.className='pri';b.addEventListener('click',play);sp.appendChild(b);
-  if(edit){const e=document.createElement('button');e.textContent='编辑';e.addEventListener('click',edit);sp.appendChild(e);}li.appendChild(sp);box.appendChild(li);};
+ const add=(M,ord,won,play,edit)=>{const li=document.createElement('li');li.innerHTML='<span class="ord">'+mt(M,'ord')+'</span><div><h3>'+mt(M,'name')+(EN()?' <small lang="zh">'+M.name+'</small>':'')+(won?'<em class="seal sm">捷</em>':'')+'</h3><p class="role">'+mt(M,'role')+'</p><p>'+mt(M,'line')+'</p></div>';
+  const sp=document.createElement('span');sp.className='acts';const b=document.createElement('button');b.textContent=tr('入阵','Play');b.className='pri';b.addEventListener('click',play);sp.appendChild(b);
+  if(edit){const e=document.createElement('button');e.textContent=tr('编辑','Edit');e.addEventListener('click',edit);sp.appendChild(e);}li.appendChild(sp);box.appendChild(li);};
  const embedRow=L=>{const M=mkMission(L);add(M,M.ord,false,()=>showBrief(mkMission(L)),()=>openEditor(Object.assign({},L,{id:'lv'+Date.now().toString(36),name:(L.name||'')+'（改）'})));};
  EMBED.filter(L=>L&&L.first).forEach(embedRow);
  MISSIONS.forEach((M,i)=>add(M,M.ord,done.includes(i),()=>showBrief(i)));
@@ -1353,7 +1423,7 @@ function buildTitle(){const box=$('mlist');box.innerHTML='';
  LOCAL.forEach((L,i)=>{const M=mkMission(L);add(M,M.ord,false,()=>showBrief(mkMission(L)),()=>openEditor(L,i));});
  syncDiff();}
 function syncDiff(){for(const k of['force','might','wit','pace','vol']){$('d_'+k).value=D[k];}
- $('o_force').textContent=D.force+'%';$('o_might').textContent=D.might+'%';$('o_wit').textContent=WIT[D.wit-1];$('o_pace').textContent=paceName(D.pace);$('o_vol').textContent=D.snd?D.vol+'%':'静音';
+ $('o_force').textContent=D.force+'%';$('o_might').textContent=D.might+'%';$('o_wit').textContent=WIT[D.wit-1];$('o_pace').textContent=paceName(D.pace);$('o_vol').textContent=D.snd?D.vol+'%':tr('静音','muted');
  const bs=$('presets').children;for(let i=0;i<bs.length;i++){const p=PRESET[i];bs[i].classList.toggle('on',p.force===D.force&&p.might===D.might&&p.wit===D.wit&&p.pace===D.pace);}}
 
 function resize(){if(!cvEl)return;const r=cvEl.getBoundingClientRect();W=Math.max(200,r.width);H=Math.max(200,r.height);dpr=Math.min(2,window.devicePixelRatio||1);
@@ -1368,12 +1438,23 @@ function frame(ts){
 }
 const toWorld=(sx,sy)=>{const x=cl(cam.x+sx/cam.z,0,WW-1),v=cam.y*K+sy/cam.z;let y=v/K;for(let i=0;i<4;i++)y=cl((v+hpx(x,cl(y,0,WH-1)))/K,0,WH-1);return{x,y};};
 const scrOf=u=>({x:(u.x-cam.x)*cam.z,y:((u.y-cam.y)*K-hpx(u.x,u.y))*cam.z});
+function applyLang(){const e=EN();
+ for(let i=0;i<TNAME.length;i++){TNAME[i]=e?TNAME_EN[i]:TNAME_ZH[i];TNOTE[i]=e?TNOTE_EN[i]:TNOTE_ZH[i];}
+ Object.assign(GN,e?GN_EN:GN_ZH);Object.assign(TAC,e?TAC_EN:TAC_ZH);
+ for(const k in UT_ZH)if(UT[k])UT[k].name=e?UT_EN[k]:UT_ZH[k];for(const k in FM)FM[k].name=e?FM_EN[k]:FM_ZH[k];
+ BRUSH=e?'"Cormorant Garamond",'+BRUSH_ZH:BRUSH_ZH;WIT=e?WIT_EN:WIT_ZH;WN=e?WN_EN:WN_ZH;WD=e?WD_EN:WD_ZH;GAN=e?'ABCDEFGHIJ':GAN_ZH;
+ try{document.documentElement.lang=e?'en':'zh-CN';document.title=e?'Changping · Ink-Wash War Game':'长平之战 水墨兵戏';
+  for(const el of document.querySelectorAll('[data-en]')){if(el.dataset.zh===undefined)el.dataset.zh=el.innerHTML;el.innerHTML=e?el.dataset.en:el.dataset.zh;}
+  for(const el of document.querySelectorAll('[data-en-label]')){if(el.dataset.zhLabel===undefined)el.dataset.zhLabel=el.getAttribute('aria-label')||'';el.setAttribute('aria-label',e?el.dataset.enLabel:el.dataset.zhLabel);}
+  const b=$('blang');b.textContent=e?'中文':'English';b.lang=e?'zh':'en';}catch(_){}}
+function setLang(l){LANG=l==='en'?'en':'zh';try{localStorage.setItem('changping-lang',LANG);}catch(e){}applyLang();buildTitle();}
 function init(){
  try{touchy=window.matchMedia('(hover:none)').matches;}catch(e){}
  cvEl=$('cv');ctx=cvEl.getContext('2d');nc=mkCanvas(10,10);nctx=nc.getContext('2d');miniEl=$('mini');mctx=miniEl.getContext('2d');
  loadLevels();try{edInit();}catch(e){}
- buildTitle();window.addEventListener('resize',resize);
+ applyLang();buildTitle();window.addEventListener('resize',resize);
  try{$('bedit').addEventListener('click',()=>openEditor());}catch(e){}
+ try{document.fonts.load('600 30px "Cormorant Garamond"','Fire Hold');}catch(e){}
  try{document.fonts.load('30px "Ma Shan Zheng"','长平丹水故关秦壁赵垒营西粮道戟盾弩骑帅将守伏溃死疾火攻');}catch(e){}
  const ptrs=new Map(),pos=e=>{const r=cvEl.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};};
  const pd=()=>{const a=[...ptrs.values()];return Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);};
@@ -1407,8 +1488,9 @@ function init(){
  $('siegemenu').addEventListener('click',e=>{const b=e.target.closest('button');if(b){cmd(b.dataset.c);$('siegemenu').hidden=true;hudT=0;}});
  $('bpause').addEventListener('click',()=>{cmd('pause');hudT=0;});$('bspeed').addEventListener('click',()=>{cmd('speed');hudT=0;});
  $('bhelp').addEventListener('click',()=>{if(!G)return;G.wasP2=G.paused;showCodex();});
- $('bquit').addEventListener('click',()=>{if(!G)return;const was=G.paused;modal('<h2>收兵</h2><p>此役尚未分胜负，确定离开？</p>',[['继续作战',()=>{closeModal();G.paused=was;}],['军令与献策',showBriefAgain],[exitName(),exitGame]]);});
+ $('bquit').addEventListener('click',()=>{if(!G)return;const was=G.paused;modal(tr('<h2>收兵</h2><p>此役尚未分胜负，确定离开？</p>','<h2>Withdraw</h2><p>The battle is not yet decided. Leave the field?</p>'),[[tr('继续作战','Keep Fighting'),()=>{closeModal();G.paused=was;}],[tr('军令与献策','Orders & Counsel'),showBriefAgain],[exitName(),exitGame]]);});
  $('bcodex').addEventListener('click',()=>showCodex());
+ try{$('blang').addEventListener('click',()=>{setLang(EN()?'zh':'en');sfx('tick');});}catch(e){}
  for(const k of['force','might','wit','pace','vol'])$('d_'+k).addEventListener('input',e=>{D[k]=+e.target.value;if(k==='vol'){D.snd=D.vol>0;audio();if(SND.master)SND.master.gain.value=D.vol/100;sfx('pluck');}saveD();syncDiff();});
  $('presets').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;Object.assign(D,PRESET[+b.dataset.p]);saveD();syncDiff();sfx('tick');});
  $('bsnd').addEventListener('click',()=>{D.snd=!D.snd;if(D.snd&&D.vol===0)D.vol=70;saveD();if(D.snd){audio();if(SND.master)SND.master.gain.value=D.vol/100;sfx('pluck');}else ambient();hudT=0;});
@@ -1482,6 +1564,11 @@ const FORMAT_DOC=`【怎样加一关】
    // 内置音效名：clash arrow thud crash fall fire gong horn pluck qin tick move drum drums hail hoof win lose
 }
 
+【英文版】卷首可切换中文 / English。英文模式下读这些字段，缺省时沿用中文：
+ "en":{"name":"…","ord":"…","role":"…","line":"…","brief":"…","goals":["…"],"tips":["…"],"winText":"…"}
+ 事件与触发器动作：text_en；lesson 另有 title_en、ok_en；军阵与粮队：name_en；unitTypes：name_en、weapon_en；
+ objectives 与 lose：text_en。地图题字、据点名、旗上字、孙子语录、士卒呼喝始终用中文；英文里提到据点可括注中文，如 Supply Corridor (甬道)。
+
 【条件】
 {"type":"point","i":0,"side":1}        据点 i 归 side 所有
 {"type":"dead","side":2}               该方主将已亡（或已降）
@@ -1511,7 +1598,7 @@ const saveLocal=()=>{try{localStorage.setItem('changping-levels',JSON.stringify(
 let CUSTOM_KINDS=[],CT_ADDED=[];
 function installTypes(def){for(const k of CUSTOM_KINDS){delete UT[k];delete CT[k];}for(const[a,b]of CT_ADDED)if(CT[a])delete CT[a][b];CUSTOM_KINDS=[];CT_ADDED=[];
  for(const k in def||{}){if(UT[k])continue;const d=def[k]||{},base=UT[d.base]&&!UT[d.base].base&&d.base!=='liang'?d.base:'ji';
-  UT[k]=Object.assign({},UT[base],d,{base,name:esc(d.name||k),ch:String(d.ch||UT[base].ch).slice(0,1),weapon:d.weapon?esc(d.weapon):''});CT[k]=Object.assign({},CT[base],d.counters);CUSTOM_KINDS.push(k);}
+  UT[k]=Object.assign({},UT[base],d,{base,name:esc(tr(d.name||k,d.name_en)),ch:String(d.ch||UT[base].ch).slice(0,1),weapon:d.weapon?esc(tr(d.weapon,d.weapon_en)):''});CT[k]=Object.assign({},CT[base],d.counters);CUSTOM_KINDS.push(k);}
  for(const k of CUSTOM_KINDS){const wk=(def[k]||{}).weakTo||{};for(const o in wk)if(CT[o]&&CT[o][k]===undefined){CT[o][k]=wk[o];CT_ADDED.push([o,k]);}}}
 
 function applyTerrain(g,L,b){
@@ -1526,23 +1613,24 @@ function aiOf(g,a,tx,ty){if(!a)return null;
   else{const p=g.points.find(p=>p.side===1)||g.gen[1]||{x:WW/2,y:WH/2};gx=p.x;gy=p.y;}
   return aslt(gx,gy,{pref:a.pref||undefined,focus:!!a.focus,aggro:a.aggro});}
  const o={pref:a.pref||undefined};if(a.mode==='stay')o.stay=true;return guard(a.post?a.post[0]:tx,a.post?a.post[1]:ty,a.leash||220,o);}
-function mkUnit(g,s){const side=s.side===1?1:2,o={};if(s.name)o.name=esc(s.name);if(s.general)o.general=true;if(s.fm&&FM[s.fm])o.fm=s.fm;if(s.tag)o.tag=String(s.tag);if(s.gear&&GN[s.gear])o.gear=s.gear;
+function mkUnit(g,s){const side=s.side===1?1:2,o={};if(s.name)o.name=esc(s.name);if(s.name_en)o.nameEn=esc(s.name_en);if(s.general)o.general=true;if(s.fm&&FM[s.fm])o.fm=s.fm;if(s.tag)o.tag=String(s.tag);if(s.gear&&GN[s.gear])o.gear=s.gear;
  if(s.hold||s.ambush||(s.ai&&s.ai.mode==='stay'))o.hold=true;if(s.ambush)o.holdT=10;if(typeof s.face==='number')o.face=s.face;
  const x=ci(s.x,0,MW-1),y=ci(s.y,0,MH-1);if(side===2)o.ai=aiOf(g,s.ai||{mode:'guard'},x,y);
  const type=UT[s.type]&&s.type!=='liang'?s.type:'ji',u=spawn(side,type,cl(Number(s.n)||3000,300,30000),x,y,o);if(u.general)g.gen[side]=u;return u;}
-function runAct(g,a){if(!a)return;switch(a.do){
- case'msg':msg(a.text||'',a.kind);break;
- case'weather':setWeather(a.type||'sun',typeof a.wind==='number'?a.wind:g.wind,a.str||1);if(a.text)msg(a.text);break;
- case'spawn':{let foe=false;for(const s of a.units||[]){const u=mkUnit(g,s);g.s0[u.side]+=u.n;if(u.side===2)foe=true;}if(foe)sfx('drums');if(a.text)msg(a.text,a.kind||(foe?'warn':'good'));break;}
- case'convoy':{const f=a.from||[58,3],u=spawn(1,'liang',a.n||1800,ci(f[0],0,MW-1),ci(f[1],0,MH-1),{auto:true,name:esc(a.name||'粮队'),morale:100});u.dest=a.to|0;u.gain=a.gain===undefined?35:a.gain;
-  const p=g.points[u.dest]||g.points[0];if(p){u.path=findPath(u,p.x+40,p.y);u.state='move';}msg(a.text||'粮队已上路','good');break;}
- case'retask':for(const u of g.units)if(u.side===2&&u.tag===a.tag){u.ai=aiOf(g,a.ai||{mode:'assault'},u.x/TS|0,u.y/TS|0);u.hold=false;u.path=[];}if(a.text)msg(a.text,a.kind||'warn');break;
+const lt=(a,k)=>a[k+'_en']!=null&&EN()?a[k+'_en']:a[k];
+function runAct(g,a){if(!a)return;const txt=lt(a,'text');switch(a.do){
+ case'msg':msg(txt||'',a.kind);break;
+ case'weather':setWeather(a.type||'sun',typeof a.wind==='number'?a.wind:g.wind,a.str||1);if(txt)msg(txt);break;
+ case'spawn':{let foe=false;for(const s of a.units||[]){const u=mkUnit(g,s);g.s0[u.side]+=u.n;if(u.side===2)foe=true;}if(foe)sfx('drums');if(txt)msg(txt,a.kind||(foe?'warn':'good'));break;}
+ case'convoy':{const f=a.from||[58,3],u=spawn(1,'liang',a.n||1800,ci(f[0],0,MW-1),ci(f[1],0,MH-1),{auto:true,name:esc(lt(a,'name')||tr('粮队','Supply Train')),morale:100});u.dest=a.to|0;u.gain=a.gain===undefined?35:a.gain;
+  const p=g.points[u.dest]||g.points[0];if(p){u.path=findPath(u,p.x+40,p.y);u.state='move';}msg(txt||tr('粮队已上路','A supply train is on the road'),'good');break;}
+ case'retask':for(const u of g.units)if(u.side===2&&u.tag===a.tag){u.ai=aiOf(g,a.ai||{mode:'assault'},u.x/TS|0,u.y/TS|0);u.hold=false;u.path=[];}if(txt)msg(txt,a.kind||'warn');break;
  case'grain':{const s=a.side===2?2:1;if(a.set!==undefined)g.grain[s]=a.set;if(a.add)g.grain[s]=cl((g.grain[s]||0)+a.add,0,100);break;}
  case'sfx':sfx(String(a.name));break;
  case'flag':g.flags['f_'+String(a.name||'')]=1;break;
- case'lesson':{const pv=g.paused;modal((a.title?'<p class="ord">教示</p><h2>'+esc(a.title)+'</h2>':'')+String(a.text||'').split('\n').map(x=>'<p>'+esc(x)+'</p>').join(''),[[esc(a.ok||'领命'),()=>{closeModal();if(G===g)g.paused=pv;}]]);break;}
+ case'lesson':{const pv=g.paused,ti=lt(a,'title');modal((ti?'<p class="ord">'+tr('教示','Lesson')+'</p><h2>'+esc(ti)+'</h2>':'')+String(txt||'').split('\n').map(x=>'<p>'+esc(x)+'</p>').join(''),[[esc(lt(a,'ok')||tr('领命','Understood')),()=>{closeModal();if(G===g)g.paused=pv;}]]);break;}
  case'win':g.flags.forceWin=1;break;
- case'lose':g.flags.forceLose=esc(a.text||'兵败');break;}}
+ case'lose':g.flags.forceLose=esc(txt||tr('兵败','Defeated'));break;}}
 function strength(g,side){let n=0;for(const u of g.units)if(u.side===side&&u.type!=='liang')n+=u.n;return n;}
 function cond(g,c){if(!c)return false;const s=c.side===1?1:2;switch(c.type){
  case'point':return !!g.points[c.i|0]&&g.points[c.i|0].side===(c.side===2?2:1);
@@ -1568,6 +1656,8 @@ function mkMission(L){
  const M={data:L,name:esc(L.name||'无名之战'),ord:esc(L.ord||'自拟'),role:esc(L.role||''),seed:L.seed||7,hour0:typeof L.hour0==='number'?L.hour0:5,hourLen:L.hourLen>5?L.hourLen:50,paceTime:!!L.paceTime,
   face:{1:Number((L.face||{})[1])||0,2:(L.face||{})[2]===undefined?PI:Number(L.face[2])||0},cam:Array.isArray(L.cam)&&L.cam.length>=2?L.cam:[30,19],line:esc(L.line||''),brief:esc(L.brief||''),goals:lines(L.goals),tips:lines(L.tips),
   labels:(L.labels||[]).filter(l=>l&&l.t).map(l=>({t:String(l.t),x:Number(l.x)||0,y:Number(l.y)||0,s:cl(Number(l.s)||26,12,60)})),win:esc(L.winText||'此战告捷。')};
+ {const e=L.en&&typeof L.en==='object'?L.en:{};M.en={name:esc(e.name||''),ord:esc(e.ord||''),role:esc(e.role||''),line:esc(e.line||''),brief:esc(e.brief||''),goals:Array.isArray(e.goals)&&e.goals.length?lines(e.goals):null,tips:Array.isArray(e.tips)&&e.tips.length?lines(e.tips):null,win:esc(e.winText||'')};
+  if(!M.en.name)M.en.name=M.name;if(!M.en.ord)M.en.ord=L.ord?M.ord:'Custom';if(!M.en.win)M.en.win=L.winText?M.win:'Victory.';}
  M.setup=g=>{const b=build(g);g.tilePaint=!!L.rows;g.convArr=0;g.convLost=0;applyTerrain(g,L,b);
   for(const f of L.forts||[]){const x0=ci(Math.min(f.x0,f.x1),0,MW-3),y0=ci(Math.min(f.y0,f.y1),0,MH-3),x1=ci(Math.max(f.x0,f.x1),x0+2,MW-1),y1=ci(Math.max(f.y0,f.y1),y0+2,MH-1);
    b.fort(x0,y0,x1,y1,f.side===1?1:2,(f.gates||[]).filter(q=>{const x=q[0],y=q[1];return x>=x0&&x<=x1&&y>=y0&&y<=y1&&((x===x0||x===x1)!==(y===y0||y===y1));}).map(q=>[q[0],q[1],cl(Number(q[2])||1500,100,9000)]));}
@@ -1581,14 +1671,14 @@ function mkMission(L){
   for(const r of L.grain||[]){const s=r.side===2?2:1,k=s===1?D.pace/100:100/D.pace;if(g.grain[s]===null)continue;
    const cut=r.cutBy===undefined||r.cutBy===null||(g.points[r.cutBy]&&g.points[r.cutBy].side!==s);
    if(cut)g.grain[s]=Math.max(0,g.grain[s]-dt*(r.drain||0)*k);else g.grain[s]=Math.min(100,g.grain[s]+dt*(r.regen||0));
-   if(g.grain[s]<=0){if(!g.flags['st'+s]){g.flags['st'+s]=1;msg(s===1?'军中粮尽，士卒饥疲':'敌军粮尽，军心动摇',s===1?'warn':'good');quote('supply');}}else g.flags['st'+s]=0;}
+   if(g.grain[s]<=0){if(!g.flags['st'+s]){g.flags['st'+s]=1;msg(s===1?tr('军中粮尽，士卒饥疲','Our grain is gone; the soldiers grow hungry and weak'):tr('敌军粮尽，军心动摇','The enemy is out of grain; their resolve wavers'),s===1?'warn':'good');quote('supply');}}else g.flags['st'+s]=0;}
   for(const u of g.units)if(u.type==='liang'&&u.alive&&u.dest!==undefined){const p=g.points[u.dest]||g.points[0];if(!p)continue;
-   if(dist(u,p)<110){u.alive=false;g.convArr++;if(g.grain[1]!==null)g.grain[1]=Math.min(100,g.grain[1]+u.gain);msg('粮队入营，军心大定','good');for(const o of g.units)if(o.side===1)o.morale=Math.min(100,o.morale+12);}
+   if(dist(u,p)<110){u.alive=false;g.convArr++;if(g.grain[1]!==null)g.grain[1]=Math.min(100,g.grain[1]+u.gain);msg(tr('粮队入营，军心大定',"Supply train in camp: the army takes heart"),'good');for(const o of g.units)if(o.side===1)o.morale=Math.min(100,o.morale+12);}
    else if(!u.path.length)u.path=findPath(u,p.x+40,p.y);}
   g.trT=(g.trT||0)-dt;if(g.trT<=0){g.trT=.5;(L.triggers||[]).forEach((tr,i)=>{if(g.flags['tr'+i]||!cond(g,tr.when))return;g.flags['tr'+i]=1;for(const a of tr.do||[])runAct(g,a);});}};
- M.obj=g=>(L.objectives&&L.objectives.length?L.objectives:(L.goals||[]).map(t=>({text:t}))).map(o=>[fillTxt(g,o.text),o.fail&&cond(g,o.fail)?-1:o.done&&cond(g,o.done)?1:0]);
+ M.obj=g=>(L.objectives&&L.objectives.length?L.objectives:(EN()&&L.en&&Array.isArray(L.en.goals)&&L.en.goals.length?L.en.goals:L.goals||[]).map(t=>({text:t}))).map(o=>[fillTxt(g,lt(o,'text')),o.fail&&cond(g,o.fail)?-1:o.done&&cond(g,o.done)?1:0]);
  M.check=g=>{if(g.flags.forceLose)return['lose',g.flags.forceLose];
-  for(const l of L.lose||[{when:{type:'dead',side:1},text:'主将阵亡'}])if(cond(g,l.when))return['lose',esc(l.text||'兵败')];
+  for(const l of L.lose||[{when:{type:'dead',side:1},text:'主将阵亡',text_en:'Our general has fallen'}])if(cond(g,l.when))return['lose',esc(lt(l,'text')||tr('兵败','Defeated'))];
   if(g.flags.forceWin)return['win'];const w=L.win||{type:'wiped',side:2};if(Array.isArray(w)?w.some(x=>cond(g,x)):cond(g,w))return['win'];return null;};
  return M;}
 function checkLevel(L){const w=[],t=terrainOf(L),us=L.units||[];
@@ -1771,7 +1861,7 @@ function edInit(){
  $('e_pick').addEventListener('change',e=>{const v=e.target.value;if(!v)return;const i=Number(v.slice(1));if(v[0]==='L'&&LOCAL[i])edLoad(LOCAL[i],i);else if(EMBED[i])edLoad(Object.assign({},EMBED[i],{id:'lv'+Date.now().toString(36),name:(EMBED[i].name||'')+'（改）'}),-1);});
 }
 
-if(typeof window!=='undefined'&&window.__TEST)window.__CP={newGame,update,render,hud,drawMini,MISSIONS,fireAt,get G(){return G;},init,cmd,order,tactic,mkMission,checkLevel,captureBuiltin,levelOut,edLoad,blankLevel,terrainOf,UT,CT,setRun(){running=true;}};
+if(typeof window!=='undefined'&&window.__TEST)window.__CP={setLang,briefHtml,mt,endGame,buildTitle,applyLang,get LANG(){return LANG;},newGame,update,render,hud,drawMini,MISSIONS,fireAt,get G(){return G;},init,cmd,order,tactic,mkMission,checkLevel,captureBuiltin,levelOut,edLoad,blankLevel,terrainOf,UT,CT,setRun(){running=true;}};
 else init();
 })();
 

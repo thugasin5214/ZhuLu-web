@@ -1,12 +1,14 @@
-// 教学关“讲武”测试：脚本玩家按教示逐课操作，确认每一课都能触发、最终取胜。用法：node tests/tutorial.js
+// 教学关“讲武”测试：脚本玩家按教示逐课操作，确认每一课都能触发、最终取胜。用法：node tests/tutorial.js [zh|en]
 const fs=require('fs');let t=fs.readFileSync(require('path').join(__dirname,'smoke.js'),'utf8');
-t=t.slice(0,t.indexOf("const mode="));
+const LG=process.argv[2]==='en'?'en':'zh';
+t=t.slice(0,t.indexOf("const mode=")).replace('global.window={__TEST:true,',"global.window={__TEST:true,__LANG:'"+LG+"',");
 eval(t+`
 const LV=JSON.parse(fs.readFileSync(require('path').join(__dirname,'../levels/levels.json'),'utf8')).find(l=>l.id==='jiangwu');
 if(!LV){console.log('FAIL 找不到教学关');process.exit(1);}
 console.log('check:',CP.checkLevel(LV));
 CP.newGame(CP.mkMission(LV));const G=CP.G;G.paused=false;
-const U=n=>G.units.find(u=>u.name===n&&u.alive);
+const NE={'前军':'Vanguard','弩营':'Crossbow Camp'};
+const U=n=>G.units.find(u=>(u.name===n||u.name===NE[n])&&u.alive);
 const mine=()=>G.units.filter(u=>u.side===1&&u.alive&&!u.auto&&u.state!=='rout');
 const flag=n=>!!G.flags['f_'+n];
 let step=0,failed=false;

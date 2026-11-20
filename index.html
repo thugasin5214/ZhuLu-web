@@ -183,6 +183,16 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
 #mcard table{border-collapse:collapse;width:100%;font-size:14px}
 #mcard th,#mcard td{text-align:left;padding:.25em .5em .25em 0;border-bottom:1px solid var(--line);vertical-align:top}
 #mcard th{font-family:var(--brush);font-weight:400;font-size:18px;white-space:nowrap}
+#mcard .pv{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.4em 0}
+#mcard .pv button{font-size:17px}
+#mcard select,#mcard input{font:inherit;font-size:15px;color:var(--ink);background:var(--paper2);border:1px solid var(--line);border-radius:2px;padding:.3em .5em;min-width:0}
+#mcard input{width:7em;text-transform:uppercase;letter-spacing:.2em}
+#pv_status{color:var(--zhu);min-height:1.7em;margin:.3em 0}
+#mcard textarea{display:block;width:100%;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.4;color:var(--ink);background:var(--paper2);border:1px solid var(--line);border-radius:2px;padding:.35em .5em;resize:vertical;word-break:break-all}
+#mcard textarea:focus-visible,#mcard input:focus-visible,#mcard select:focus-visible{outline:2px solid var(--zhu);outline-offset:1px}
+#mcard .st{margin:.6em 0 .25em;font-size:14px}
+#mcard button.lk{border:0;padding:0;font-family:var(--body);font-size:inherit;color:var(--zhu);text-decoration:underline;text-underline-offset:3px;background:none}
+#mcard button:disabled{opacity:.5;cursor:default}
 #mbtns{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
 @media (prefers-reduced-motion:reduce){#quote{transition:none}#log .ln{animation:none}}
 </style>
@@ -203,7 +213,7 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
       <label><span data-en="Supply time">粮草时限</span><input type="range" id="d_pace" min="70" max="130" step="5"><output id="o_pace"></output></label>
       <label><span data-en="Volume">音量</span><input type="range" id="d_vol" min="0" max="100" step="5"><output id="o_vol"></output></label>
     </section>
-    <div class="foot"><button id="bcodex" data-en="Art of War Primer">兵法要览</button><button id="bedit" data-en="Campaign Editor">战役编辑器</button><button id="blang" lang="en">English</button><span>知彼知己，百战不殆。</span></div>
+    <div class="foot"><button id="bcodex" data-en="Art of War Primer">兵法要览</button><button id="bpvp" data-en="Online Battle">联机对战</button><button id="bedit" data-en="Campaign Editor">战役编辑器</button><button id="blang" lang="en">English</button><span>知彼知己，百战不殆。</span></div>
   </div>
   <svg class="mt" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
     <path fill="currentColor" opacity=".08" d="M0,200 C80,130 140,170 200,100 C240,60 280,130 340,95 C400,55 460,140 520,115 C600,75 680,160 760,125 C840,95 900,160 1000,135 L1000,300 L0,300Z"/>
@@ -283,6 +293,7 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
   <table>
     <tr><th>鼠标</th><td>左键点选，拖框多选，双击选同种；右键行军，右键敌阵进攻；滚轮缩放，方向键或 WASD 移动视野。</td></tr>
     <tr><th>触屏</th><td>轻点军阵选中，轻点地面行军，轻点敌阵进攻；单指拖动视野，双指缩放。</td></tr>
+    <tr><th>联机对战</th><td>卷首点“联机对战”。一人选战图“开局”，另一人“应战”。在 claude.ai 上用四位战局号；在其他地方（如自己架的网页）则两人互换一次“邀请码”和“回执码”，两台电脑跨网络直接相连。开局者执朱旗，应战者执青旗，各自只看得见自己视野内的敌军；斩敌主将或夺其帅旗者胜。对战中不能暂停、快进。</td></tr>
     <tr><th>画面</th><td>斜俯视的立体战场：山丘、绝壁、城垣、箭楼各有高低，军阵立于其上；高处之物会遮住身后。点选军阵，士卒举兵应声，旌旗翻卷；下令则应“得令”。</td></tr>
     <tr><th>镇守</th><td>原地坚守不追击，所受伤害减少；稍久即成“深沟高垒”，不惧冲锋。在林中镇守则为伏兵，敌不能察，暴起一击威力倍增。</td></tr>
     <tr><th>分兵 合兵</th><td>一阵分为两阵，可分守要道、包抄侧背；相邻的同种军阵可再合为一。</td></tr>
@@ -331,6 +342,7 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
   <table>
     <tr><th>Mouse</th><td>Left-click to select, drag a box for several, double-click to select every unit of that kind. Right-click ground to march, right-click an enemy to attack. Wheel to zoom; arrow keys or WASD to pan.</td></tr>
     <tr><th>Touch</th><td>Tap a unit to select, tap ground to march, tap an enemy to attack. Drag with one finger to pan, pinch to zoom.</td></tr>
+    <tr><th>Online Battle</th><td>On the title screen press “Online Battle”. One player picks a map and opens a game; the other answers it. On claude.ai you use a four-character game code; elsewhere (on your own hosted page) the two players swap an “invite code” and a “reply code” once, and the two computers connect directly across the internet. The host leads the vermilion banner, the guest the azure; each sees only enemies within their own sight. Kill the enemy general or take their banner to win. Online games cannot be paused or sped up.</td></tr>
     <tr><th>The field</th><td>A raised, oblique view: hills, cliffs, walls and towers have height, and units stand on top of them; tall things hide what lies behind. Selected soldiers raise their weapons and answer “诺”; given an order they reply “得令” (“As you command”).</td></tr>
     <tr><th>Hold</th><td>Stand fast and do not pursue; take less damage. After a while the unit is entrenched and shrugs off charges. Holding in a forest makes an ambush: the enemy cannot see you, and the first strike hits twice as hard.</td></tr>
     <tr><th>Split / Merge</th><td>Divide one unit into two to guard several roads or strike flanks; neighbouring units of the same kind can merge back into one.</td></tr>
@@ -373,7 +385,7 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
     <tr><th>Day, night, weather</th><td>Night and heavy fog shrink sight, hiding distant enemies. Arrows fly farther downwind, shorter into the wind.</td></tr>
   </table>
 </template>
-<script type="application/json" id="levels">[{"id":"julu","name":"破釜","ord":"别传","role":"楚 上将军项羽","line":"渡漳水，断秦军甬道，三日粮尽之前击破王离。","brief":"秦二世三年，王离围赵于巨鹿，章邯筑甬道输粟以济之。诸侯军救赵者十余壁，莫敢纵兵。项羽引兵渡漳水，皆沉船，破釜甑，烧庐舍，持三日粮，以示士卒必死，无一还心。","goals":["夺取并守住“甬道”，断王离军粮","斩王离，或击溃秦军","赶在军粮耗尽之前","项羽不可阵亡"],"tips":["我军只带三日粮，不会再有补给：粮尽则士气日衰，务必速战。","死士（楚军戟兵的精锐）克制秦军战车，让他们顶在前面。","先分兵取西边的甬道：秦军断粮后士气跌落，再合击王离本阵。","北岸渡口有秦军把守，半渡而击的是我军——可先用弩手隔水压制，或从东渡口绕行。"],"winText":"楚战士无不一以当十，呼声动天。九战，绝其甬道，大破之，虏王离。诸侯将入辕门，无不膝行而前，莫敢仰视。","seed":19,"hour0":4,"hourLen":60,"face":{"1":-1.5708,"2":1.5708},"cam":[28,29],"weather":{"type":"sun","wind":-1.5708,"str":1},"draw":[{"op":"river","pts":[[0,27],[14,29],[30,26],[44,28],[59,26]]},{"op":"road","pts":[[28,37],[28,30],[29,22],[31,15],[33,12]]},{"op":"road","pts":[[48,37],[48,30],[47,22],[41,15],[37,12]]},{"op":"road","pts":[[0,9],[14,9],[24,10],[31,11]]},{"op":"hill","x":12,"y":18,"r":4},{"op":"hill","x":52,"y":18,"r":3.5},{"op":"hill","x":21,"y":3,"r":3},{"op":"hill","x":44,"y":33,"r":3},{"op":"forest","x":8,"y":32,"r":3.5},{"op":"forest","x":38,"y":21,"r":3},{"op":"forest","x":52,"y":7,"r":3},{"op":"forest","x":19,"y":15,"r":2.5},{"op":"marsh","x":17,"y":23,"r":2.5}],"camps":[{"x0":29,"y0":7,"x1":40,"y1":14,"side":2}],"points":[{"x":13.5,"y":9.5,"side":2,"name":"甬道","time":10}],"labels":[{"t":"漳水","x":8,"y":25.2,"s":32},{"t":"秦营","x":41.6,"y":8,"s":26},{"t":"甬道","x":18,"y":7.2,"s":22}],"units":[{"side":1,"type":"sishi","n":4000,"x":28,"y":33,"general":true,"name":"项羽亲卫","name_en":"Xiang Yu's Guard"},{"side":1,"type":"sishi","n":5000,"x":25,"y":33},{"side":1,"type":"sishi","n":5000,"x":31,"y":33},{"side":1,"type":"dun","n":4000,"x":30,"y":35},{"side":1,"type":"nu","n":4000,"x":27,"y":35},{"side":1,"type":"qi","n":3500,"x":22,"y":34},{"side":1,"type":"qi","n":3500,"x":34,"y":34},{"side":2,"type":"dun","n":5000,"x":34,"y":10,"general":true,"name":"王离亲卫","ai":{"mode":"stay"},"name_en":"Wang Li's Guard"},{"side":2,"type":"ji","n":6000,"x":31,"y":16,"ai":{"mode":"guard","leash":240}},{"side":2,"type":"ji","n":6000,"x":38,"y":16,"ai":{"mode":"guard","leash":240}},{"side":2,"type":"nu","n":4000,"x":34,"y":13,"ai":{"mode":"stay"}},{"side":2,"type":"che","n":3000,"x":26,"y":13,"tag":"车","ai":{"mode":"guard","leash":320,"pref":"nu"}},{"side":2,"type":"che","n":3000,"x":43,"y":13,"tag":"车","ai":{"mode":"guard","leash":320,"pref":"nu"}},{"side":2,"type":"ji","n":4000,"x":28,"y":23,"ai":{"mode":"guard","leash":160}},{"side":2,"type":"nu","n":3000,"x":30,"y":22,"ai":{"mode":"stay"},"fm":"yan"},{"side":2,"type":"ji","n":3500,"x":14,"y":10,"ai":{"mode":"guard","leash":180}},{"side":2,"type":"ji","n":4000,"x":36,"y":12,"ai":{"mode":"guard","leash":200}}],"unitTypes":{"sishi":{"name":"死士","ch":"死","base":"ji","spd":50,"atk":1.25,"def":0.95,"weapon":"长铍","charge":1.2,"counters":{"qi":1.6,"che":1.8,"dun":0.95},"name_en":"Death-Sworn","weapon_en":"long pike"},"che":{"name":"战车","ch":"车","base":"qi","spd":74,"atk":1.35,"def":1.15,"weapon":"驷马战车","charge":1.25,"counters":{"nu":1.6,"dun":1.3,"ji":0.75,"sishi":0.7},"weakTo":{"ji":1.7},"name_en":"Chariots","weapon_en":"four-horse chariot"}},"grain":[{"side":1,"start":60,"drain":0.11},{"side":2,"start":100,"drain":0.6,"regen":0.05,"cutBy":0}],"events":[{"t":3,"do":"msg","text":"楚军尽渡漳水，沉船破釜，只余三日之粮","kind":"warn","text_en":"Chu has crossed the Zhang, sunk its boats and broken its pots: three days of grain remain"},{"t":100,"do":"spawn","text":"章邯遣军沿甬道来援！","units":[{"side":2,"type":"ji","n":4000,"x":1,"y":9,"ai":{"mode":"assault","point":0}},{"side":2,"type":"qi","n":2500,"x":1,"y":11,"ai":{"mode":"assault","point":0,"pref":"nu"}}],"text_en":"Zhang Han sends troops down the corridor to relieve Wang Li!"},{"t":150,"do":"weather","type":"sun","wind":-1.5708,"str":2,"text":"大南风起，顺风而射者利","text_en":"A strong south wind rises: those who shoot downwind have the edge"}],"triggers":[{"when":{"type":"point","i":0,"side":1},"do":[{"do":"msg","text":"甬道已绝，王离军乏食！","kind":"good","text_en":"The corridor is cut: Wang Li's army goes hungry!"},{"do":"retask","tag":"车","ai":{"mode":"assault","point":0,"pref":"nu"},"text":"秦军战车驰援甬道","text_en":"Qin chariots race to retake the corridor"}]},{"when":{"type":"strength","side":2,"below":50},"do":[{"do":"msg","text":"秦军已折其半，诸侯军在壁上观望","kind":"good","text_en":"Half the Qin army is gone; the allied armies watch from their walls"}]}],"win":[{"type":"dead","side":2},{"type":"strength","side":2,"below":35}],"lose":[{"when":{"type":"grain","side":1,"below":0},"text":"三日粮尽，军心溃散","text_en":"Three days of grain are gone, and the army falls apart"},{"when":{"type":"dead","side":1},"text":"项羽阵亡","text_en":"Xiang Yu has fallen"}],"objectives":[{"text":"断秦军甬道（敌粮 {grain2}）","done":{"type":"point","i":0,"side":1},"text_en":"Cut the Qin corridor (enemy grain {grain2})"},{"text":"斩王离或击溃秦军（敌尚存 {enemy}%）","done":{"type":"dead","side":2},"text_en":"Kill Wang Li or rout the Qin (enemy at {enemy}%)"},{"text":"军粮耗尽之前取胜（军粮 {grain1}）","fail":{"type":"grain","side":1,"below":0},"text_en":"Win before the grain runs out (grain {grain1})"},{"text":"项羽无恙","fail":{"type":"dead","side":1},"text_en":"Xiang Yu unharmed"}],"music":{"scale":"shang","gap":[1.2,3.4],"vol":0.32,"drum":0.34},"sfx":{"horn":[["tone",110,117,1.3,"sawtooth",0.08,0],["tone",165,172,1.3,"sawtooth",0.04,0.04],["tone",55,58,1.3,"sine",0.12,0]]},"en":{"name":"Sink the Boats","ord":"Side Tale","role":"Chu · Supreme General Xiang Yu","line":"Cross the Zhang River, cut the Qin supply corridor, and break Wang Li before your three days of grain run out.","brief":"207 BC. Wang Li besieges Zhao at Julu, fed by grain that Zhang Han ships down a walled supply corridor. More than ten allied armies have come to rescue Zhao, yet none dares to fight. Xiang Yu leads his men across the Zhang River, then sinks the boats, smashes the cooking pots, burns the huts, and carries only three days of grain — to show every soldier there is no way home.","goals":["Seize and hold the Supply Corridor (甬道) to starve Wang Li's army","Kill Wang Li, or rout the Qin army","Before your grain runs out","Xiang Yu must survive"],"tips":["You carry only three days of grain and will get no more: when it runs out morale falls daily. Fight fast.","Death-Sworn (死士, Chu's elite halberdiers) counter Qin chariots — put them in front.","Detach troops to take the corridor in the west first: once Qin is cut off its morale sinks; then converge on Wang Li's main body.","Qin guards the north-bank crossing, so it is you who will be hit halfway across. Pin them with crossbowmen from across the river, or go around by the eastern ford."],"winText":"Every Chu warrior fought as ten, and their war cries shook the heavens. In nine battles they cut the corridor, crushed the Qin and captured Wang Li. When the allied generals came through the camp gate, every one of them advanced on his knees, and none dared look up."}},{"id":"jiangwu","first":true,"name":"讲武","ord":"教习","role":"赵 新拜裨将","line":"校场讲武：行军、统众、变阵、接战、火攻、合击，一一习之。","brief":"秦兵压上党，赵国征发新军。新拜裨将者，先赴邯郸城外校场，习旌旗金鼓之令、四阵进退之法，然后从军长平。校尉在侧，每成一课，即授下一课。","goals":["依校尉教示，逐课习之","击破校场东面的秦军"],"tips":["电脑：左键点选、拖框多选，右键行军或进攻；方向键或 WASD 移动视野，滚轮缩放，中键拖动画面，点小地图可跳转。","手机：轻点军阵选中，轻点地面行军，轻点敌阵进攻；单指拖动画面，双指缩放。","兵种相克：戟克骑，骑克弩，盾克戟与弩。骑兵行军最快，但撞上戟兵吃亏。","其余号令：镇守 G（就地固守，久守成深沟高垒）、止步 X、急行 R（快但耗体力）、分兵 F、合兵 C、筑楼 B、攻城器 E。空格暂停，可随时暂停再下令。","左上角军令一课一勾。忘了要领，可点“收兵”→“军令与献策”重看这些献策。"],"winText":"三军既习，进退有度。《司马法》曰：“天下虽安，忘战必危。”校场讲武已毕，可赴长平。","seed":11,"hour0":4,"hourLen":200,"face":{"1":0,"2":3.1416},"cam":[17,20],"weather":{"type":"sun","wind":0,"str":2},"draw":[{"op":"road","pts":[[0,19],[20,19],[40,18],[59,18]]},{"op":"hill","x":24,"y":9,"r":3.5},{"op":"forest","x":38,"y":28,"r":3.6},{"op":"forest","x":5,"y":31,"r":2.5},{"op":"marsh","x":30,"y":33,"r":2}],"camps":[{"x0":4,"y0":15,"x1":14,"y1":24,"side":1}],"points":[{"x":22,"y":19,"side":1,"name":"将台","time":8}],"labels":[{"t":"校场","x":6,"y":13.5,"s":30},{"t":"南林","x":37,"y":24.2,"s":26}],"units":[{"side":1,"type":"dun","n":3000,"x":10,"y":19,"name":"中军","general":true,"name_en":"Centre"},{"side":1,"type":"ji","n":3000,"x":13,"y":17,"name":"前军","name_en":"Vanguard"},{"side":1,"type":"ji","n":2400,"x":13,"y":21,"name":"左军","name_en":"Left Wing"},{"side":1,"type":"nu","n":2500,"x":8,"y":22,"name":"弩营","name_en":"Crossbow Camp"},{"side":1,"type":"qi","n":2000,"x":8,"y":16,"name":"骑营","name_en":"Horse Camp"},{"side":2,"type":"nu","n":1200,"x":38,"y":28,"name":"伏兵","tag":"伏","ambush":true,"ai":{"mode":"stay"},"name_en":"Ambushers"}],"events":[{"t":0.6,"do":"lesson","title":"第一课　行军","text":"此为讲武校场。先学行军。\n电脑：左键点选一阵，右键点地面，军阵即开往该处。\n手机：轻点军阵选中，再轻点地面。\n视野：方向键或 WASD 移动，滚轮缩放（手机单指拖动、双指缩放），点右下小地图可跳转。\n令“前军”（戟兵）开到东面“将台”旗下。","ok":"领命","title_en":"Lesson 1 · Marching","text_en":"This is the drill ground. First, learn to march.\nMouse: left-click a unit to select it, then right-click the ground and it marches there.\nTouch: tap a unit to select it, then tap the ground.\nView: arrow keys or WASD to pan, mouse wheel to zoom (on touch, drag with one finger and pinch). Click the minimap at bottom-right to jump.\nMarch the Vanguard (halberdiers) to the Command Platform flag (将台) to the east.","ok_en":"Understood"}],"triggers":[{"when":{"type":"near","x":22,"y":19,"r":2.2},"do":[{"do":"flag","name":"一"},{"do":"lesson","title":"第二课　统众","text":"善。一将不能独战，再学统领诸阵。\n按 Q（或下方“全选”）选中全军；也可按住左键拖框圈选多阵；按住 Shift 点选可增减；双击一阵，选中同种全部军阵。\n多阵同时右键一处，会排成方块齐进。\n令全军开到将台。","ok":"领命","title_en":"Lesson 2 · Commanding the Army","text_en":"Well done. One general cannot fight alone — now learn to lead many units.\nPress Q (or the All button) to select your whole army. You can also drag a box around several units, Shift-click to add or remove one, or double-click a unit to select every unit of that kind.\nRight-click one spot with several units selected and they march there in a block.\nBring the whole army to the Command Platform.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"一"},{"type":"used","c":"multi"},{"type":"near","x":22,"y":19,"r":3.5,"n":4}]},"do":[{"do":"flag","name":"二"},{"do":"lesson","title":"第三课　四阵","text":"阵者，兵之形也。选中军阵，按数字键或下方按钮变阵：\n1 方阵：攻守平均，常备之阵，锋矢冲来也能稳住。\n2 锋矢阵：攻击加三成、行军更快，但防御减弱；冲阵破敌用之，最克雁行阵，撞上圆阵则钝。\n3 圆阵：防御加四成，不惧侧背夹击，但行动迟缓；被围或待援时用之。\n4 雁行阵：箭矢杀伤加三成、射程更远；弩手专用之阵。\n选中全军，四阵各变一次。","ok":"领命","title_en":"Lesson 3 · The Four Formations","text_en":"Formation is the shape of an army. Select units and press a number key or the buttons below:\n1 Square: balanced attack and defence; the standard formation, steady even against an Arrowhead charge.\n2 Arrowhead: +30% attack and faster marching, but weaker defence. Use it to smash enemy lines; it crushes the Wild Goose but blunts itself on a Circle.\n3 Circle: +40% defence and immune to flank and rear attacks, but slow. Use it when surrounded or waiting for help.\n4 Wild Goose: +30% missile damage and longer range — the crossbowmen's formation.\nSelect the whole army and try each of the four formations once.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"二"},{"type":"used","c":["fang","feng","yuan","yan"]}]},"do":[{"do":"flag","name":"三"},{"do":"spawn","units":[{"side":2,"type":"ji","n":1500,"x":31,"y":19,"name":"靶阵","tag":"靶","ai":{"mode":"stay"},"name_en":"Target Company"}]},{"do":"lesson","title":"第四课　接战","text":"东面来了一阵敌军（“靶阵”）。\n选中我军，右键点敌阵即进攻（手机：轻点敌阵）。\n兵种相克：戟克骑，骑克弩，盾克戟与弩。靶阵是戟兵，以盾兵当之最好，切莫让骑兵去撞。\n侧背受击的敌阵伤亡、士气损失大增；士气崩溃则溃走。\n击破靶阵。","ok":"领命","title_en":"Lesson 4 · Engaging","text_en":"An enemy unit has appeared to the east: the Target Company (靶阵).\nSelect your troops and right-click the enemy to attack (touch: tap the enemy).\nCounters: halberdiers beat cavalry, cavalry beat crossbowmen, shieldmen beat halberdiers and crossbowmen. The target is halberdiers, so meet them with shieldmen — and keep your cavalry away.\nEnemies hit in the flank or rear take far heavier losses and morale damage; when morale breaks, they rout.\nDestroy the Target Company.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"三"},{"type":"tagDead","tag":"靶"}]},"do":[{"do":"flag","name":"四"},{"do":"lesson","title":"第五课　火攻","text":"斥候报：东南“南林”中藏有伏兵。\n火攻须用弩手：选中弩营，按 V（或“火攻”），再点林地或敌营，即发火箭。弩手须进到射程之内；放过一次火，要二十余息才能再发。\n火借风势：右上角可见风向，今日大西风，火向东烧，人要站在上风。雨天不可火攻。\n令弩营火烧南林。","ok":"领命","title_en":"Lesson 5 · Fire Attack","text_en":"Scouts report an ambush hidden in the South Wood (南林) to the southeast.\nFire needs crossbowmen: select the Crossbow Camp, press V (or the Fire button), then click a forest or enemy camp to loose fire arrows. The crossbowmen must be within range; after each volley it takes over twenty seconds to ready another.\nFire follows the wind: the top-right corner shows the wind. Today a strong west wind blows the fire east, so stand upwind. Fire will not catch in rain.\nHave the Crossbow Camp set the South Wood ablaze.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"四"},{"type":"used","c":"fire"}]},"do":[{"do":"flag","name":"五"},{"do":"spawn","text":"秦军一阵自东而来","units":[{"side":2,"type":"ji","n":3500,"x":46,"y":17,"name":"秦军","tag":"敌","ai":{"mode":"guard","leash":160},"name_en":"Qin Company"}],"text_en":"A Qin unit approaches from the east"},{"do":"lesson","title":"第六课　合击","text":"林火已起。凡战者，以正合，以奇胜。秦军一阵正自东而来。\n选中我军数阵，按 T（或“战术”）选一种，再点敌阵：\n两翼包抄：诸阵分左右两翼夹击。\n绕后夹击：离敌最近的一阵正面镇守，其余绕到敌后。\n侧翼包抄：一阵正面镇守，其余迂回侧翼。\n只选一阵也行，会自动分兵（主将亲卫与不足一千六的军阵不能分）。\n用一次战术，击破秦军。","ok":"领命","title_en":"Lesson 6 · Envelopment","text_en":"The wood is burning. In battle, engage with the orthodox and win with the unexpected. A Qin unit is marching in from the east.\nSelect several of your units, press T (or Tactics), choose one, then click the enemy:\nDouble Envelopment: your units split into left and right wings and strike both sides.\nRear Assault: the unit nearest the enemy pins it from the front while the rest circle behind.\nFlanking Attack: one unit holds the front while the rest wheel onto a flank.\nA single unit works too — it splits itself (a general's guard, or a unit under 1,600 men, cannot split).\nUse one tactic and defeat the Qin.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"五"},{"type":"used","c":"tac"}]},"do":[{"do":"msg","text":"合击之势已成","kind":"good","text_en":"The envelopment is in place"}]}],"win":[{"type":"all","of":[{"type":"flag","name":"五"},{"type":"tagDead","tag":"敌"}]}],"lose":[],"objectives":[{"text":"一　行军：前军开到将台","done":{"type":"flag","name":"一"},"text_en":"Lesson 1 · March: bring the Vanguard to the Command Platform"},{"text":"二　统众：全军齐至将台","done":{"type":"flag","name":"二"},"text_en":"Lesson 2 · Command: bring the whole army to the Command Platform"},{"text":"三　四阵：方、锋矢、圆、雁行各变一次","done":{"type":"flag","name":"三"},"text_en":"Lesson 3 · Formations: try Square, Arrowhead, Circle and Wild Goose"},{"text":"四　接战：击破靶阵","done":{"type":"flag","name":"四"},"text_en":"Lesson 4 · Engage: destroy the Target Company"},{"text":"五　火攻：弩营火烧南林","done":{"type":"flag","name":"五"},"text_en":"Lesson 5 · Fire: burn the South Wood with the Crossbow Camp"},{"text":"六　合击：用一次战术","done":{"type":"used","c":"tac"},"text_en":"Lesson 6 · Envelop: use one tactic"},{"text":"七　击破秦军","done":{"type":"all","of":[{"type":"flag","name":"五"},{"type":"tagDead","tag":"敌"}]},"text_en":"Lesson 7 · Defeat the Qin Company"},{"text":"余课（可选）：镇守、急行、分兵、合兵各试一次","done":{"type":"used","c":["hold","march","split","merge"]},"text_en":"Extra (optional): try Hold, Force March, Split and Merge once each"}],"en":{"name":"Drill Ground","ord":"Training","role":"Zhao · Newly Appointed Lieutenant","line":"On the drill ground, learn to march, command, change formation, engage, burn and envelop — one lesson at a time.","brief":"Qin troops press on Shangdang, and Zhao is raising new levies. As a newly appointed lieutenant you report first to the drill ground outside Handan, to learn the banners and drums and the four formations before marching to Changping. Your instructor stands beside you: finish each lesson and he gives the next.","goals":["Follow the instructor's lessons one by one","Defeat the Qin unit east of the drill ground"],"tips":["Mouse: left-click to select, drag a box for several, right-click to march or attack. Arrow keys or WASD pan the view, wheel zooms, middle-drag pans, click the minimap to jump.","Touch: tap a unit to select, tap ground to march, tap an enemy to attack; drag with one finger to pan, pinch to zoom.","Unit counters: halberdiers beat cavalry, cavalry beat crossbowmen, shieldmen beat halberdiers and crossbowmen. Cavalry are fastest but lose against halberds.","Other orders: Hold G (stand fast; hold long enough to entrench), Stop X, Force March R (fast but tiring), Split F, Merge C, Tower B, Siege E. Space pauses — you can always pause and give orders.","The orders list at top-left ticks off each lesson. Forgot something? Press Withdraw → Orders & Counsel to read these tips again."],"winText":"The army is drilled: it advances and withdraws in good order. As the Sima Fa says, “Though the realm be at peace, to forget war is to court peril.” Your training is done — on to Changping."}}]</script>
+<script type="application/json" id="levels">[{"id":"julu","name":"破釜","ord":"别传","role":"楚 上将军项羽","line":"渡漳水，断秦军甬道，三日粮尽之前击破王离。","brief":"秦二世三年，王离围赵于巨鹿，章邯筑甬道输粟以济之。诸侯军救赵者十余壁，莫敢纵兵。项羽引兵渡漳水，皆沉船，破釜甑，烧庐舍，持三日粮，以示士卒必死，无一还心。","goals":["夺取并守住“甬道”，断王离军粮","斩王离，或击溃秦军","赶在军粮耗尽之前","项羽不可阵亡"],"tips":["我军只带三日粮，不会再有补给：粮尽则士气日衰，务必速战。","死士（楚军戟兵的精锐）克制秦军战车，让他们顶在前面。","先分兵取西边的甬道：秦军断粮后士气跌落，再合击王离本阵。","北岸渡口有秦军把守，半渡而击的是我军——可先用弩手隔水压制，或从东渡口绕行。"],"winText":"楚战士无不一以当十，呼声动天。九战，绝其甬道，大破之，虏王离。诸侯将入辕门，无不膝行而前，莫敢仰视。","seed":19,"hour0":4,"hourLen":60,"face":{"1":-1.5708,"2":1.5708},"cam":[28,29],"weather":{"type":"sun","wind":-1.5708,"str":1},"draw":[{"op":"river","pts":[[0,27],[14,29],[30,26],[44,28],[59,26]]},{"op":"road","pts":[[28,37],[28,30],[29,22],[31,15],[33,12]]},{"op":"road","pts":[[48,37],[48,30],[47,22],[41,15],[37,12]]},{"op":"road","pts":[[0,9],[14,9],[24,10],[31,11]]},{"op":"hill","x":12,"y":18,"r":4},{"op":"hill","x":52,"y":18,"r":3.5},{"op":"hill","x":21,"y":3,"r":3},{"op":"hill","x":44,"y":33,"r":3},{"op":"forest","x":8,"y":32,"r":3.5},{"op":"forest","x":38,"y":21,"r":3},{"op":"forest","x":52,"y":7,"r":3},{"op":"forest","x":19,"y":15,"r":2.5},{"op":"marsh","x":17,"y":23,"r":2.5}],"camps":[{"x0":29,"y0":7,"x1":40,"y1":14,"side":2}],"points":[{"x":13.5,"y":9.5,"side":2,"name":"甬道","time":10}],"labels":[{"t":"漳水","x":8,"y":25.2,"s":32},{"t":"秦营","x":41.6,"y":8,"s":26},{"t":"甬道","x":18,"y":7.2,"s":22}],"units":[{"side":1,"type":"sishi","n":4000,"x":28,"y":33,"general":true,"name":"项羽亲卫","name_en":"Xiang Yu's Guard"},{"side":1,"type":"sishi","n":5000,"x":25,"y":33},{"side":1,"type":"sishi","n":5000,"x":31,"y":33},{"side":1,"type":"dun","n":4000,"x":30,"y":35},{"side":1,"type":"nu","n":4000,"x":27,"y":35},{"side":1,"type":"qi","n":3500,"x":22,"y":34},{"side":1,"type":"qi","n":3500,"x":34,"y":34},{"side":2,"type":"dun","n":5000,"x":34,"y":10,"general":true,"name":"王离亲卫","ai":{"mode":"stay"},"name_en":"Wang Li's Guard"},{"side":2,"type":"ji","n":6000,"x":31,"y":16,"ai":{"mode":"guard","leash":240}},{"side":2,"type":"ji","n":6000,"x":38,"y":16,"ai":{"mode":"guard","leash":240}},{"side":2,"type":"nu","n":4000,"x":34,"y":13,"ai":{"mode":"stay"}},{"side":2,"type":"che","n":3000,"x":26,"y":13,"tag":"车","ai":{"mode":"guard","leash":320,"pref":"nu"}},{"side":2,"type":"che","n":3000,"x":43,"y":13,"tag":"车","ai":{"mode":"guard","leash":320,"pref":"nu"}},{"side":2,"type":"ji","n":4000,"x":28,"y":23,"ai":{"mode":"guard","leash":160}},{"side":2,"type":"nu","n":3000,"x":30,"y":22,"ai":{"mode":"stay"},"fm":"yan"},{"side":2,"type":"ji","n":3500,"x":14,"y":10,"ai":{"mode":"guard","leash":180}},{"side":2,"type":"ji","n":4000,"x":36,"y":12,"ai":{"mode":"guard","leash":200}}],"unitTypes":{"sishi":{"name":"死士","ch":"死","base":"ji","spd":50,"atk":1.25,"def":0.95,"weapon":"长铍","charge":1.2,"counters":{"qi":1.6,"che":1.8,"dun":0.95},"name_en":"Death-Sworn","weapon_en":"long pike"},"che":{"name":"战车","ch":"车","base":"qi","spd":74,"atk":1.35,"def":1.15,"weapon":"驷马战车","charge":1.25,"counters":{"nu":1.6,"dun":1.3,"ji":0.75,"sishi":0.7},"weakTo":{"ji":1.7},"name_en":"Chariots","weapon_en":"four-horse chariot"}},"grain":[{"side":1,"start":60,"drain":0.11},{"side":2,"start":100,"drain":0.6,"regen":0.05,"cutBy":0}],"events":[{"t":3,"do":"msg","text":"楚军尽渡漳水，沉船破釜，只余三日之粮","kind":"warn","text_en":"Chu has crossed the Zhang, sunk its boats and broken its pots: three days of grain remain"},{"t":100,"do":"spawn","text":"章邯遣军沿甬道来援！","units":[{"side":2,"type":"ji","n":4000,"x":1,"y":9,"ai":{"mode":"assault","point":0}},{"side":2,"type":"qi","n":2500,"x":1,"y":11,"ai":{"mode":"assault","point":0,"pref":"nu"}}],"text_en":"Zhang Han sends troops down the corridor to relieve Wang Li!"},{"t":150,"do":"weather","type":"sun","wind":-1.5708,"str":2,"text":"大南风起，顺风而射者利","text_en":"A strong south wind rises: those who shoot downwind have the edge"}],"triggers":[{"when":{"type":"point","i":0,"side":1},"do":[{"do":"msg","text":"甬道已绝，王离军乏食！","kind":"good","text_en":"The corridor is cut: Wang Li's army goes hungry!"},{"do":"retask","tag":"车","ai":{"mode":"assault","point":0,"pref":"nu"},"text":"秦军战车驰援甬道","text_en":"Qin chariots race to retake the corridor"}]},{"when":{"type":"strength","side":2,"below":50},"do":[{"do":"msg","text":"秦军已折其半，诸侯军在壁上观望","kind":"good","text_en":"Half the Qin army is gone; the allied armies watch from their walls"}]}],"win":[{"type":"dead","side":2},{"type":"strength","side":2,"below":35}],"lose":[{"when":{"type":"grain","side":1,"below":0},"text":"三日粮尽，军心溃散","text_en":"Three days of grain are gone, and the army falls apart"},{"when":{"type":"dead","side":1},"text":"项羽阵亡","text_en":"Xiang Yu has fallen"}],"objectives":[{"text":"断秦军甬道（敌粮 {grain2}）","done":{"type":"point","i":0,"side":1},"text_en":"Cut the Qin corridor (enemy grain {grain2})"},{"text":"斩王离或击溃秦军（敌尚存 {enemy}%）","done":{"type":"dead","side":2},"text_en":"Kill Wang Li or rout the Qin (enemy at {enemy}%)"},{"text":"军粮耗尽之前取胜（军粮 {grain1}）","fail":{"type":"grain","side":1,"below":0},"text_en":"Win before the grain runs out (grain {grain1})"},{"text":"项羽无恙","fail":{"type":"dead","side":1},"text_en":"Xiang Yu unharmed"}],"music":{"scale":"shang","gap":[1.2,3.4],"vol":0.32,"drum":0.34},"sfx":{"horn":[["tone",110,117,1.3,"sawtooth",0.08,0],["tone",165,172,1.3,"sawtooth",0.04,0.04],["tone",55,58,1.3,"sine",0.12,0]]},"en":{"name":"Sink the Boats","ord":"Side Tale","role":"Chu · Supreme General Xiang Yu","line":"Cross the Zhang River, cut the Qin supply corridor, and break Wang Li before your three days of grain run out.","brief":"207 BC. Wang Li besieges Zhao at Julu, fed by grain that Zhang Han ships down a walled supply corridor. More than ten allied armies have come to rescue Zhao, yet none dares to fight. Xiang Yu leads his men across the Zhang River, then sinks the boats, smashes the cooking pots, burns the huts, and carries only three days of grain — to show every soldier there is no way home.","goals":["Seize and hold the Supply Corridor (甬道) to starve Wang Li's army","Kill Wang Li, or rout the Qin army","Before your grain runs out","Xiang Yu must survive"],"tips":["You carry only three days of grain and will get no more: when it runs out morale falls daily. Fight fast.","Death-Sworn (死士, Chu's elite halberdiers) counter Qin chariots — put them in front.","Detach troops to take the corridor in the west first: once Qin is cut off its morale sinks; then converge on Wang Li's main body.","Qin guards the north-bank crossing, so it is you who will be hit halfway across. Pin them with crossbowmen from across the river, or go around by the eastern ford."],"winText":"Every Chu warrior fought as ten, and their war cries shook the heavens. In nine battles they cut the corridor, crushed the Qin and captured Wang Li. When the allied generals came through the camp gate, every one of them advanced on his knees, and none dared look up."}},{"id":"jiangwu","first":true,"name":"讲武","ord":"教习","role":"赵 新拜裨将","line":"校场讲武：行军、统众、变阵、接战、火攻、合击，一一习之。","brief":"秦兵压上党，赵国征发新军。新拜裨将者，先赴邯郸城外校场，习旌旗金鼓之令、四阵进退之法，然后从军长平。校尉在侧，每成一课，即授下一课。","goals":["依校尉教示，逐课习之","击破校场东面的秦军"],"tips":["电脑：左键点选、拖框多选，右键行军或进攻；方向键或 WASD 移动视野，滚轮缩放，中键拖动画面，点小地图可跳转。","手机：轻点军阵选中，轻点地面行军，轻点敌阵进攻；单指拖动画面，双指缩放。","兵种相克：戟克骑，骑克弩，盾克戟与弩。骑兵行军最快，但撞上戟兵吃亏。","其余号令：镇守 G（就地固守，久守成深沟高垒）、止步 X、急行 R（快但耗体力）、分兵 F、合兵 C、筑楼 B、攻城器 E。空格暂停，可随时暂停再下令。","左上角军令一课一勾。忘了要领，可点“收兵”→“军令与献策”重看这些献策。"],"winText":"三军既习，进退有度。《司马法》曰：“天下虽安，忘战必危。”校场讲武已毕，可赴长平。","seed":11,"hour0":4,"hourLen":200,"face":{"1":0,"2":3.1416},"cam":[17,20],"weather":{"type":"sun","wind":0,"str":2},"draw":[{"op":"road","pts":[[0,19],[20,19],[40,18],[59,18]]},{"op":"hill","x":24,"y":9,"r":3.5},{"op":"forest","x":38,"y":28,"r":3.6},{"op":"forest","x":5,"y":31,"r":2.5},{"op":"marsh","x":30,"y":33,"r":2}],"camps":[{"x0":4,"y0":15,"x1":14,"y1":24,"side":1}],"points":[{"x":22,"y":19,"side":1,"name":"将台","time":8}],"labels":[{"t":"校场","x":6,"y":13.5,"s":30},{"t":"南林","x":37,"y":24.2,"s":26}],"units":[{"side":1,"type":"dun","n":3000,"x":10,"y":19,"name":"中军","general":true,"name_en":"Centre"},{"side":1,"type":"ji","n":3000,"x":13,"y":17,"name":"前军","name_en":"Vanguard"},{"side":1,"type":"ji","n":2400,"x":13,"y":21,"name":"左军","name_en":"Left Wing"},{"side":1,"type":"nu","n":2500,"x":8,"y":22,"name":"弩营","name_en":"Crossbow Camp"},{"side":1,"type":"qi","n":2000,"x":8,"y":16,"name":"骑营","name_en":"Horse Camp"},{"side":2,"type":"nu","n":1200,"x":38,"y":28,"name":"伏兵","tag":"伏","ambush":true,"ai":{"mode":"stay"},"name_en":"Ambushers"}],"events":[{"t":0.6,"do":"lesson","title":"第一课　行军","text":"此为讲武校场。先学行军。\n电脑：左键点选一阵，右键点地面，军阵即开往该处。\n手机：轻点军阵选中，再轻点地面。\n视野：方向键或 WASD 移动，滚轮缩放（手机单指拖动、双指缩放），点右下小地图可跳转。\n令“前军”（戟兵）开到东面“将台”旗下。","ok":"领命","title_en":"Lesson 1 · Marching","text_en":"This is the drill ground. First, learn to march.\nMouse: left-click a unit to select it, then right-click the ground and it marches there.\nTouch: tap a unit to select it, then tap the ground.\nView: arrow keys or WASD to pan, mouse wheel to zoom (on touch, drag with one finger and pinch). Click the minimap at bottom-right to jump.\nMarch the Vanguard (halberdiers) to the Command Platform flag (将台) to the east.","ok_en":"Understood"}],"triggers":[{"when":{"type":"near","x":22,"y":19,"r":2.2},"do":[{"do":"flag","name":"一"},{"do":"lesson","title":"第二课　统众","text":"善。一将不能独战，再学统领诸阵。\n按 Q（或下方“全选”）选中全军；也可按住左键拖框圈选多阵；按住 Shift 点选可增减；双击一阵，选中同种全部军阵。\n多阵同时右键一处，会排成方块齐进。\n令全军开到将台。","ok":"领命","title_en":"Lesson 2 · Commanding the Army","text_en":"Well done. One general cannot fight alone — now learn to lead many units.\nPress Q (or the All button) to select your whole army. You can also drag a box around several units, Shift-click to add or remove one, or double-click a unit to select every unit of that kind.\nRight-click one spot with several units selected and they march there in a block.\nBring the whole army to the Command Platform.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"一"},{"type":"used","c":"multi"},{"type":"near","x":22,"y":19,"r":3.5,"n":4}]},"do":[{"do":"flag","name":"二"},{"do":"lesson","title":"第三课　四阵","text":"阵者，兵之形也。选中军阵，按数字键或下方按钮变阵：\n1 方阵：攻守平均，常备之阵，锋矢冲来也能稳住。\n2 锋矢阵：攻击加三成、行军更快，但防御减弱；冲阵破敌用之，最克雁行阵，撞上圆阵则钝。\n3 圆阵：防御加四成，不惧侧背夹击，但行动迟缓；被围或待援时用之。\n4 雁行阵：箭矢杀伤加三成、射程更远；弩手专用之阵。\n选中全军，四阵各变一次。","ok":"领命","title_en":"Lesson 3 · The Four Formations","text_en":"Formation is the shape of an army. Select units and press a number key or the buttons below:\n1 Square: balanced attack and defence; the standard formation, steady even against an Arrowhead charge.\n2 Arrowhead: +30% attack and faster marching, but weaker defence. Use it to smash enemy lines; it crushes the Wild Goose but blunts itself on a Circle.\n3 Circle: +40% defence and immune to flank and rear attacks, but slow. Use it when surrounded or waiting for help.\n4 Wild Goose: +30% missile damage and longer range — the crossbowmen's formation.\nSelect the whole army and try each of the four formations once.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"二"},{"type":"used","c":["fang","feng","yuan","yan"]}]},"do":[{"do":"flag","name":"三"},{"do":"spawn","units":[{"side":2,"type":"ji","n":1500,"x":31,"y":19,"name":"靶阵","tag":"靶","ai":{"mode":"stay"},"name_en":"Target Company"}]},{"do":"lesson","title":"第四课　接战","text":"东面来了一阵敌军（“靶阵”）。\n选中我军，右键点敌阵即进攻（手机：轻点敌阵）。\n兵种相克：戟克骑，骑克弩，盾克戟与弩。靶阵是戟兵，以盾兵当之最好，切莫让骑兵去撞。\n侧背受击的敌阵伤亡、士气损失大增；士气崩溃则溃走。\n击破靶阵。","ok":"领命","title_en":"Lesson 4 · Engaging","text_en":"An enemy unit has appeared to the east: the Target Company (靶阵).\nSelect your troops and right-click the enemy to attack (touch: tap the enemy).\nCounters: halberdiers beat cavalry, cavalry beat crossbowmen, shieldmen beat halberdiers and crossbowmen. The target is halberdiers, so meet them with shieldmen — and keep your cavalry away.\nEnemies hit in the flank or rear take far heavier losses and morale damage; when morale breaks, they rout.\nDestroy the Target Company.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"三"},{"type":"tagDead","tag":"靶"}]},"do":[{"do":"flag","name":"四"},{"do":"lesson","title":"第五课　火攻","text":"斥候报：东南“南林”中藏有伏兵。\n火攻须用弩手：选中弩营，按 V（或“火攻”），再点林地或敌营，即发火箭。弩手须进到射程之内；放过一次火，要二十余息才能再发。\n火借风势：右上角可见风向，今日大西风，火向东烧，人要站在上风。雨天不可火攻。\n令弩营火烧南林。","ok":"领命","title_en":"Lesson 5 · Fire Attack","text_en":"Scouts report an ambush hidden in the South Wood (南林) to the southeast.\nFire needs crossbowmen: select the Crossbow Camp, press V (or the Fire button), then click a forest or enemy camp to loose fire arrows. The crossbowmen must be within range; after each volley it takes over twenty seconds to ready another.\nFire follows the wind: the top-right corner shows the wind. Today a strong west wind blows the fire east, so stand upwind. Fire will not catch in rain.\nHave the Crossbow Camp set the South Wood ablaze.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"四"},{"type":"used","c":"fire"}]},"do":[{"do":"flag","name":"五"},{"do":"spawn","text":"秦军一阵自东而来","units":[{"side":2,"type":"ji","n":3500,"x":46,"y":17,"name":"秦军","tag":"敌","ai":{"mode":"guard","leash":160},"name_en":"Qin Company"}],"text_en":"A Qin unit approaches from the east"},{"do":"lesson","title":"第六课　合击","text":"林火已起。凡战者，以正合，以奇胜。秦军一阵正自东而来。\n选中我军数阵，按 T（或“战术”）选一种，再点敌阵：\n两翼包抄：诸阵分左右两翼夹击。\n绕后夹击：离敌最近的一阵正面镇守，其余绕到敌后。\n侧翼包抄：一阵正面镇守，其余迂回侧翼。\n只选一阵也行，会自动分兵（主将亲卫与不足一千六的军阵不能分）。\n用一次战术，击破秦军。","ok":"领命","title_en":"Lesson 6 · Envelopment","text_en":"The wood is burning. In battle, engage with the orthodox and win with the unexpected. A Qin unit is marching in from the east.\nSelect several of your units, press T (or Tactics), choose one, then click the enemy:\nDouble Envelopment: your units split into left and right wings and strike both sides.\nRear Assault: the unit nearest the enemy pins it from the front while the rest circle behind.\nFlanking Attack: one unit holds the front while the rest wheel onto a flank.\nA single unit works too — it splits itself (a general's guard, or a unit under 1,600 men, cannot split).\nUse one tactic and defeat the Qin.","ok_en":"Understood"}]},{"when":{"type":"all","of":[{"type":"flag","name":"五"},{"type":"used","c":"tac"}]},"do":[{"do":"msg","text":"合击之势已成","kind":"good","text_en":"The envelopment is in place"}]}],"win":[{"type":"all","of":[{"type":"flag","name":"五"},{"type":"tagDead","tag":"敌"}]}],"lose":[],"objectives":[{"text":"一　行军：前军开到将台","done":{"type":"flag","name":"一"},"text_en":"Lesson 1 · March: bring the Vanguard to the Command Platform"},{"text":"二　统众：全军齐至将台","done":{"type":"flag","name":"二"},"text_en":"Lesson 2 · Command: bring the whole army to the Command Platform"},{"text":"三　四阵：方、锋矢、圆、雁行各变一次","done":{"type":"flag","name":"三"},"text_en":"Lesson 3 · Formations: try Square, Arrowhead, Circle and Wild Goose"},{"text":"四　接战：击破靶阵","done":{"type":"flag","name":"四"},"text_en":"Lesson 4 · Engage: destroy the Target Company"},{"text":"五　火攻：弩营火烧南林","done":{"type":"flag","name":"五"},"text_en":"Lesson 5 · Fire: burn the South Wood with the Crossbow Camp"},{"text":"六　合击：用一次战术","done":{"type":"used","c":"tac"},"text_en":"Lesson 6 · Envelop: use one tactic"},{"text":"七　击破秦军","done":{"type":"all","of":[{"type":"flag","name":"五"},{"type":"tagDead","tag":"敌"}]},"text_en":"Lesson 7 · Defeat the Qin Company"},{"text":"余课（可选）：镇守、急行、分兵、合兵各试一次","done":{"type":"used","c":["hold","march","split","merge"]},"text_en":"Extra (optional): try Hold, Force March, Split and Merge once each"}],"en":{"name":"Drill Ground","ord":"Training","role":"Zhao · Newly Appointed Lieutenant","line":"On the drill ground, learn to march, command, change formation, engage, burn and envelop — one lesson at a time.","brief":"Qin troops press on Shangdang, and Zhao is raising new levies. As a newly appointed lieutenant you report first to the drill ground outside Handan, to learn the banners and drums and the four formations before marching to Changping. Your instructor stands beside you: finish each lesson and he gives the next.","goals":["Follow the instructor's lessons one by one","Defeat the Qin unit east of the drill ground"],"tips":["Mouse: left-click to select, drag a box for several, right-click to march or attack. Arrow keys or WASD pan the view, wheel zooms, middle-drag pans, click the minimap to jump.","Touch: tap a unit to select, tap ground to march, tap an enemy to attack; drag with one finger to pan, pinch to zoom.","Unit counters: halberdiers beat cavalry, cavalry beat crossbowmen, shieldmen beat halberdiers and crossbowmen. Cavalry are fastest but lose against halberds.","Other orders: Hold G (stand fast; hold long enough to entrench), Stop X, Force March R (fast but tiring), Split F, Merge C, Tower B, Siege E. Space pauses — you can always pause and give orders.","The orders list at top-left ticks off each lesson. Forgot something? Press Withdraw → Orders & Counsel to read these tips again."],"winText":"The army is drilled: it advances and withdraws in good order. As the Sima Fa says, “Though the realm be at peace, to forget war is to court peril.” Your training is done — on to Changping."}},{"id":"pvp-danshui","pvp":true,"name":"丹水对阵","ord":"对战","role":"两军对垒","line":"两军隔丹水对垒，三处浅滩可渡。","brief":"两军隔丹水对垒，各据一垒。水上三处浅滩可渡：中路最近，直通敌垒正门；南北两路稍远，有山林可倚。","goals":["斩敌军主将，或夺其帅旗","保住我军主将与帅旗"],"tips":["半渡而击：敌军涉水时迎头痛击。","垒门两侧箭楼上的弩手居高临下，强攻正门代价不小，可造攻城器，或诱敌出垒。","骑兵走南北两路绕后，专取弩手与落单之敌。","视野之外的敌军是看不见的：山丘上看得远，林中可设伏。"],"winText":"此战告捷。","seed":31,"hour0":5,"hourLen":60,"face":{"1":0,"2":3.1416},"cam":[12,19],"weather":{"type":"sun","wind":0,"str":1},"rows":[".............................~~.............................",".............................~~.............................","...................^^^.......~~.......^^^...................","...................^^^^......~~......^^^^...................",".....f.f.........^^^^^^^.....~~.....^^^^^^^.........f.f.....","....ffff.........^^^^^^^.....~~.....^^^^^^^.........ffff....","....fffff.........^^^^^......~~......^^^^^.........fffff....","....fffff.........^^^^^......~~......^^^^^.........fffff....","...ffffff.........^^^.^......~~......^.^^^.........ffffff...","....fffff.....---------------==---------------.....fffff....","......f.......-..............~~..............-.......f......","..............-.^^...........~~...........^^.-..............","..............-^^^^^.........~~.........^^^^^-..............","..............-^^^^^....f....~~....f....^^^^^-..............","..............-.^^^....fff...~~...fff....^^^.-..............","..............-.^^.....ffff..~~..ffff.....^^.-..............","..............-.......fffff..~~..fffff.......-..............","..............-.........ff...~~...ff.........-..............","..............-..............~~..............-..............","............-----------------==-----------------............","..............-..............~~..............-..............","..............-.........ff...~~...ff.........-..............","..............-........ffff..~~..ffff........-..............","..............-........fff...~~...fff........-..............","..............-.......ffff...~~...ffff.......-..............","..............-........f.....~~.....f........-..............","............^^-..............~~..............-^^............","............^^-^.............~~.............^-^^............",".......f....^^---------------==---------------^^....f.......","....ffff................%%%..~~..%%%................ffff....","....fffff..........^^...%%%%.~~.%%%%...^^..........fffff....","...ffffff..........^^^^^%%%..~~..%%%^^^^^..........ffffff...","...ffffff..........^^^^^.%...~~...%.^^^^^..........ffffff...",".....ffff.........^^^^^^^....~~....^^^^^^^.........ffff.....","...................^^^^^.....~~.....^^^^^...................","...................^^^^^.....~~.....^^^^^...................",".....................^.......~~.......^.....................",".............................~~............................."],"forts":[{"x0":3,"y0":14,"x1":11,"y1":24,"side":1,"gates":[[11,19,1500]]},{"x0":48,"y0":14,"x1":56,"y1":24,"side":2,"gates":[[48,19,1500]]}],"points":[{"x":6.5,"y":19.5,"side":1,"name":"帅旗","time":10},{"x":53.5,"y":19.5,"side":2,"name":"帅旗","time":10}],"labels":[{"t":"丹水","x":31.6,"y":13,"s":30}],"units":[{"type":"dun","n":4000,"x":7,"y":19,"general":true,"hold":true,"side":1,"name":"朱旗主将亲卫","name_en":"Vermilion General’s Guard"},{"type":"dun","n":4000,"x":52,"y":19,"general":true,"hold":true,"side":2,"name":"青旗主将亲卫","name_en":"Azure General’s Guard"},{"type":"nu","n":4000,"x":10,"y":18,"hold":true,"side":1},{"type":"nu","n":4000,"x":49,"y":18,"hold":true,"side":2},{"type":"nu","n":4000,"x":10,"y":20,"hold":true,"side":1},{"type":"nu","n":4000,"x":49,"y":20,"hold":true,"side":2},{"type":"ji","n":5000,"x":14,"y":17,"side":1},{"type":"ji","n":5000,"x":45,"y":17,"side":2},{"type":"ji","n":5000,"x":14,"y":21,"side":1},{"type":"ji","n":5000,"x":45,"y":21,"side":2},{"type":"dun","n":4000,"x":16,"y":19,"side":1},{"type":"dun","n":4000,"x":43,"y":19,"side":2},{"type":"qi","n":3000,"x":13,"y":13,"side":1},{"type":"qi","n":3000,"x":46,"y":13,"side":2},{"type":"qi","n":3000,"x":13,"y":25,"side":1},{"type":"qi","n":3000,"x":46,"y":25,"side":2}],"events":[{"t":240,"do":"weather","type":"rain","wind":0.785,"str":1,"text":"天降大雨，弩弦受潮","text_en":"Heavy rain falls; bowstrings go slack"},{"t":330,"do":"weather","type":"sun","wind":0,"str":1,"text":"雨歇","text_en":"The rain stops"}],"music":{"scale":"yu"},"name_en":"Dan River Standoff","en":{"name":"Dan River Standoff","ord":"Versus","role":"Two armies face off","line":"Two armies face each other across the Dan River; three fords can be crossed.","brief":"Two armies face each other across the Dan River, each holding a fort. Three fords cross the water: the middle one is shortest and leads straight to the enemy's main gate; the northern and southern ones are longer, with hills and woods to lean on.","goals":["Kill the enemy general, or take their banner","Keep your own general and banner"],"tips":["Strike them halfway across: hit enemy troops while they are wading.","Crossbowmen on the towers beside each gate shoot from above, so storming the main gate is costly. Build siege engines, or lure the enemy out.","Send cavalry by the northern and southern fords to get behind the enemy and pick off crossbowmen and stragglers.","You cannot see enemies outside your sight: hills see far, and forests hide ambushes."],"winText":"Victory."}}]</script>
 <script>
 'use strict';
 (()=>{
@@ -462,6 +474,8 @@ function playOps(ops,v){for(const o of ops){if(!Array.isArray(o))continue;const 
  else if(o[0]==='hiss')hiss(cl(p[0]||.3,.02,6),p[1]||'bandpass',p[2]||1000,p[3]||p[2]||1000,p[4]||1,cl((p[5]||.2)*v,0,1),p[6]||0);else if(o[0]==='drum')drum(cl((p[0]||1)*v,0,2),p[1]||0);else if(o[0]==='pluck')pluck(p[0]|0,cl((p[1]||1)*v,0,2),p[2]||0);}}
 const pluck=(i,v,dl)=>{const f=MUS.scale[cl(i,0,MUS.scale.length-1)];tone(f,f*.997,1.7,'triangle',.24*v,dl);tone(f*2,f*2,.5,'sine',.07*v,dl);tone(f*3,f*3,.18,'sine',.03*v,dl);};
 function sfx(name,x,y){
+ if(ACT!==ME)return;
+ if(NET.role==='host'&&!CMDCTX){const ri=RELAY.indexOf(name);if(ri>=0){const nw=Date.now();if(nw-(NET.sfxT[name]||0)>(GAP[name]||200)){NET.sfxT[name]=nw;fx([1,ri,x===undefined?null:Math.round(x),y===undefined?null:Math.round(y)]);}}}
  if(!D.snd)return;const now=typeof performance!=='undefined'?performance.now():0;if(now-(SND.last[name]||-1e9)<(GAP[name]||0))return;SND.last[name]=now;
  let v=1;if(x!==undefined&&G){const sx=(x-cam.x)*cam.z,sy=(y-cam.y)*K*cam.z;if(sx<-90||sy<-90||sx>W+90||sy>H+90)v=.2;}
  const cu=G&&G.M&&G.M.data&&G.M.data.sfx&&G.M.data.sfx[name];if(Array.isArray(cu)){playOps(cu,v);return;}
@@ -575,12 +589,12 @@ function findPath(u,gx,gy){
 /* ---------- 军阵 ---------- */
 function spawn(side,type,n,tx,ty,opt){
  const kind=type;if(UT[type]&&UT[type].base)type=UT[type].base;
- if(side===2&&type!=='liang')n=Math.max(500,Math.round(n*D.force/10000)*100);
+ if(side===2&&type!=='liang'&&!G.pvp)n=Math.max(500,Math.round(n*D.force/10000)*100);
  let i=cl(ty|0,0,MH-1)*MW+cl(tx|0,0,MW-1);
  if(!pass(i)){const j=nearPass(tx|0,ty|0);if(j>=0){i=j;tx=j%MW;ty=j/MW|0;}}
  const k=side+kind;G.nameIdx[k]=G.nameIdx[k]||0;
  const u={id:G.uid++,side,type,kind,n,nMax:n,x:(tx+.5)*TS,y:(ty+.5)*TS,face:G.M.face[side],fm:'fang',morale:90,stam:100,path:[],target:null,ordered:false,
-  hold:false,holdT:0,march:false,state:'idle',cd:Math.random()*2,fireCd:0,hidden:false,vis:side===1,visA:side===1?1:0,ambushT:0,lastHit:-99,lastAtk:-99,
+  hold:false,holdT:0,march:false,state:'idle',cd:Math.random()*2,fireCd:0,hidden:false,vis:side===1,visA:side===ME?1:0,ambushT:0,lastHit:-99,lastAtk:-99,
   chargeT:0,runT:0,death:false,alive:true,thinkT:Math.random()*.4,repT:0,general:false,auto:false,ai:null,siege:null,routT:0,r:20,hitT:0,contact:null,cd2:0,atkN:0,atkP:0,had:false,tag:''};
  if(opt)Object.assign(u,opt);
  if(EN()&&u.nameEn)u.name=u.nameEn;
@@ -604,7 +618,7 @@ function rout(u){
 function surrounded(u){let q=0;for(const e of G.units){if(e.side===u.side||!e.alive||e.state==='rout'||e.type==='liang')continue;const dx=e.x-u.x,dy=e.y-u.y;if(dx*dx+dy*dy>190*190)continue;q|=1<<((dx>0?1:0)+(dy>0?2:0));}
  return((q&1)+(q>>1&1)+(q>>2&1)+(q>>3&1))>=3;}
 function wallBetween(a,b){if(G.map[tileIdx(a.x,a.y)]===WALL||G.map[tileIdx(b.x,b.y)]===WALL)return false;for(let s=1;s<4;s++){const i=tileIdx(a.x+(b.x-a.x)*s/4,a.y+(b.y-a.y)*s/4),t=G.map[i];if(t===WALL)return true;if(t===GATE){const g=G.gateIdx[i];if(g&&g.hp>0)return true;}}return false;}
-const canSee=(u,e)=>u.side===1?e.vis:(!e.hidden||dist(u,e)<70);
+const canSee=(u,e)=>u.side===1||G.pvp?e.vis:(!e.hidden||dist(u,e)<70);
 function visionOf(u){let v=420-250*dark();if(G.weather==='fog')v*=.45;return v*(1+.12*elevOf(u));}
 function rangeOf(u){let r=UT[u.kind].range*(FM[u.fm].rng||1)*(1+.1*elevOf(u));if(G.weather==='fog')r*=.6;return r*(1-.2*dark());}
 function rangeTo(u,t){return rangeOf(u)*(1-.08*Math.min(3,elevOf(t)))*(1+Math.cos(ang(u,t)-G.wind)*(G.windStr>1?.22:.08));}
@@ -666,7 +680,7 @@ function fight(u,dt){
  if(foe){
   if(u.hidden){u.ambushT=6;u.hidden=false;quote('ambush');}
   const m=meleeMult(u,foe);const ga=G.gap[tileIdx(u.x,u.y)],gb=G.gap[tileIdx(foe.x,foe.y)],gp=ga&&gb?Math.min(ga,gb):(ga||gb);let eff=u.n;if(gp&&eff>frontage(gp)){eff=frontage(gp);quote('ai');}
-  let dmg=16*Math.pow(eff/1000,.7)*m*dt*(u.side===2?D.might/100:1);if(u.state==='move'&&!tg)dmg*=.4;G.heat=Math.min(3,(G.heat||0)+dt*2);
+  let dmg=16*Math.pow(eff/1000,.7)*m*dt*(u.side===2&&!G.pvp?D.might/100:1);if(u.state==='move'&&!tg)dmg*=.4;G.heat=Math.min(3,(G.heat||0)+dt*2);
   foe.atkN++;hurt(foe,dmg,FLK);u.stam-=1.1*dt;u.lastAtk=G.t;
   if(u.state!=='move')u.face=turn(u.face,ang(u,foe),dt*5);
   if(Math.random()<dt*6){splat((u.x+foe.x)/2,(u.y+foe.y)/2);sfx('clash',u.x,u.y);}
@@ -676,8 +690,8 @@ function fight(u,dt){
    if(tg&&canSee(u,tg)&&dist(u,tg)<=rangeTo(u,tg))t2=tg;
    else if(!u.ordered||!tg){let bd=1e9;for(const e of G.units){if(e.side===u.side||!e.alive||!canSee(u,e))continue;const d=dist(u,e);if(d<bd&&d<=rangeTo(u,e)){bd=d;t2=e;}}}
    if(t2){if(u.hidden){u.ambushT=6;u.hidden=false;quote('ambush');}
-    u.cd=2.2;hurt(t2,11*2.2*Math.pow(u.n/1000,.7)*rangedMult(u,t2)*(u.side===2?D.might/100:1),1);volley(u,t2,false);sfx('arrow',u.x,u.y);G.heat=Math.min(3,(G.heat||0)+.3);
-    if(u.side===2&&D.wit>=3&&u.fireCd<=0&&G.weather!=='rain'){const fi=tileIdx(t2.x,t2.y);if(flam(fi)&&G.own[fi]!==2&&startFire(fi)){u.fireCd=40;volley(u,t2,true);msg(tr('敌军发火箭'+(G.map[fi]===FOREST?'焚林':'烧营')+'！','Enemy fire arrows set the '+(G.map[fi]===FOREST?'forest':'camp')+' ablaze!'),'warn');}}u.face=ang(u,t2);u.lastAtk=G.t;u.stam-=.6;}
+    u.cd=2.2;hurt(t2,11*2.2*Math.pow(u.n/1000,.7)*rangedMult(u,t2)*(u.side===2&&!G.pvp?D.might/100:1),1);volley(u,t2,false);sfx('arrow',u.x,u.y);G.heat=Math.min(3,(G.heat||0)+.3);
+    if(u.side===2&&!G.pvp&&D.wit>=3&&u.fireCd<=0&&G.weather!=='rain'){const fi=tileIdx(t2.x,t2.y);if(flam(fi)&&G.own[fi]!==2&&startFire(fi)){u.fireCd=40;volley(u,t2,true);msg(tr('敌军发火箭'+(G.map[fi]===FOREST?'焚林':'烧营')+'！','Enemy fire arrows set the '+(G.map[fi]===FOREST?'forest':'camp')+' ablaze!'),'warn');}}u.face=ang(u,t2);u.lastAtk=G.t;u.stam-=.6;}
    else u.cd=.25;}
  }
  if(u.siege){const g=u.siege;if(g.hp>0){const raw=3*(UT[u.kind].gate||1)*Math.pow(u.n/1000,.7)*(u.type==='nu'?.3:u.type==='qi'?.5:1)*dt;u.lastAtk=G.t;
@@ -688,13 +702,13 @@ function fight(u,dt){
  if(u.bomb){const i=u.bomb.i,p=cen(i),t=G.map[i],g=G.gateIdx[i];
   if(u.gear!=='cata'||!(t===WALL||(t===GATE&&g&&g.hp>0)||G.tower[i]>0))u.bomb=null;
   else if(!foe&&!u.path.length&&dist(u,p)<=bombR(u)){u.bcd=(u.bcd||0)-dt;u.face=turn(u.face,ang(u,p),dt*4);
-   if(u.bcd<=0){u.bcd=3;const dm=70*Math.sqrt(u.n/3000);G.arrows.push({x0:u.x,y0:u.y,x1:p.x+(Math.random()-.5)*14,y1:p.y+(Math.random()-.5)*14,t:0,d:.9,stone:true});sfx('thud',u.x,u.y);u.lastAtk=G.t;u.stam-=1;
+   if(u.bcd<=0){u.bcd=3;const dm=70*Math.sqrt(u.n/3000);G.arrows.push({x0:u.x,y0:u.y,x1:p.x+(Math.random()-.5)*14,y1:p.y+(Math.random()-.5)*14,t:0,d:.9,stone:true});fx([5,Math.round(u.x),Math.round(u.y),Math.round(p.x),Math.round(p.y)]);sfx('thud',u.x,u.y);u.lastAtk=G.t;u.stam-=1;
     if(t===GATE){g.hp-=dm;if(g.hp<=0)breakGate(g);}
     else if(t===WALL){const h=(G.shp[i]===undefined?600:G.shp[i])-dm;G.shp[i]=h;if(h<=0)breach(i);}
     else{const k='t'+i,h=(G.shp[k]===undefined?260:G.shp[k])-dm;G.shp[k]=h;if(h<=0){G.tower[i]--;delete G.shp[k];sfx('crash',p.x,p.y);msg(tr('箭楼被砸塌一层','A tower storey collapses'),'good');}}}}}
 }
 const bombR=u=>300*(1+.05*elevOf(u));
-function breach(i){const p=cen(i);G.map[i]=RUBBLE;delete G.shp[i];G.elev[i]=0;sfx('crash',p.x,p.y);msg(tr('城垣崩塌，缺口已开！','The wall collapses: a breach is open!'),'good');paintRubble(i);computeGap();}
+function breach(i){const p=cen(i);G.map[i]=RUBBLE;G.breachL.push(i);delete G.shp[i];G.elev[i]=0;sfx('crash',p.x,p.y);msg(tr('城垣崩塌，缺口已开！','The wall collapses: a breach is open!'),'good');paintRubble(i);computeGap();}
 function breakGate(g){sfx('crash',g.x,g.y);g.hp=0;G.map[g.i]=ROAD;msg(g.side===1?tr('我军垒门被攻破！','Our gate has been broken!'):tr('敌垒门已破！','The enemy gate is broken!'),g.side===1?'warn':'good');stain(g.x,g.y,16);}
 
 /* ---------- 行军 ---------- */
@@ -705,7 +719,7 @@ function stepUnit(u,dt){
   if(!e.alive||u.state==='rout')u.man=null;
   else if(!u.path.length||(m.cur&&(m.hold?u.contact===e||dist(u,m.cur)<8:dist(u,m.cur)<44))){let go=false;
    while(m.pts.length&&!go){const q=m.pts.shift(),R=e.r+u.r+q.R,p=findPath(u,e.x+Math.cos(m.a+q.da)*R,e.y+Math.sin(m.a+q.da)*R);if(p.length){u.path=p;u.state='move';m.cur=p[p.length-1];go=true;}}
-   if(!go){u.man=null;u.path=[];u.state='idle';if(m.hold){u.hold=true;u.target=null;u.face=ang(u,e);}else{u.target=e;u.ordered=true;u.repT=0;if(u.side===1){quote('qi');ack([u],'杀');}}}}}
+   if(!go){u.man=null;u.path=[];u.state='idle';if(m.hold){u.hold=true;u.target=null;u.face=ang(u,e);}else{u.target=e;u.ordered=true;u.repT=0;{quote('qi');if(u.side===ME)ack([u],'杀');}}}}}
  if(u.state!=='rout'&&tg){
   const d=dist(u,tg),rg=UT[u.kind].range&&!u.contact;
   if(u.hold||(rg?d<=rangeTo(u,tg)*.92:(d<=u.r+tg.r+2&&!wallBetween(u,tg)))){u.path.length=0;u.runT=0;return;}
@@ -727,7 +741,7 @@ function stepUnit(u,dt){
  u.stam-=dt*(fast?2.6:.3);
  if(u.type==='qi'&&u.state!=='rout'){const e=G.elev[ni];let k=t===MARSH?1:t===FOREST?.6:t===HILL&&e>=2?(e>=3?.8:.5):G.weather==='rain'&&fast&&(t===PLAIN||t===BURNT)?.25:0;
   if(k){const loss=Math.min(u.n,u.n*k/100*(fast?2.2:1)*dt);u.n-=loss;if(u.side===1)G.stats.loss+=loss;else G.stats.kill+=loss;u.runT=0;
-   if(u.side===1&&G.t-(u.wornT||-99)>25){u.wornT=G.t;msg(tr(u.name+(t===MARSH?'陷于沮泽':t===FOREST?'穿行密林':t===HILL?'攀行险坡':'雨中疾驰')+'，战马折损',u.name+(t===MARSH?' bogged in marsh':t===FOREST?' pushing through forest':t===HILL?' climbing steep slopes':' galloping in rain')+': horses lost'),'warn');quote(t===MARSH?'marsh':'terrain');}}}
+   if((u.side===1||G.pvp)&&G.t-(u.wornT||-99)>25){u.wornT=G.t;msg(tr(u.name+(t===MARSH?'陷于沮泽':t===FOREST?'穿行密林':t===HILL?'攀行险坡':'雨中疾驰')+'，战马折损',u.name+(t===MARSH?' bogged in marsh':t===FOREST?' pushing through forest':t===HILL?' climbing steep slopes':' galloping in rain')+': horses lost'),'warn',u.side);quote(t===MARSH?'marsh':'terrain');}}}
  // 看护：两息之内几乎未动，则重新寻路并稍作侧移
  u.stT=(u.stT||0)+dt;if(u.stT>2){if(u.path.length&&Math.hypot(u.x-(u.sx||0),u.y-(u.sy||0))<5&&!u.contact){const f=u.path[u.path.length-1];u.path=findPath(u,f.x,f.y);const a=u.face+(Math.random()<.5?1.57:-1.57);tryMove(u,Math.cos(a)*8,Math.sin(a)*8);}u.sx=u.x;u.sy=u.y;u.stT=0;}
 }
@@ -751,11 +765,11 @@ function separate(dt){const U=G.units;for(let i=0;i<U.length;i++){const a=U[i];i
 function think(u){
  if(u.state==='rout'||u.type==='liang')return;
  if(u.target&&!u.target.alive){u.target=null;u.ordered=false;}
- if(u.side===2)return aiThink(u);
+ if(u.side===2&&!G.pvp)return aiThink(u);
  if(u.state==='move'||u.bomb||u.man)return;
  if(u.target&&u.ordered){if(!u.target.vis){u.target=null;u.ordered=false;}return;}
  const rg=UT[u.kind].range,R=rg?rangeOf(u)*1.05:(u.hold?u.r+45:150);let b=null,bd=R;
- for(const e of G.units){if(e.side!==2||!e.alive||!e.vis)continue;const d=dist(u,e)-(rg?0:e.r);if(d<bd){bd=d;b=e;}}
+ for(const e of G.units){if(e.side===u.side||!e.alive||!e.vis)continue;const d=dist(u,e)-(rg?0:e.r);if(d<bd){bd=d;b=e;}}
  u.target=b;
 }
 function aiForm(u,tg){
@@ -810,10 +824,10 @@ function upkeep(u,dt){
  u.stam=cl(u.stam,0,100);
  if(u.hold)u.holdT+=dt;else u.holdT=0;
  if(u.make){if(!u.hold||u.state==='rout')u.make=null;else if(!u.contact){u.make.t+=dt*Math.sqrt(u.n/3000)/GT[u.make.g];if(Math.random()<dt*1.6)sfx('thud',u.x,u.y);
-   if(u.make.t>=1){u.gear=u.make.g;u.make=null;sfx('drum',u.x,u.y);if(u.side===1)msg(tr(u.name+'造成'+GN[u.gear]+(u.gear==='cata'?'：右键（或轻点）敌方城垣、垒门、箭楼即可轰击':u.gear==='ladder'?'：可直接翻越城垣':'：撞门如摧枯'),u.name+' has built a '+GN[u.gear]+(u.gear==='cata'?': right-click (or tap) an enemy wall, gate or tower to bombard':u.gear==='ladder'?': can climb straight over walls':': smashes gates with ease')),'good');}}}
+   if(u.make.t>=1){u.gear=u.make.g;u.make=null;sfx('drum',u.x,u.y);if(u.side===1||G.pvp)msg(tr(u.name+'造成'+GN[u.gear]+(u.gear==='cata'?'：右键（或轻点）敌方城垣、垒门、箭楼即可轰击':u.gear==='ladder'?'：可直接翻越城垣':'：撞门如摧枯'),u.name+' has built a '+GN[u.gear]+(u.gear==='cata'?': right-click (or tap) an enemy wall, gate or tower to bombard':u.gear==='ladder'?': can climb straight over walls':': smashes gates with ease')),'good',u.side);}}}
  if(u.build){const bi=u.build.i;if(!u.hold||u.state==='rout'||tileIdx(u.x,u.y)!==bi||G.tower[bi]>=3)u.build=null;
   else if(!u.contact){u.build.t+=dt*Math.sqrt(u.n/3000)/14;if(Math.random()<dt*1.6)sfx('thud',u.x,u.y);
-   if(u.build.t>=1){G.tower[bi]++;u.build=G.tower[bi]<3&&u.buildMore?{i:bi,t:0}:null;sfx('drum',u.x,u.y);msg(tr(u.name+'筑成箭楼'+'一二三'[G.tower[bi]-1]+'层，地势 '+elevOf(u),u.name+' raised a tower to storey '+G.tower[bi]+', height '+elevOf(u)),'good');}}}
+   if(u.build.t>=1){G.tower[bi]++;u.build=G.tower[bi]<3&&u.buildMore?{i:bi,t:0}:null;sfx('drum',u.x,u.y);msg(tr(u.name+'筑成箭楼'+'一二三'[G.tower[bi]-1]+'层，地势 '+elevOf(u),u.name+' raised a tower to storey '+G.tower[bi]+', height '+elevOf(u)),'good',u.side);}}}
  if(u.type==='liang'){if(u.n<300)kill(u);return;}
  if(calm&&!starve)u.morale+=dt*2;
  const gen=G.gen[u.side];if(gen&&gen.alive&&!starve&&dist(u,gen)<280)u.morale+=dt;
@@ -835,14 +849,14 @@ function fires(dt){
  for(const[i,f]of G.fires){f.t-=dt*(G.weather==='rain'?6:1);f.sp-=dt;
   if(f.sp<=0){f.sp=2.6;const x=i%MW,y=i/MW|0;for(let d=0;d<8;d++){const nx=x+DX[d],ny=y+DY[d];if(nx<0||ny<0||nx>=MW||ny>=MH)continue;
    const al=Math.cos(Math.atan2(DY[d],DX[d])-G.wind),p=G.windStr>1?(al>.5?.85:al<-.3?.04:.25):(al>.5?.5:al<-.3?.1:.25);if(Math.random()<p)startFire(ny*MW+nx);}}
-  if(f.t<=0){G.fires.delete(i);G.burnt[i]=1;if(G.map[i]===FOREST)G.map[i]=BURNT;paintBurnt(i);}}
+  if(f.t<=0){G.fires.delete(i);G.burnt[i]=1;G.burntL.push(i);if(G.map[i]===FOREST)G.map[i]=BURNT;paintBurnt(i);}}
 }
 
 /* ---------- 据点 ---------- */
 function points(dt){for(const p of G.points){let a=0,d=0;for(const u of G.units){if(!u.alive||u.type==='liang'||u.state==='rout'||dist(u,p)>p.r)continue;if(u.side===p.side)d++;else a++;}
  if(a&&!d){p.prog+=dt/p.time;if(p.prog>=1){p.side=3-p.side;p.prog=0;if(G.M.onPoint)G.M.onPoint(G,p);}}else p.prog=Math.max(0,p.prog-dt/4);}}
-function vis(dt){for(const e of G.units){if(e.side===1)continue;let v=false;for(const p of G.units){if(p.side!==1||!p.alive)continue;if(dist(e,p)<(e.hidden?90:visionOf(p))){v=true;break;}}
- e.vis=v;e.visA=cl(e.visA+(v?dt*3:-dt*2),0,1);}}
+function vis(dt){for(const e of G.units){if(e.side===1&&!G.pvp)continue;let v=false;for(const p of G.units){if(p.side===e.side||!p.alive)continue;if(dist(e,p)<(e.hidden?90:visionOf(p))){v=true;break;}}
+ e.vis=v;if(e.side!==ME)e.visA=cl(e.visA+(v?dt*3:-dt*2),0,1);}}
 
 function update(dt){
  const g=G;g.t+=dt;
@@ -870,15 +884,15 @@ function update(dt){
 
 /* ---------- 号令 ---------- */
 const selOK=()=>G.sel.filter(u=>u.alive&&u.state!=='rout');
-function pickUnit(wx,wy,side){let b=null,bd=1e9;for(const u of G.units){if(u.side!==side||!u.alive||(side===2&&!u.vis))continue;const d=Math.hypot(u.x-wx,(u.y-wy)*K);if(d<u.r+12&&d<bd){bd=d;b=u;}}return b;}
+function pickUnit(wx,wy,side){let b=null,bd=1e9;for(const u of G.units){if(u.side!==side||!u.alive||(side!==ACT&&!u.vis))continue;const d=Math.hypot(u.x-wx,(u.y-wy)*K);if(d<u.r+12&&d<bd){bd=d;b=u;}}return b;}
 const use=(...k)=>{if(G&&G.used)for(const x of k)G.used[x]=1;};
-function order(wx,wy){
+function orderSim(wx,wy){
  let s=selOK();if(!s.length)return;for(const u of s)u.man=null;
- const e=pickUnit(wx,wy,2);
+ const e=pickUnit(wx,wy,3-ACT);
  sfx('move');
  if(e){for(const u of s){u.bomb=null;if(u.hidden)u.ambushT=10;u.target=e;u.ordered=true;u.hold=false;u.state='idle';u.repT=0;}ring(e.x,e.y,ZHU);ack(s,'杀');use('attack');return;}
  {const ti=tileIdx(wx,wy),tt=G.map[ti],gg=G.gateIdx[ti],cat=s.filter(u=>u.gear==='cata');
-  if(cat.length&&(tt===WALL&&G.own[ti]!==1||(tt===GATE&&gg&&gg.hp>0&&gg.side!==1)||(G.tower[ti]>0&&G.own[ti]===2))){
+  if(cat.length&&(tt===WALL&&G.own[ti]!==ACT||(tt===GATE&&gg&&gg.hp>0&&gg.side!==ACT)||(G.tower[ti]>0&&G.own[ti]===3-ACT))){
    for(const u of cat){u.bomb={i:ti};u.bcd=1;u.target=null;u.ordered=false;u.hold=false;u.state='idle';u.path=[];u.repT=0;}
    const p=cen(ti);ring(p.x,p.y,ZHU);ack(cat,'轰');msg(tr('发石车轰击'+(tt===WALL?'城垣':tt===GATE?'垒门':'箭楼'),'Trebuchets bombard the '+(tt===WALL?'wall':tt===GATE?'gate':'tower')));s=s.filter(u=>u.gear!=='cata');if(!s.length)return;}}
  for(const u of s)u.bomb=null;
@@ -889,7 +903,7 @@ function order(wx,wy){
 }
 function splitOff(u){if(u.n<1600||u.general){msg(u.general?tr('主将亲卫不可分兵','The general’s guard cannot be split'):tr('兵力不足一千六，不可再分','Too few men to split (needs 1,600)'));return null;}
  const h=u.n/2;u.n=h;u.nMax/=2;const a=u.face+PI/2;
- const v=spawn(1,u.kind,h,u.x/TS,u.y/TS,{fm:u.fm,morale:u.morale,stam:u.stam,face:u.face,hold:u.hold,gear:u.gear});
+ const v=spawn(u.side,u.kind,h,u.x/TS,u.y/TS,{fm:u.fm,morale:u.morale,stam:u.stam,face:u.face,hold:u.hold,gear:u.gear});
  v.nMax=u.nMax;v.r=u.r;v.x=u.x+Math.cos(a)*18;v.y=u.y+Math.sin(a)*18;u.x-=Math.cos(a)*18;u.y-=Math.sin(a)*18;
  if(!pass(tileIdx(v.x,v.y))){v.x=u.x;v.y=u.y;}return v;}
 function split(u){const v=splitOff(u);if(v)G.sel.push(v);}
@@ -911,26 +925,20 @@ function tactic(mode,e){
   if(dist(front,e)>e.r+front.r+60){front.hold=false;front.state='move';front.man={tg:e,a,pts:[{da:0,R:-10}],hold:true};}else{front.man=null;front.hold=true;front.state='idle';front.face=ang(front,e);}ack([front],'守');}
  ack(mv,mode==='wings'?'包抄':mode==='rear'?'绕后':'侧击');sfx('move');ring(e.x,e.y,ZHU);
  use('tac',mode);msg(tr(TAC[mode]+'：'+(front?front.name+'逼近敌前镇守，':'')+(mode==='wings'?'分兵左右两翼':mode==='rear'?'后军绕出敌后':'后军迂回侧翼')+'，合击敌'+e.name,TAC[mode]+': '+(front?front.name+' pins the enemy front; ':'')+(mode==='wings'?'wings swing out left and right':mode==='rear'?'the rest circle behind':'the rest wheel onto the flank')+' to strike '+e.name));}
-function tacAt(w){const mode=G.tacMode;G.tacMode=null;const e=pickUnit(w.x,w.y,2);if(!e){msg(tr('须点选一支看得见的敌军','Pick a visible enemy unit'));return;}tactic(mode,e);}
+function tacAt(w){const mode=G.tacMode;G.tacMode=null;const e=pickUnit(w.x,w.y,3-ME);if(!e){msg(tr('须点选一支看得见的敌军','Pick a visible enemy unit'),'',ME);return;}act('tactic',[mode,e.id]);}
 function merge(s){if(s.length<2){msg(tr('合兵需选中两阵以上同种军阵','To merge, select two or more units of the same kind'));return;}const a=s[0];let done=0;
  for(const b of s.slice(1)){if(b.kind!==a.kind||b.general||dist(a,b)>150)continue;const t=a.n+b.n;a.morale=(a.morale*a.n+b.morale*b.n)/t;a.stam=(a.stam*a.n+b.stam*b.n)/t;a.n=t;a.nMax+=b.nMax;b.alive=false;done++;}
  if(!done)msg(tr('需同种军阵且相距不远，方可合兵','Only nearby units of the same kind can merge'));else{G.units=G.units.filter(u=>u.alive);G.sel=[a];}}
-function fireAt(w){
- G.fireMode=false;const arch=selOK().filter(u=>u.type==='nu');
+function fireSim(w){
+ const arch=selOK().filter(u=>u.type==='nu');
  if(!arch.length){msg(tr('火攻需选中弩手','Fire attacks need crossbowmen selected'));return;}
  if(G.weather==='rain'){msg(tr('雨中火不可发','Fire will not catch in the rain'));return;}
  const i=tileIdx(w.x,w.y);if(!flam(i)){msg(tr('此地无草木营帐可燃（林地、敌营可火攻）','Nothing to burn here (target forest or an enemy camp)'));return;}
  for(const u of arch){if(u.fireCd>0||Math.hypot(u.x-w.x,u.y-w.y)>rangeOf(u)*1.3)continue;u.fireCd=25;volley(u,w,true);startFire(i);use('fire');quote(G.windStr>1?'wind':'fire');return;}
  msg(tr('弩手距离太远，或火箭尚未备妥','Crossbowmen out of range, or fire arrows not ready'));
 }
-function cmd(c){
- if(!G||G.over)return;const s=selOK();sfx('tick');
- if(c==='all'){const pv=G.sel;G.sel=G.units.filter(u=>u.side===1&&!u.auto&&u.alive&&u.state!=='rout');hail(G.sel.filter(u=>!pv.includes(u)));use('all');if(G.sel.length>1)use('multi');return;}
- if(c==='pause'){G.paused=!G.paused;return;}
- if(c==='siege'){$('siegemenu').hidden=!$('siegemenu').hidden;$('tacmenu').hidden=true;return;}
- if(c==='tac'){if(G.tacMode){G.tacMode=null;return;}$('tacmenu').hidden=!$('tacmenu').hidden;$('siegemenu').hidden=true;return;}
- if(c==='speed'){G.speed=G.speed===1?2:1;return;}
- if(!s.length){msg(tr('先点选我军军阵','Select one of your units first'));return;}
+function cmdSim(c){
+ const s=selOK();if(!s.length)return;
  if(c==='hold'){const on=!s.every(u=>u.hold);for(const u of s){u.man=null;u.hold=on;if(on){u.path=[];u.target=null;u.ordered=false;u.state='idle';u.march=false;}}}
  else if(c==='stop')for(const u of s){u.man=null;u.bomb=null;u.make=null;u.build=null;u.path=[];u.target=null;u.ordered=false;u.state='idle';u.march=false;}
  else if(c==='split')s.forEach(split);
@@ -955,9 +963,9 @@ function cmd(c){
 
 /* ---------- 墨迹特效 ---------- */
 function splat(x,y){for(let i=0;i<3;i++){const a=Math.random()*TAU,v=20+Math.random()*50;G.parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:.35+Math.random()*.3,r:1+Math.random()*2.4});}}
-function volley(u,t,fire){const n=fire?3:5;for(let i=0;i<n;i++){const j=u.r*.7,k=(t.r||10)*.7;G.arrows.push({x0:u.x+(Math.random()-.5)*j*2,y0:u.y+(Math.random()-.5)*j*2,x1:t.x+(Math.random()-.5)*k*2,y1:t.y+(Math.random()-.5)*k*2,t:-i*.05,d:.45,fire});}}
-function ring(x,y,c){G.rings.push({x,y,c,t:0});}
-function stain(x,y,r){const c=G.gctx;if(!c)return;c.save();for(let i=0;i<9;i++){const a=Math.random()*TAU,d=Math.random()*r;c.fillStyle='rgba(30,27,24,'+(.05+Math.random()*.1)+')';c.beginPath();c.arc(x+Math.cos(a)*d,y+Math.sin(a)*d,3+Math.random()*r*.5,0,TAU);c.fill();}
+function volley(u,t,fire){if(NET.role==='host'&&(u.side===2||u.vis||t.side===2))fx([0,Math.round(u.x),Math.round(u.y),Math.round(t.x),Math.round(t.y),fire?1:0]);const n=fire?3:5;for(let i=0;i<n;i++){const j=u.r*.7,k=(t.r||10)*.7;G.arrows.push({x0:u.x+(Math.random()-.5)*j*2,y0:u.y+(Math.random()-.5)*j*2,x1:t.x+(Math.random()-.5)*k*2,y1:t.y+(Math.random()-.5)*k*2,t:-i*.05,d:.45,fire});}}
+function ring(x,y,c){if(ACT!==ME)return;G.rings.push({x,y,c,t:0});}
+function stain(x,y,r){fx([4,Math.round(x),Math.round(y),Math.round(r)]);const c=G.gctx;if(!c)return;c.save();for(let i=0;i<9;i++){const a=Math.random()*TAU,d=Math.random()*r;c.fillStyle='rgba(30,27,24,'+(.05+Math.random()*.1)+')';c.beginPath();c.arc(x+Math.cos(a)*d,y+Math.sin(a)*d,3+Math.random()*r*.5,0,TAU);c.fill();}
  c.strokeStyle='rgba(30,27,24,.5)';c.lineWidth=1.2;c.beginPath();c.moveTo(x-6,y+4);c.lineTo(x+7,y-3);c.moveTo(x+2,y-8);c.lineTo(x-1,y+6);c.stroke();c.restore();}
 
 /* ---------- 水墨地形 ---------- */
@@ -1084,8 +1092,8 @@ function drawTower(c,i){const lv=G.tower[i],p=cen(i),base=Math.max(G.map[i]===WA
  c.fillStyle='#22201d';for(let k=-18;k<16;k+=7)c.fillRect(p.x+k,ty+2,4,3.5);}
 
 /* ---------- 军阵呼应 ---------- */
-function hail(us){if(!us.length)return;us.forEach((u,j)=>{u.cheerAt=NOW+Math.min(j,8)*.05;if(j<8)G.floats.push({u,txt:'诺',t0:NOW+Math.min(j,8)*.05});});sfx('hail');if(us.some(u=>u.type==='qi'))sfx('hoof');}
-function ack(us,txt){us.forEach((u,j)=>{u.ackAt=NOW;if(j<6)G.floats.push({u,txt,t0:NOW});});}
+function hail(us){if(!us.length||ACT!==ME)return;us.forEach((u,j)=>{u.cheerAt=NOW+Math.min(j,8)*.05;if(j<8)G.floats.push({u,txt:'诺',t0:NOW+Math.min(j,8)*.05});});sfx('hail');if(us.some(u=>u.type==='qi'))sfx('hoof');}
+function ack(us,txt){if(ACT!==ME)return;us.forEach((u,j)=>{u.ackAt=NOW;if(j<6)G.floats.push({u,txt,t0:NOW});});}
 
 /* ---------- 绘制 ---------- */
 let cvEl,ctx,nc,nctx,miniEl,mctx;
@@ -1207,7 +1215,7 @@ function render(){
  const d=dark();
  if(d>.02){const w=nc.width,h=nc.height,x=nctx,s=w/W;x.globalCompositeOperation='source-over';x.clearRect(0,0,w,h);x.fillStyle='rgba(16,22,36,'+(.68*d)+')';x.fillRect(0,0,w,h);x.globalCompositeOperation='destination-out';
   const hole=(wx,wy,rr,a)=>{const px=(wx-cam.x)*z*s,py=((wy-cam.y)*K-hpx(wx,wy))*z*s,r=rr*z*s;if(px<-r||py<-r||px>w+r||py>h+r)return;x.save();x.translate(px,py);x.scale(1,K);const gr=x.createRadialGradient(0,0,r*.15,0,0,r);gr.addColorStop(0,'rgba(0,0,0,'+a+')');gr.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=gr;x.beginPath();x.arc(0,0,r,0,TAU);x.fill();x.restore();};
-  for(const u of g.units)if(u.side===1)hole(u.x,u.y,visionOf(u),.8);for(const[i]of g.fires){const p=cen(i);hole(p.x,p.y,130,.7);}
+  for(const u of g.units)if(u.side===ME)hole(u.x,u.y,visionOf(u),.8);for(const[i]of g.fires){const p=cen(i);hole(p.x,p.y,130,.7);}
   c.drawImage(nc,0,0,W,H);}
  if(drag&&drag.mode==='box'&&drag.moved){c.strokeStyle=ZHU;c.lineWidth=1.2;c.setLineDash([5,4]);c.strokeRect(drag.sx,drag.sy,drag.x-drag.sx,drag.y-drag.sy);c.setLineDash([]);}
  if(g.tacMode){c.fillStyle=ZHU;c.font='20px '+BRUSH;c.textAlign='center';c.fillText(tr(TAC[g.tacMode]+'：点选敌军',TAC[g.tacMode]+': pick an enemy'),W/2,H-150);}
@@ -1215,14 +1223,16 @@ function render(){
 }
 function drawMini(){const c=mctx,g=G;c.clearRect(0,0,180,114);c.drawImage(g.mini,0,0);const s=180/WW;
  for(const p of g.points){c.fillStyle=p.side===1?ZHU:QING;c.fillRect(p.x*s-2,p.y*s-5,4,7);}
- for(const u of g.units){if(u.side===2&&!u.vis)continue;c.fillStyle=u.type==='liang'?ZHE:u.side===1?ZHU:QING;c.beginPath();c.arc(u.x*s,u.y*s,u.general?3.2:2.3,0,TAU);c.fill();}
+ for(const u of g.units){if(u.side!==ME&&!u.vis)continue;c.fillStyle=u.type==='liang'?ZHE:u.side===1?ZHU:QING;c.beginPath();c.arc(u.x*s,u.y*s,u.general?3.2:2.3,0,TAU);c.fill();}
  c.strokeStyle=INK;c.lineWidth=1;c.strokeRect(cam.x*s,Math.max(0,cam.y)*s,W/cam.z*s,Math.min(WH,H/cam.z/K)*s);}
 
 /* ---------- 军报、兵法题句、界面 ---------- */
-function msg(t,kind){if(typeof window!=='undefined'&&window.__onMsg)window.__onMsg(t,kind);const box=$('log');if(!box)return;const d=document.createElement('div');d.className='ln '+(kind||'');d.textContent=t;box.appendChild(d);if(kind==='warn')sfx('horn');else if(kind==='good')sfx('pluck');G.msgN=(G.msgN||0)+1;
+function msg(t,kind,to){if(to===undefined&&CMDCTX)to=CMDCTX;
+ if(NET.role==='host'){if(to===undefined)fx([2,swapTxt(t),kind==='warn'?'good':kind==='good'?'warn':kind||'']);else if(to!==ME){fx([2,String(t),kind||'']);return;}}else if(to!==undefined&&to!==ME)return;
+ if(typeof window!=='undefined'&&window.__onMsg)window.__onMsg(t,kind);const box=$('log');if(!box)return;const d=document.createElement('div');d.className='ln '+(kind||'');d.textContent=t;box.appendChild(d);if(kind==='warn')sfx('horn');else if(kind==='good')sfx('pluck');G.msgN=(G.msgN||0)+1;
  setTimeout(()=>{try{d.remove();}catch(e){}},6500);}
 let qTimer=0;
-function quote(k){if(!G||G.t-(G.qt[k]||-999)<75||G.t-G.qLast<8)return;G.qt[k]=G.t;G.qLast=G.t;const q=QUOTES[k],el=$('quote');
+function quote(k){if(ACT!==ME){fx([3,k]);return;}if(!G||G.t-(G.qt[k]||-999)<75||G.t-G.qLast<8)return;G.qt[k]=G.t;G.qLast=G.t;fx([3,k]);const q=QUOTES[k],el=$('quote');
  sfx('qin');$('qtext').textContent=q[0];$('qsrc').textContent='孙子 '+q[1];try{$('qen').textContent=EN()?q[2]||'':'';}catch(e){}el.classList.add('on');clearTimeout(qTimer);qTimer=setTimeout(()=>el.classList.remove('on'),5200);}
 function setWeather(w,wind,str){G.weather=w;if(wind!==undefined)G.wind=wind;G.windStr=str||1;if(w==='rain'){quote('rain');}if(w==='fog')quote('fog');}
 const WN_ZH={sun:'晴',rain:'雨',fog:'雾'},WN_EN={sun:'Clear',rain:'Rain',fog:'Fog'},WD_ZH=['西','西北','北','东北','东','东南','南','西南'],WD_EN=['W','NW','N','NE','E','SE','S','SW'];let WN=WN_ZH,WD=WD_ZH;
@@ -1233,8 +1243,8 @@ function hud(){
  setH('clock',EN()?HN[h|0]+' '+HNP[h|0]+'<small>'+(d>.5?'night':d>0?'dusk':'day')+'</small>':HN[h|0]+'时<small>'+(d>.5?'夜':d>0?'昏':'昼')+'</small>');
  const wi=((Math.round(g.wind/(PI/4))%8)+8)%8;
  setH('wx',WN[g.weather]+'<small>'+tr((g.windStr>1?'大':'')+WD[wi]+'风',(g.windStr>1?'gale ':'wind ')+'from '+WD[wi])+'</small>');
- let gr='';if(g.grain[1]!==null)gr+=tr('军粮 ','Grain ')+Math.ceil(g.grain[1]);if(g.grain[2]!==null)gr+=(gr?'　':'')+tr('敌粮 ','Enemy grain ')+Math.ceil(g.grain[2]);
- let tot=0;for(const u of g.units)if(u.side===1&&u.type!=='liang')tot+=u.n;
+ let gr='';if(g.grain[ME]!==null)gr+=tr('军粮 ','Grain ')+Math.ceil(g.grain[ME]);if(g.grain[3-ME]!==null)gr+=(gr?'　':'')+tr('敌粮 ','Enemy grain ')+Math.ceil(g.grain[3-ME]);
+ let tot=0;for(const u of g.units)if(u.side===ME&&u.type!=='liang')tot+=u.n;
  setH('force',(gr?gr+'　':'')+tr('我军 '+Math.round(tot/100)/10+' 千','Our army '+Math.round(tot/100)/10+'k'));
  setH('objlist',g.M.obj(g).map(o=>'<li class="'+(o[1]>0?'ok':o[1]<0?'bad':'')+'">'+o[0]+'</li>').join(''));
  const s=selOK();let info;
@@ -1381,7 +1391,7 @@ let running=false,last=0,hudT=0,miniT=0,touchy=false,drag=null;
 const keys={};
 function newGame(mi){
  const M=typeof mi==='number'?MISSIONS[mi]:mi;installTypes(M.data&&M.data.unitTypes);setMusic(M.data&&M.data.music);
- G={mi:typeof mi==='number'?mi:-1,M,s0:[0,0,0],fortList:[],campList:[],tilePaint:false,t:0,map:new Uint8Array(MW*MH),own:new Uint8Array(MW*MH),burnt:new Uint8Array(MW*MH),units:[],gates:[],gateIdx:{},points:[],elev:new Uint8Array(MW*MH),hv:new Float32Array(MW*MH),props:[],floats:[],gap:new Uint8Array(MW*MH),shp:{},ramp:new Uint8Array(MW*MH),tower:new Uint8Array(MW*MH),riverLines:[],roadLines:[],fires:new Map(),arrows:[],parts:[],rings:[],sel:[],
+ G={mi:typeof mi==='number'?mi:-1,M,s0:[0,0,0],pvp:!!M.pvp,burntL:[],breachL:[],flag0:[],fortList:[],campList:[],tilePaint:false,t:0,map:new Uint8Array(MW*MH),own:new Uint8Array(MW*MH),burnt:new Uint8Array(MW*MH),units:[],gates:[],gateIdx:{},points:[],elev:new Uint8Array(MW*MH),hv:new Float32Array(MW*MH),props:[],floats:[],gap:new Uint8Array(MW*MH),shp:{},ramp:new Uint8Array(MW*MH),tower:new Uint8Array(MW*MH),riverLines:[],roadLines:[],fires:new Map(),arrows:[],parts:[],rings:[],sel:[],
   weather:'sun',wind:0,windStr:1,grain:[null,null,null],gen:[null,null,null],hour0:M.hour0,hourLen:M.paceTime?M.hourLen*100/D.pace:M.hourLen,heat:0,events:[],evi:0,over:null,speed:1,paused:true,uid:1,
   stats:{kill:0,loss:0,surr:0},flags:{},used:{},rnd:rng32(M.seed),nameIdx:{},qt:{},qLast:-99,fireMode:false,ground:null,gctx:null};
  M.setup(G);G.events=M.events.slice().sort((a,b)=>a.t-b.t);
@@ -1401,15 +1411,16 @@ function showBrief(mi,ed){
 function showBriefAgain(){const M=G.M;modal(briefHtml(M),
   [[G.t>0?tr('继续','Resume'):tr('开战','To Battle'),()=>{closeModal();G.paused=false;}],[exitName(),exitGame]]);}
 function endGame(r){
- if(G.over)return;G.over=r;const win=r[0]==='win',M=G.M;sfx(win?'win':'lose');
+ if(G.over)return;if(G.pvp){G.over=r;if(!G.pvpEnd)G.pvpEnd={w:r[0]==='win'?ME:3-ME,why:'wiped'};pvpShow();return;}
+ G.over=r;const win=r[0]==='win',M=G.M;sfx(win?'win':'lose');
  if(win&&G.mi>=0&&!done.includes(G.mi)){done.push(G.mi);try{localStorage.setItem('changping-done',JSON.stringify(done));}catch(e){}}
  const st=tr('歼敌 ','Enemy slain ')+Math.round(G.stats.kill)+(G.stats.surr?tr('　受降 ','　Surrendered ')+Math.round(G.stats.surr):'')+tr('　折损 ','　Our losses ')+Math.round(G.stats.loss)+tr('　历时 ','　Duration ')+(G.t/G.hourLen).toFixed(1)+tr(' 时辰',' double-hours');
  const btn=[];if(win&&G.mi>=0&&G.mi<MISSIONS.length-1)btn.push([tr('下一战','Next Battle'),()=>showBrief(G.mi+1)]);btn.push([tr('再战此役','Fight Again'),()=>showBrief(G.mi>=0?G.mi:mkMission(G.M.data),fromEd)]);btn.push([exitName(),exitGame]);
  modal('<p class="seal '+(win?'':'lost')+'">'+(win?'捷':'败')+'</p><h2>'+mt(M,'name')+(win?tr('　大捷',' — Victory'):tr('　兵败',' — Defeat'))+'</h2><p>'+(win?mt(M,'win'):r[1]+tr('。','.'))+'</p><p class="role">'+st+'</p>',btn);
 }
-function toTitle(){fromEd=false;closeModal();running=false;G=null;ambient();$('game').hidden=true;$('editor').hidden=true;$('title').hidden=false;buildTitle();}
+function toTitle(){netClose();fromEd=false;closeModal();running=false;G=null;ambient();$('game').hidden=true;$('editor').hidden=true;$('title').hidden=false;buildTitle();}
 function modal(html,btns){const m=$('modal');$('mbody').innerHTML=html;const f=$('mbtns');f.innerHTML='';
- btns.forEach(([t,fn],i)=>{const b=document.createElement('button');b.textContent=t;if(i===0)b.className='pri';b.addEventListener('click',fn);f.appendChild(b);});m.hidden=false;if(G)G.wasPaused=G.paused,G.paused=true;}
+ btns.forEach(([t,fn],i)=>{const b=document.createElement('button');b.textContent=t;if(i===0)b.className='pri';b.addEventListener('click',fn);f.appendChild(b);});m.hidden=false;if(G&&!G.pvp)G.wasPaused=G.paused,G.paused=true;}
 function closeModal(){$('modal').hidden=true;}
 function showCodex(back){modal($(EN()?'codex-en':'codex').innerHTML,[[tr('合上兵书','Close the Book'),()=>{closeModal();if(back)back();else if(G&&!G.over)G.paused=G.wasP2;}]]);}
 function buildTitle(){const box=$('mlist');box.innerHTML='';
@@ -1419,7 +1430,7 @@ function buildTitle(){const box=$('mlist');box.innerHTML='';
  const embedRow=L=>{const M=mkMission(L);add(M,M.ord,false,()=>showBrief(mkMission(L)),()=>openEditor(Object.assign({},L,{id:'lv'+Date.now().toString(36),name:(L.name||'')+'（改）'})));};
  EMBED.filter(L=>L&&L.first).forEach(embedRow);
  MISSIONS.forEach((M,i)=>add(M,M.ord,done.includes(i),()=>showBrief(i)));
- EMBED.filter(L=>!(L&&L.first)).forEach(embedRow);
+ EMBED.filter(L=>!(L&&(L.first||L.pvp))).forEach(embedRow);
  LOCAL.forEach((L,i)=>{const M=mkMission(L);add(M,M.ord,false,()=>showBrief(mkMission(L)),()=>openEditor(L,i));});
  syncDiff();}
 function syncDiff(){for(const k of['force','might','wit','pace','vol']){$('d_'+k).value=D[k];}
@@ -1432,8 +1443,11 @@ function frame(ts){
  requestAnimationFrame(frame);if(!running||!G)return;
  const el=Math.min(.05,(ts-last)/1000||0);last=ts;
  const ps=520*el/cam.z;if(keys.ArrowLeft||keys.a)cam.x-=ps;if(keys.ArrowRight||keys.d)cam.x+=ps;if(keys.ArrowUp||keys.w)cam.y-=ps/K;if(keys.ArrowDown||keys.s)cam.y+=ps/K;NOW=ts/1000;
- if(!G.paused&&!G.over)for(let i=0;i<G.speed&&!G.over;i++)update(el);
+ NET.frameAt=performance.now();
+ if(NET.role==='guest'&&G.pvp)guestTick(el);
+ else if(!G.paused&&!G.over)for(let i=0;i<G.speed&&!G.over;i++)update(el);
  if(!G)return;
+ netHostTick(el);
  music(el);render();hudT-=el;if(hudT<=0){hudT=.2;hud();}miniT-=el;if(miniT<=0){miniT=.25;drawMini();}
 }
 const toWorld=(sx,sy)=>{const x=cl(cam.x+sx/cam.z,0,WW-1),v=cam.y*K+sy/cam.z;let y=v/K;for(let i=0;i<4;i++)y=cl((v+hpx(x,cl(y,0,WH-1)))/K,0,WH-1);return{x,y};};
@@ -1452,7 +1466,7 @@ function init(){
  try{touchy=window.matchMedia('(hover:none)').matches;}catch(e){}
  cvEl=$('cv');ctx=cvEl.getContext('2d');nc=mkCanvas(10,10);nctx=nc.getContext('2d');miniEl=$('mini');mctx=miniEl.getContext('2d');
  loadLevels();try{edInit();}catch(e){}
- applyLang();buildTitle();window.addEventListener('resize',resize);
+ applyLang();buildTitle();netInit();window.addEventListener('resize',resize);
  try{$('bedit').addEventListener('click',()=>openEditor());}catch(e){}
  try{document.fonts.load('600 30px "Cormorant Garamond"','Fire Hold');}catch(e){}
  try{document.fonts.load('30px "Ma Shan Zheng"','长平丹水故关秦壁赵垒营西粮道戟盾弩骑帅将守伏溃死疾火攻');}catch(e){}
@@ -1468,18 +1482,18 @@ function init(){
   if(drag.mode==='pan'||(drag.mode==='touch'&&drag.moved)){cam.x=drag.cx-(p.x-drag.sx)/cam.z;cam.y=drag.cy-(p.y-drag.sy)/cam.z/K;}});
  const up=e=>{if(!ptrs.has(e.pointerId))return;const prevSel=G?G.sel.slice():[];const p=pos(e);ptrs.delete(e.pointerId);if(!drag||!G)return;
   if(drag.mode==='pinch'){if(ptrs.size===0)drag=null;return;}const d=drag;drag=null;const w=toWorld(p.x,p.y);
-  if(d.mode==='box'){if(!d.moved){if(G.tacMode)return tacAt(w);if(G.fireMode)return fireAt(w);const u=pickUnit(w.x,w.y,1);
+  if(d.mode==='box'){if(!d.moved){if(G.tacMode)return tacAt(w);if(G.fireMode)return fireAt(w);const u=pickUnit(w.x,w.y,ME);
     if(u&&!u.auto&&u.state!=='rout'){if(d.shift){const i=G.sel.indexOf(u);if(i>=0)G.sel.splice(i,1);else G.sel.push(u);}else G.sel=[u];}else if(!d.shift)G.sel=[];}
    else{const ax=Math.min(d.sx,p.x),ay=Math.min(d.sy,p.y),bx=Math.max(d.sx,p.x),by=Math.max(d.sy,p.y);
-    const s=G.units.filter(u=>{if(u.side!==1||u.auto||u.state==='rout')return false;const q=scrOf(u);return q.x>=ax&&q.x<=bx&&q.y>=ay-8&&q.y<=by+8;});G.sel=d.shift?[...new Set(G.sel.concat(s))]:s;}}
+    const s=G.units.filter(u=>{if(u.side!==ME||u.auto||u.state==='rout')return false;const q=scrOf(u);return q.x>=ax&&q.x<=bx&&q.y>=ay-8&&q.y<=by+8;});G.sel=d.shift?[...new Set(G.sel.concat(s))]:s;}}
   else if(d.mode==='order'){if(G.tacMode)tacAt(w);else if(G.fireMode)G.fireMode=false;else order(w.x,w.y);}
-  else if(d.mode==='touch'&&!d.moved){if(G.tacMode)return tacAt(w);if(G.fireMode)return fireAt(w);const u=pickUnit(w.x,w.y,1);
+  else if(d.mode==='touch'&&!d.moved){if(G.tacMode)return tacAt(w);if(G.fireMode)return fireAt(w);const u=pickUnit(w.x,w.y,ME);
    if(u&&!u.auto&&u.state!=='rout'){if(G.sel.length===1&&G.sel[0]===u)G.sel=[];else if(G.sel.includes(u))G.sel=[u];else if(G.sel.length&&e.shiftKey)G.sel.push(u);else G.sel=[u];}
    else if(G.sel.length)order(w.x,w.y);}
   {const nw=G.sel.filter(u=>!prevSel.includes(u));if(nw.length)hail(nw);if(G.sel.length)use('select');if(G.sel.length>1)use('multi');}
   hudT=0;};
  cvEl.addEventListener('pointerup',up);cvEl.addEventListener('pointercancel',e=>{ptrs.delete(e.pointerId);drag=null;});
- cvEl.addEventListener('dblclick',e=>{if(!G)return;const p=pos(e),w=toWorld(p.x,p.y),u=pickUnit(w.x,w.y,1);if(u&&!u.auto){G.sel=G.units.filter(o=>o.side===1&&!o.auto&&o.kind===u.kind&&o.state!=='rout');hail(G.sel);use('select');if(G.sel.length>1)use('multi');}});
+ cvEl.addEventListener('dblclick',e=>{if(!G)return;const p=pos(e),w=toWorld(p.x,p.y),u=pickUnit(w.x,w.y,ME);if(u&&!u.auto){G.sel=G.units.filter(o=>o.side===ME&&!o.auto&&o.kind===u.kind&&o.state!=='rout');hail(G.sel);use('select');if(G.sel.length>1)use('multi');}});
  cvEl.addEventListener('wheel',e=>{e.preventDefault();const p=pos(e),w=toWorld(p.x,p.y);cam.z=cl(cam.z*(e.deltaY<0?1.1:.91),.45,1.6);cam.x=w.x-p.x/cam.z;cam.y=w.y-(p.y/cam.z+hpx(w.x,w.y))/K;},{passive:false});
  const mj=e=>{if(!G)return;const r=miniEl.getBoundingClientRect();cam.x=(e.clientX-r.left)/r.width*WW-W/cam.z/2;cam.y=(e.clientY-r.top)/r.height*WH-H/cam.z/K/2;};
  miniEl.addEventListener('pointerdown',e=>{try{miniEl.setPointerCapture(e.pointerId);}catch(_){}mj(e);});miniEl.addEventListener('pointermove',e=>{if(e.buttons||e.pointerType==='touch')mj(e);});
@@ -1585,6 +1599,9 @@ const FORMAT_DOC=`【怎样加一关】
                                        ram ladder cata 攻城器  fire 火攻得手  tac 用过战术 wings rear side 三种战术
 {"type":"all","of":[…]}  {"type":"any","of":[…]}  {"type":"not","of":<条件>}
 
+【联机对战】关卡加上 "pvp":true 就会出现在“联机对战”的战图列表里（不再出现在卷首的战役列表）。对战时二号阵营由应战者指挥，
+其 ai 设置无效；胜负改为：主将阵亡、开局时属于己方的据点被夺、或全军覆没者负。难度设置不作用于对战。事件、粮草规则照常生效。
+
 【提醒】删掉据点会让后面的据点序号前移，规则里引用的序号要跟着改。敌军兵力与战力还会按卷首的难度设置缩放。`;
 
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1668,7 +1685,7 @@ function mkMission(L){
   const w=L.weather||{};setWeather(w.type==='rain'||w.type==='fog'?w.type:'sun',Number(w.wind)||0,w.str>1?2:1);};
  M.events=(L.events||[]).map(e=>({t:Number(e.t)||0,f:g=>runAct(g,e)}));
  M.tick=(g,dt)=>{
-  for(const r of L.grain||[]){const s=r.side===2?2:1,k=s===1?D.pace/100:100/D.pace;if(g.grain[s]===null)continue;
+  for(const r of L.grain||[]){const s=r.side===2?2:1,k=G.pvp?1:s===1?D.pace/100:100/D.pace;if(g.grain[s]===null)continue;
    const cut=r.cutBy===undefined||r.cutBy===null||(g.points[r.cutBy]&&g.points[r.cutBy].side!==s);
    if(cut)g.grain[s]=Math.max(0,g.grain[s]-dt*(r.drain||0)*k);else g.grain[s]=Math.min(100,g.grain[s]+dt*(r.regen||0));
    if(g.grain[s]<=0){if(!g.flags['st'+s]){g.flags['st'+s]=1;msg(s===1?tr('军中粮尽，士卒饥疲','Our grain is gone; the soldiers grow hungry and weak'):tr('敌军粮尽，军心动摇','The enemy is out of grain; their resolve wavers'),s===1?'warn':'good');quote('supply');}}else g.flags['st'+s]=0;}
@@ -1785,7 +1802,7 @@ function edTab(t){if(t)ED.tab=t;const P=$('epane'),L=ED.L;if(!P||!L)return;let h
   if(o)h+='<p><button data-e="delsel">删除此项</button></p>';}
  else if(ED.tab==='info'){const w=L.weather||{};h=F('战役名',I('name',L.name))+F('序',I('ord',L.ord||''))+F('我方主帅',I('role',L.role||''))+F('一句话任务',I('line',L.line||''))+F('战前形势',TA('brief',L.brief||''))+F('军令，每行一条',TA('goals',(L.goals||[]).join('\n'),'data-lines'))+F('献策，每行一条',TA('tips',(L.tips||[]).join('\n'),'data-lines'))+F('胜后题记',TA('winText',L.winText||''))+
   F('开局时辰',S('hour0',L.hour0,[...HN].map((c,i)=>[i,c+'时']),1))+F('每时辰秒数',I('hourLen',L.hourLen,'number','min="10"'))+F('天气',S('weather.type',w.type||'sun',[['sun','晴'],['rain','雨'],['fog','雾']]))+F('风向',S('weather.wind',w.wind||0,WD.map((n,i)=>[i*PI/4,n+'风']),1))+F('风力',S('weather.str',w.str||1,[[1,'微风'],[2,'大风']],1))+
-  F('我军面向',S('_face',L.face[1],[[0,'东'],[PI,'西'],[-PI/2,'北'],[PI/2,'南']],1))+F('开局镜头',I('cam',(L.cam||[]).join(','),'text','data-csv placeholder="x,y"'))+F('难度影响时限',C('paceTime',L.paceTime));}
+  F('我军面向',S('_face',L.face[1],[[0,'东'],[PI,'西'],[-PI/2,'北'],[PI/2,'南']],1))+F('开局镜头',I('cam',(L.cam||[]).join(','),'text','data-csv placeholder="x,y"'))+F('难度影响时限',C('paceTime',L.paceTime))+F('联机对战图',C('pvp',L.pvp));}
  else if(ED.tab==='rule')h='<p class="hint">规则用 JSON 写，点“＋”插入样例再改数字；写法见“格式”页。据点序号以地图上旗旁的数字为准。</p>'+J('取胜条件（满足其一）','win',4)+J('落败条件','lose',4)+J('定时事件','events',9)+J('条件触发','triggers',5)+J('粮草','grain',4)+J('左上角军令（可空）','objectives',4);
  else if(ED.tab==='mod')h='<p class="hint">自定兵种写好后，左侧“兵种”下拉里就能选。</p>'+J('自定兵种与兵器','unitTypes',9)+J('配乐','music',3)+'<p><button data-e="mus">试听配乐</button></p>'+J('音效（覆盖内置或新增）','sfx',5)+'<p class="tp">'+Object.keys(L.sfx||{}).map(k=>'<button data-sfx="'+esc(k)+'">试听 '+esc(k)+'</button>').join('')+'</p>';
  else if(ED.tab==='io')h='<p class="hint">整关就是一段 JSON：可以复制给别人或别的 agent，也可以把别处写好的 JSON 粘进来载入。</p><p class="tp"><button data-e="gen">生成当前战役的 JSON</button><button data-e="copy">复制</button><button data-e="load">载入文本框里的 JSON</button></p><textarea id="e_json" rows="14" spellcheck="false" placeholder="在此粘贴关卡 JSON"></textarea>'+
@@ -1861,7 +1878,250 @@ function edInit(){
  $('e_pick').addEventListener('change',e=>{const v=e.target.value;if(!v)return;const i=Number(v.slice(1));if(v[0]==='L'&&LOCAL[i])edLoad(LOCAL[i],i);else if(EMBED[i])edLoad(Object.assign({},EMBED[i],{id:'lv'+Date.now().toString(36),name:(EMBED[i].name||'')+'（改）'}),-1);});
 }
 
-if(typeof window!=='undefined'&&window.__TEST)window.__CP={setLang,briefHtml,mt,endGame,buildTitle,applyLang,get LANG(){return LANG;},newGame,update,render,hud,drawMini,MISSIONS,fireAt,get G(){return G;},init,cmd,order,tactic,mkMission,checkLevel,captureBuiltin,levelOut,edLoad,blankLevel,terrainOf,UT,CT,setRun(){running=true;}};
+/* ====================================================================
+   两人联机对战：主机权威。开局者（主机，一号阵营）运行整场模拟，
+   应战者（客机，二号阵营）只发号令、收战况并在本地插值显示。
+   通道：claude.ai 页面用 room 能力（单条消息不超过 4KiB，可能丢包，故战况全用绝对值、可重发）；
+   没有 room 时退回 BroadcastChannel，只能同一浏览器两个窗口对战。
+   ==================================================================== */
+let ME=1,ACT=1,CMDCTX=0;
+const NET={pc:null,roomState:'none',lobbyOpen:false,role:null,tx:null,code:'',L:null,fx:[],seq:0,uT:0,wT:0,known:{},started:false,last:0,map:{},need:{},needT:0,chunks:null,timer:0,room:null,nr:null,peerId:null,bOff:0,lost:false,lobby:[],sfxT:{},frameAt:0,status:''};
+const FMK=['fang','feng','yuan','yan'],GEARK=['','ram','ladder','cata'],RELAY=['thud','crash','fall','fire','gong','drum','drums'];
+const swapTxt=t=>String(t).replace(/我军主将|敌将|我军|敌军|敌(?![军将])|\b(?:The enemy|the enemy|Enemy|enemy|Our|our)\b/g,m=>({'我军主将':'敌将','敌将':'我军主将','我军':'敌军','敌军':'我军','敌':'我军','The enemy':'Our','the enemy':'our','Enemy':'Our','enemy':'our','Our':'Enemy','our':'enemy'})[m]);
+const num=v=>{v=Number(v);return isFinite(v)?v:0;};
+function fx(a){if(NET.role==='host'&&NET.started&&NET.fx.length<90)NET.fx.push(a);}
+function netSend(o){if(NET.tx)NET.tx.send(o);}
+function pvpMaps(){return EMBED.concat(LOCAL).filter(L=>L&&L.pvp);}
+function mkPvp(L){const M=mkMission(L);M.pvp=true;const setup=M.setup;
+ M.setup=g=>{setup(g);for(const u of g.units)u.ai=null;g.flag0=g.points.map(p=>p.side);};
+ const lost=(g,s)=>{const u=g.gen[s];if(u&&!u.alive)return'gen';if(g.flag0.some((o,i)=>o===s&&g.points[i].side!==s))return'flag';if(!g.units.some(x=>x.side===s&&x.type!=='liang'))return'wiped';return'';};
+ M.check=g=>{const a=lost(g,1),b=lost(g,2);if(!a&&!b)return null;g.pvpEnd={w:a&&b?0:a?2:1,why:a&&b?'both':a||b};return g.pvpEnd.w===ME?['win']:['lose',''];};
+ M.obj=g=>{const mg=g.gen[ME],fl=(g.flag0||[]).some((o,i)=>o===ME&&g.points[i]&&g.points[i].side!==ME),has=(g.flag0||[]).some(o=>o===ME);
+  const fo=(g.flag0||[]).some(x=>x===3-ME),dead=mg&&!mg.alive;const o=[[tr('斩敌军主将'+(fo?'，或夺其帅旗':''),'Kill the enemy general'+(fo?', or take their banner':'')),0],[tr('我军主将'+(dead?'已亡':'无恙'),'Our general '+(dead?'has fallen':'is safe')),dead?-1:0]];if(has)o.push([tr('守住我军帅旗','Hold our banner'),fl?-1:0]);return o;};
+ return M;}
+function pvpShow(){const e=G.pvpEnd||{w:0,why:'both'},win=e.w===ME,draw=e.w===0;sfx(win?'win':'lose');
+ const WHY=EN()?{gen:['The enemy general is slain','Our general has fallen'],flag:['We have taken the enemy banner','Our banner has been taken'],wiped:['The enemy army is destroyed','Our army is destroyed'],left:['Your opponent has left the field','The game was cut off']}:{gen:['敌军主将授首','我军主将阵亡'],flag:['已夺敌军帅旗','我军帅旗被夺'],wiped:['敌军全军覆没','我军全军覆没'],left:['对手已离开战场','战局中断']};
+ const st=G.stats,k=ME===1?st.kill:st.loss,l=ME===1?st.loss:st.kill;
+ modal('<p class="seal '+(win?'':'lost')+'">'+(draw?'和':win?'捷':'败')+'</p><h2>'+mt(G.M,'name')+(draw?tr('　两败俱伤',' — Mutual Ruin'):win?tr('　大捷',' — Victory'):tr('　兵败',' — Defeat'))+'</h2><p>'+(draw?tr('双方同时失其所守。','Both sides lost what they held at the same moment.'):(WHY[e.why]||WHY.left)[win?0:1]+tr('。','.'))+'</p><p class="role">'+tr('歼敌 ','Enemy slain ')+Math.round(k)+tr('　折损 ','　Our losses ')+Math.round(l)+tr('　历时 ','　Duration ')+(G.t/G.hourLen).toFixed(1)+tr(' 时辰',' double-hours')+'</p>',[[tr('回到卷首','Back to Title'),toTitle]]);}
+function startPvp(L,side){closeModal();ME=side;ACT=side;fromEd=false;newGame(mkPvp(L));$('title').hidden=true;$('editor').hidden=true;$('game').hidden=false;resize();try{$('log').innerHTML='';}catch(e){}
+ const gen=G.gen[side];if(gen){cam.x=gen.x-W/cam.z/2;cam.y=gen.y-H/cam.z/K/2;}
+ NET.map={};NET.need={};NET.seq=0;NET.fx=[];NET.known={};NET.last=Date.now();NET.lost=false;NET.bOff=0;
+ if(side===2){G.units=G.units.filter(u=>u.side===2);G.gen[1]=null;for(const u of G.units){u.tx=u.x;u.ty=u.y;u.tf=u.face;u.visA=1;u.seq=0;NET.map[u.id]=u;}}
+ G.paused=false;G.speed=1;running=true;hud();sfx('drums');msg(side===1?tr('对手已应战。你执朱旗，居西。','Your opponent has answered. You lead the vermilion banner, in the west.'):tr('已入战局。你执青旗，居东。','You have joined. You lead the azure banner, in the east.'),'good',side);}
+
+/* ---- 号令分发：本机执行，或发给主机 ---- */
+const SIM={order:(x,y)=>orderSim(x,y),cmd:c=>cmdSim(c),fire:(x,y)=>fireSim({x,y}),tactic:(m,id)=>{const e=G.units.find(u=>u.id===id&&u.side!==ACT&&u.alive&&u.vis);if(e)tactic(m,e);}};
+function execCmd(side,sel,name,args){if(!SIM[name]||!G||G.over)return;const ps=G.sel,pa=ACT,pc=CMDCTX;G.sel=sel;ACT=side;CMDCTX=side;try{SIM[name].apply(null,args);}finally{if(side!==ME)G.sel=ps;ACT=pa;CMDCTX=pc;}}
+function act(name,args){if(!G||G.over)return;
+ if(NET.role==='guest'){const s=selOK();netSend({k:'c',n:name,a:args,ids:s.map(u=>u.id)});
+  if(name==='order'&&s.length){sfx('move');ring(args[0],args[1],INK);ack(s,'得令');}else if(name==='tactic')ack(s,'得令');return;}
+ execCmd(ME,G.sel,name,args);}
+function order(wx,wy){act('order',[wx,wy]);}
+function fireAt(w){G.fireMode=false;act('fire',[w.x,w.y]);}
+function cmd(c){
+ if(!G||G.over)return;sfx('tick');
+ if(c==='all'){const pv=G.sel;G.sel=G.units.filter(u=>u.side===ME&&!u.auto&&u.alive&&u.state!=='rout');hail(G.sel.filter(u=>!pv.includes(u)));use('all');if(G.sel.length>1)use('multi');return;}
+ if(c==='pause'){if(G.pvp){msg(tr('联机对战不能暂停','Online games cannot be paused'),'',ME);return;}G.paused=!G.paused;return;}
+ if(c==='speed'){if(G.pvp){msg(tr('联机对战不能快进','Online games cannot be sped up'),'',ME);return;}G.speed=G.speed===1?2:1;return;}
+ if(c==='siege'){$('siegemenu').hidden=!$('siegemenu').hidden;$('tacmenu').hidden=true;return;}
+ if(c==='tac'){if(G.tacMode){G.tacMode=null;return;}$('tacmenu').hidden=!$('tacmenu').hidden;$('siegemenu').hidden=true;return;}
+ if(!selOK().length){msg(tr('先点选我军军阵','Select one of your units first'),'',ME);return;}
+ if(TAC[c]){G.tacMode=c;G.fireMode=false;msg(tr(TAC[c]+'：'+(touchy?'轻点':'点选')+'要合击的敌军',TAC[c]+': '+(touchy?'tap':'click')+' the enemy to strike'),'',ME);return;}
+ if(c==='fire'){G.fireMode=!G.fireMode;if(G.fireMode)msg(tr('点选林地或敌营，发火箭','Click a forest or enemy camp to loose fire arrows'),'',ME);return;}
+ act('cmd',[c]);}
+
+/* ---- 通道 ---- */
+function netFail(e){const t=e&&e.code==='not_permitted'?tr('你在此页面只有查看权限，不能联机。请页面主人把你的权限调为“可参与”。','You can only view this page, so you cannot play online. Ask the page owner to give you at least “can participate” access.'):tr('联机通道不可用。','No online channel is available.');NET.status=t;pvpStatus(t);}
+function netOpen(code){NET.code=code;NET.peerId=null;
+ const recv=d=>{try{netRecv(d);}catch(e){}};
+ const useBC=()=>{if(typeof BroadcastChannel==='undefined')return false;const bc=new BroadcastChannel('changping-pvp-'+code);bc.onmessage=e=>recv(e.data);NET.tx={kind:'bc',send:o=>{try{bc.postMessage(o);}catch(e){}},close:()=>{try{bc.close();}catch(e){}}};return true;};
+ if(!NET.room)return Promise.resolve(useBC());
+ return NET.room.join('cp-'+code).then(nr=>{NET.nr=nr;
+  const off=[nr.on('pvp',m=>{if(!m||m.sameTab||!m.data)return;const k=m.data.k,fromGuest=k==='hello'||k==='ready'||k==='c'||k==='need'||k==='hb';if(fromGuest!==(NET.role==='host'))return;
+   if(!NET.peerId){if(NET.role==='host'&&k!=='hello')return;NET.peerId=m.peer;}else if(m.peer!==NET.peerId)return;recv(m.data);},netFail),
+   nr.onPeers(ch=>{if(NET.peerId&&ch.left.some(p=>p.peer===NET.peerId))netPeerLeft();})];
+  NET.tx={kind:'room',send:o=>{nr.emit('pvp',o).catch(e=>{if(e&&e.code==='not_permitted')netFail(e);});},close:()=>{off.forEach(f=>{try{f();}catch(e){}});nr.leave().catch(()=>{});}};return true;},()=>useBC());}
+function netClose(){const tx=NET.tx;NET.tx=null;if(tx){try{tx.send({k:'bye'});tx.close();}catch(e){}}NET.pc=null;if(NET.timer)clearInterval(NET.timer);if(NET.room&&NET.role==='host')NET.room.presence({cp:null}).catch(()=>{});
+ NET.role=null;NET.nr=null;NET.timer=0;NET.started=false;NET.L=null;NET.chunks=null;NET.peerId=null;NET.fx=[];NET.map={};ME=1;ACT=1;CMDCTX=0;}
+function netPeerLeft(){if(G&&G.pvp&&!G.over){G.pvpEnd={w:ME,why:'left'};G.over=['win'];pvpShow();}else if(!NET.started)pvpStatus(tr('对手已离开。','Your opponent has left.'));}
+function netHost(L,code){netClose();NET.role='host';NET.L=L;return netOpen(code).then(ok=>{if(!ok){NET.role=null;return false;}if(NET.room)NET.room.presence({cp:{code,map:String(L.name||'').slice(0,16)}}).catch(()=>{});return true;});}
+function netRetry(){if(NET.role!=='guest'||NET.started)return;netSend({k:NET.L?'ready':'hello'});}
+function netJoin(code){netClose();NET.role='guest';return netOpen(code).then(ok=>{if(!ok){NET.role=null;return false;}netSend({k:'hello'});NET.timer=setInterval(netRetry,1200);return true;});}
+function sendLevel(){const s=JSON.stringify(NET.L),n=Math.ceil(s.length/700);for(let i=0;i<n;i++)netSend({k:'lv',i,n,s:s.slice(i*700,i*700+700)});}
+const rosOf=u=>[u.id,u.side,u.kind,u.name,Math.round(u.nMax),u.general?1:0,u.auto?1:0];
+function netCmd(o){const ids=Array.isArray(o.ids)?o.ids.slice(0,80):[],sel=G.units.filter(u=>u.side===2&&u.alive&&u.state!=='rout'&&!u.auto&&ids.includes(u.id)),a=Array.isArray(o.a)?o.a:[];
+ const okc=['hold','stop','split','merge','march','ram','ladder','cata','nogear','build'].concat(FMK);
+ if(o.n==='order'&&isFinite(a[0])&&isFinite(a[1]))execCmd(2,sel,'order',[cl(+a[0],0,WW),cl(+a[1],0,WH)]);
+ else if(o.n==='cmd'&&okc.includes(a[0]))execCmd(2,sel,'cmd',[a[0]]);
+ else if(o.n==='fire'&&isFinite(a[0])&&isFinite(a[1]))execCmd(2,sel,'fire',[cl(+a[0],0,WW),cl(+a[1],0,WH)]);
+ else if(o.n==='tactic'&&TAC[a[0]]&&isFinite(a[1]))execCmd(2,sel,'tactic',[a[0],a[1]|0]);}
+function netRecv(o){if(!o||typeof o!=='object')return;
+ if(NET.role==='host'){
+  NET.lastG=Date.now();if(NET.lostG&&NET.started){NET.lostG=false;msg(tr('对手已恢复联络','Contact with your opponent is restored'),'good',ME);}
+  if(o.k==='hb')return;
+  if(o.k==='hello'){if(!NET.started)sendLevel();}
+  else if(o.k==='ready'){if(!NET.started){NET.started=true;NET.lastG=Date.now();NET.lostG=false;if(NET.room)NET.room.presence({cp:null}).catch(()=>{});startPvp(NET.L,1);}netSend({k:'go'});}
+  else if(o.k==='c'){if(NET.started&&G&&G.pvp&&!G.over)netCmd(o);}
+  else if(o.k==='need'){if(NET.started&&G&&Array.isArray(o.a)){const want=o.a.slice(0,60),ros=G.units.filter(u=>want.includes(u.id)&&(u.side===2||u.vis)).map(rosOf);if(ros.length)netSend({k:'r',a:ros});}}
+  else if(o.k==='bye')netPeerLeft();
+  return;}
+ if(NET.role!=='guest')return;
+ if(o.k==='lv'){if(NET.L)return;const n=o.n|0,i=o.i|0;if(n<1||n>60||i<0||i>=n)return;if(!NET.chunks||NET.chunks.length!==n)NET.chunks=new Array(n).fill(null);NET.chunks[i]=String(o.s);
+  if(NET.chunks.every(c=>c!==null)){try{const L=JSON.parse(NET.chunks.join(''));if(L&&typeof L==='object'){NET.L=L;netSend({k:'ready'});pvpStatus(tr('已收到战图，等待开局…','Map received; waiting for the battle to begin…'));}}catch(e){NET.chunks=null;}}return;}
+ if(o.k==='bye'){netPeerLeft();return;}
+ if(!NET.L)return;
+ if(!NET.started&&(o.k==='go'||o.k==='u'||o.k==='w')){NET.started=true;startPvp(NET.L,2);}
+ if(!NET.started||!G||!G.pvp)return;
+ NET.last=Date.now();if(NET.lost){NET.lost=false;msg(tr('已与主机恢复联络','Contact with the host is restored'),'good',ME);}
+ if(o.k==='u')applyUnits(o);else if(o.k==='w')applyWorld(o);else if(o.k==='r')applyRoster(o);}
+
+/* ---- 主机：广播战况 ---- */
+function takeFx(){const out=[];let b=0;while(NET.fx.length){const s=JSON.stringify(NET.fx[0]),n=/[^\x00-\x7f]/.test(s)?s.length*3:s.length;if(out.length&&b+n>1400)break;b+=n;out.push(NET.fx.shift());}return out;}
+function netHostTick(dt){if(NET.role!=='host'||!NET.started||!G)return;NET.uT-=dt;NET.wT-=dt;
+ if(!G.over){const q=Date.now()-NET.lastG;if(q>30000){netPeerLeft();return;}if(q>8000&&!NET.lostG){NET.lostG=true;msg(tr('与对手失去联络：对方可能断网，或把页面切到了后台','Lost contact with your opponent: they may be offline or have put the page in the background'),'warn',ME);}}
+ if(NET.uT<=0){NET.uT=.2;const q=++NET.seq,rec=[],ros=[];
+  for(const u of G.units){if(!(u.side===2||u.vis)){u.gv=false;continue;}if(!u.gv||!NET.known[u.id]){NET.known[u.id]=1;ros.push(rosOf(u));}u.gv=true;
+   const pg=u.make||u.build,ext=GEARK.indexOf(u.gear||'')|(u.make?GEARK.indexOf(u.make.g)<<2:0)|(pg?cl(Math.round(pg.t*100),0,100)<<4:0)|(u.build?1<<11:0);
+   rec.push([u.id,Math.round(u.x),Math.round(u.y),Math.round(u.face*100),Math.round(u.n),Math.round(u.morale),Math.round(u.stam),
+    (u.hold?1:0)|(u.holdT>8?2:0)|(u.hidden?4:0)|(u.death?8:0)|(u.march?16:0)|(u.state==='rout'?32:0)|(u.path.length?64:0)|(u.contact?128:0)|(u.man?256:0),Math.max(0,FMK.indexOf(u.fm)),ext]);}
+  for(let i=0;i<ros.length;i+=20)netSend({k:'r',a:ros.slice(i,i+20)});
+  const n=Math.max(1,Math.ceil(rec.length/40));for(let i=0;i<n;i++){const o={k:'u',q,t:Math.round(G.t*10)/10,a:rec.slice(i*40,i*40+40),e:i===n-1?1:0};if(i===0&&NET.fx.length)o.f=takeFx();netSend(o);}}
+ if(NET.wT<=0){NET.wT=1;const tw=[];for(let i=0;i<MW*MH;i++)if(G.tower[i])tw.push([i,G.tower[i]]);
+  const bl=G.burntL,b=bl.slice(-120).concat(bl.slice(NET.bOff,NET.bOff+120));NET.bOff=NET.bOff+120>=bl.length?0:NET.bOff+120;
+  netSend({k:'w',t:Math.round(G.t*10)/10,wx:[G.weather,Math.round(G.wind*100)/100,G.windStr],gr:[G.grain[1],G.grain[2]].map(v=>v===null?null:Math.round(v)),p:G.points.map(p=>[p.side,Math.round(p.prog*100)]),g:G.gates.map(x=>Math.max(0,Math.round(x.hp))),
+   tw:tw.slice(0,80),sh:Object.keys(G.shp).slice(0,50).map(k=>[k,Math.round(G.shp[k])]),f:[...G.fires.keys()].slice(0,200),b,br:G.breachL.slice(-80),st:[Math.round(G.stats.kill),Math.round(G.stats.loss)],o:G.over&&G.pvpEnd?[G.pvpEnd.w,G.pvpEnd.why]:null});}}
+
+/* ---- 客机：收战况、插值 ---- */
+function applyRoster(o){for(const r of Array.isArray(o.a)?o.a:[]){if(!Array.isArray(r))continue;const id=r[0]|0,side=r[1]===1?1:2,kind=UT[r[2]]?r[2]:'ji';let u=NET.map[id];
+  if(!u){u=spawn(side,kind,Math.max(300,num(r[4])),0,0,{name:esc(String(r[3]).slice(0,12)),general:!!r[5],auto:!!r[6]});u.id=id;u.fresh=true;u.vis=true;u.visA=0;u.seq=NET.seq;u.tx=u.x;u.ty=u.y;u.tf=u.face;NET.map[id]=u;}
+  u.nMax=Math.max(300,num(r[4]));delete NET.need[id];if(u.general)G.gen[side]=u;}}
+function applyUnits(o){const q=o.q|0;if(q<NET.seq-1)return;NET.seq=Math.max(NET.seq,q);
+ for(const r of Array.isArray(o.a)?o.a:[]){if(!Array.isArray(r))continue;const id=r[0]|0,u=NET.map[id];if(!u){NET.need[id]=1;continue;}
+  u.tx=cl(num(r[1]),0,WW);u.ty=cl(num(r[2]),0,WH);u.tf=num(r[3])/100;const n=cl(num(r[4]),1,99999);if(n<u.n-u.nMax*.004)u.hitT=.2;u.n=n;if(n>u.nMax)u.nMax=n;u.morale=cl(num(r[5]),0,100);u.stam=cl(num(r[6]),0,100);
+  const f=r[7]|0;u.hold=!!(f&1);u.holdT=f&2?9:u.hold?1:0;u.hidden=!!(f&4);u.death=!!(f&8);u.march=!!(f&16);u.state=f&32?'rout':f&64?'move':'idle';u.path=f&64?[{x:u.tx,y:u.ty}]:[];u.melee=!!(f&128);u.man=f&256?{}:null;
+  u.fm=FMK[r[8]|0]||'fang';const x=r[9]|0,mk=GEARK[(x>>2)&3],pr=((x>>4)&127)/100;u.gear=GEARK[x&3]||null;u.make=mk?{g:mk,t:pr}:null;u.build=(x>>11)&1?{t:pr,i:0}:null;
+  u.seq=q;if(u.fresh){u.x=u.tx;u.y=u.ty;u.face=u.tf;u.fresh=false;}}
+ if(o.e){let gone=false;for(const u of G.units)if((u.seq||0)<q-1){u.alive=false;delete NET.map[u.id];gone=true;}if(gone)G.units=G.units.filter(u=>u.alive);}
+ if(Array.isArray(o.f))for(const e of o.f.slice(0,60))applyFx(e);
+ if(typeof o.t==='number'&&Math.abs(o.t-G.t)>.6)G.t=o.t;}
+function applyFx(e){if(!Array.isArray(e))return;const k=e[0];
+ if(k===0||k===5){const x0=num(e[1]),y0=num(e[2]),x1=num(e[3]),y1=num(e[4]);if(k===5){G.arrows.push({x0,y0,x1,y1,t:0,d:.9,stone:true});sfx('thud',x0,y0);}
+  else{const fire=!!e[5];for(let i=0;i<(fire?3:5);i++)G.arrows.push({x0:x0+(Math.random()-.5)*28,y0:y0+(Math.random()-.5)*28,x1:x1+(Math.random()-.5)*28,y1:y1+(Math.random()-.5)*28,t:-i*.05,d:.45,fire});sfx('arrow',x0,y0);G.heat=Math.min(3,(G.heat||0)+.3);}}
+ else if(k===1){const nm=RELAY[e[1]|0];if(nm){if(e[2]===null||e[2]===undefined)sfx(nm);else sfx(nm,num(e[2]),num(e[3]));}}
+ else if(k===2)msg(String(e[1]).slice(0,90),e[2]==='warn'||e[2]==='good'?e[2]:'',ME);
+ else if(k===3){if(QUOTES[e[1]])quote(e[1]);}
+ else if(k===4)stain(num(e[1]),num(e[2]),cl(num(e[3]),4,40));}
+function applyWorld(o){const g=G;if(typeof o.t==='number'&&Math.abs(o.t-g.t)>.6)g.t=o.t;
+ if(Array.isArray(o.wx)){const w=o.wx[0]==='rain'||o.wx[0]==='fog'?o.wx[0]:'sun',s=o.wx[2]>1?2:1;if(w!==g.weather||s!==g.windStr)setWeather(w,num(o.wx[1]),s);else g.wind=num(o.wx[1]);}
+ if(Array.isArray(o.gr)){g.grain[1]=o.gr[0]===null?null:num(o.gr[0]);g.grain[2]=o.gr[1]===null?null:num(o.gr[1]);}
+ if(Array.isArray(o.p))o.p.forEach((r,i)=>{const p=g.points[i];if(p&&Array.isArray(r)){p.side=r[0]===1?1:2;p.prog=cl(num(r[1])/100,0,1);}});
+ if(Array.isArray(o.g))o.g.forEach((hp,i)=>{const x=g.gates[i];if(!x)return;hp=num(hp);if(hp<=0&&x.hp>0){x.hp=0;if(g.map[x.i]===GATE)g.map[x.i]=ROAD;}else if(hp>0)x.hp=hp;});
+ if(Array.isArray(o.tw)){g.tower.fill(0);for(const r of o.tw)if(Array.isArray(r)&&r[0]>=0&&r[0]<MW*MH)g.tower[r[0]|0]=cl(r[1]|0,0,3);}
+ if(Array.isArray(o.sh)){g.shp={};for(const r of o.sh)if(Array.isArray(r)&&/^t?\d{1,4}$/.test(String(r[0])))g.shp[String(r[0])]=num(r[1]);}
+ if(Array.isArray(o.b))for(let i of o.b){i|=0;if(i<0||i>=MW*MH||g.burnt[i])continue;g.burnt[i]=1;g.fires.delete(i);if(g.map[i]===FOREST)g.map[i]=BURNT;paintBurnt(i);}
+ if(Array.isArray(o.f)){const fs=new Set(o.f.map(i=>i|0));for(const i of[...g.fires.keys()])if(!fs.has(i))g.fires.delete(i);for(const i of fs)if(i>=0&&i<MW*MH&&!g.fires.has(i)&&!g.burnt[i])g.fires.set(i,{t:9,sp:9});}
+ if(Array.isArray(o.br)){let ch=false;for(let i of o.br){i|=0;if(i>=0&&i<MW*MH&&g.map[i]===WALL){g.map[i]=RUBBLE;g.elev[i]=0;paintRubble(i);ch=true;}}if(ch)computeGap();}
+ if(Array.isArray(o.st)){g.stats.kill=num(o.st[0]);g.stats.loss=num(o.st[1]);}
+ if(Array.isArray(o.o)&&!g.over){g.pvpEnd={w:o.o[0]===1?1:o.o[0]===2?2:0,why:String(o.o[1])};g.over=[g.pvpEnd.w===ME?'win':'lose'];pvpShow();}}
+function guestTick(dt){const g=G;if(!g.over)g.t+=dt;const k=Math.min(1,dt*9);
+ for(const u of g.units){u.r=15+5.2*Math.sqrt(u.n/1000);if(u.fresh)continue;u.x+=(u.tx-u.x)*k;u.y+=(u.ty-u.y)*k;u.face=turn(u.face,u.tf,dt*6);if(u.hitT>0)u.hitT-=dt;u.visA=Math.min(1,u.visA+dt*3);
+  if(u.melee&&Math.random()<dt*5){splat(u.x+(Math.random()-.5)*u.r,u.y+(Math.random()-.5)*u.r);sfx('clash',u.x,u.y);g.heat=Math.min(3,(g.heat||0)+.25);}}
+ g.sel=g.sel.filter(u=>u.alive&&u.state!=='rout');
+ for(const a of g.arrows)a.t+=dt;g.arrows=g.arrows.filter(a=>a.t<a.d);
+ for(const p of g.parts){p.l-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;}g.parts=g.parts.filter(p=>p.l>0);
+ for(const r of g.rings)r.t+=dt;g.rings=g.rings.filter(r=>r.t<.6);
+ NET.needT-=dt;if(NET.needT<=0){NET.needT=.5;const ids=Object.keys(NET.need).map(Number).slice(0,40);if(ids.length)netSend({k:'need',a:ids});}
+ NET.hbT=(NET.hbT||0)-dt;if(NET.hbT<=0){NET.hbT=2;netSend({k:'hb'});}
+ if(!g.over&&Date.now()-NET.last>30000){netPeerLeft();return;}
+ if(!NET.lost&&!g.over&&Date.now()-NET.last>8000){NET.lost=true;msg(tr('与主机失去联络：对方可能把页面切到了后台，或已离开','Lost contact with the host: they may have put the page in the background, or left'),'warn',ME);}}
+
+/* ---- 战局大厅 ---- */
+function pvpStatus(t){NET.status=t;try{const s=$('pv_status');if(s)s.textContent=t;}catch(e){}}
+function pvpList(){let box;try{box=$('pv_list');}catch(e){}if(!box||!box.appendChild)return;box.innerHTML='';
+ for(const o of NET.lobby){const b=document.createElement('button');b.textContent=tr('应战 ','Answer ')+o.code.toUpperCase()+'　'+o.map;b.addEventListener('click',()=>pvpJoin(o.code));box.appendChild(b);}}
+function pvpJoin(code){code=String(code||'').trim().toLowerCase();if(!/^[a-z0-9]{4}$/.test(code)){pvpStatus(tr('战局号是四位字母或数字。','A game code is four letters or digits.'));return;}
+ pvpStatus(tr('正在寻找战局 ','Looking for game ')+code.toUpperCase()+'…');netJoin(code).then(ok=>{if(!ok){pvpStatus(tr('这里没有可用的联机通道。','No online channel is available here.'));return;}
+  setTimeout(()=>{if(NET.role==='guest'&&!NET.L)pvpStatus(tr('还没找到战局 '+code.toUpperCase()+'：请确认号码，且对方仍开着“等待应战”的窗口。','Game '+code.toUpperCase()+' not found yet: check the code, and that the host still has the waiting window open.'));},9000);});}
+/* ---- 直连通道（WebRTC）：互换一次邀请码与回执码，两台电脑跨网络直接相连，不经游戏服务器 ----
+   ICE_SERVERS 只用于让双方查到自己的公网地址（STUN）；如需在严格的公司或手机网络下也能连上，
+   可在此加一台 TURN 中继，如 {urls:'turn:example.com:3478',username:'u',credential:'p'}。 */
+const ICE_SERVERS=[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']},{urls:'stun:stun.cloudflare.com:3478'}];
+const rtcOK=()=>typeof RTCPeerConnection!=='undefined';
+const b64u=bytes=>{let b='';for(let i=0;i<bytes.length;i++)b+=String.fromCharCode(bytes[i]);return btoa(b).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');};
+async function zipBytes(bytes,dir){const C=dir?CompressionStream:DecompressionStream;const st=new C('deflate-raw'),w=st.writable.getWriter();w.write(bytes);w.close();return new Uint8Array(await new Response(st.readable).arrayBuffer());}
+async function packSdp(d){const raw=new TextEncoder().encode(JSON.stringify({t:d.type,s:d.sdp}));
+ if(typeof CompressionStream!=='undefined'){try{return'CP1.'+b64u(await zipBytes(raw,1));}catch(e){}}return'CP0.'+b64u(raw);}
+async function unpackSdp(code){const m=/^CP([01])\.([A-Za-z0-9_-]+)$/.exec(String(code||'').replace(/\s+/g,''));if(!m)throw new Error('format');
+ let bytes=Uint8Array.from(atob(m[2].replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));if(m[1]==='1')bytes=await zipBytes(bytes,0);
+ const o=JSON.parse(new TextDecoder().decode(bytes));if(!o||(o.t!=='offer'&&o.t!=='answer')||typeof o.s!=='string'||o.s.length>20000)throw new Error('format');return{type:o.t,sdp:o.s};}
+function iceDone(pc){return new Promise(res=>{if(pc.iceGatheringState==='complete')return res();const t=setTimeout(res,3500);pc.addEventListener('icegatheringstatechange',()=>{if(pc.iceGatheringState==='complete'){clearTimeout(t);res();}});});}
+const RTC_FAIL_ZH='直连没有打通：双方中可能有一方在公司、校园或部分手机网络后面，路由器不让直连。可换一个网络（如手机热点）再试，或在 claude.ai 的页面里对战。',rtcFail=()=>EN()?RTC_FAIL_EN:RTC_FAIL_ZH,RTC_FAIL_EN='The direct connection did not get through: one of you may be behind a company, campus or mobile network that blocks it. Try another network (a phone hotspot, say), or play on the claude.ai page.';
+function rtcWire(dc,pc){const tx={kind:'rtc',send:o=>{if(dc.readyState==='open'){try{dc.send(JSON.stringify(o));}catch(e){}}},close:()=>{try{dc.close();}catch(e){}try{pc.close();}catch(e){}}};
+ NET.tx=tx;NET.pc=pc;
+ dc.onmessage=e=>{if(NET.tx!==tx)return;let o;try{o=JSON.parse(e.data);}catch(_){return;}try{netRecv(o);}catch(_){}};
+ dc.onopen=()=>{if(NET.tx!==tx)return;pvpStatus(tr('已与对手直连，正在交换战图…','Connected directly; exchanging the map…'));if(NET.role==='guest'){netSend({k:'hello'});if(!NET.timer)NET.timer=setInterval(netRetry,1200);}};
+ dc.onclose=()=>{if(NET.tx===tx)netPeerLeft();};
+ pc.onconnectionstatechange=()=>{if(NET.tx!==tx)return;const st=pc.connectionState;if(st==='failed'){if(NET.started)netPeerLeft();else pvpStatus(rtcFail());}else if(st==='disconnected'&&!NET.started)pvpStatus(tr('连接中断，正在重试…','Connection dropped; retrying…'));};}
+async function rtcHost(L){netClose();NET.role='host';NET.L=L;const pc=new RTCPeerConnection({iceServers:ICE_SERVERS});rtcWire(pc.createDataChannel('pvp',{ordered:true}),pc);
+ await pc.setLocalDescription(await pc.createOffer());await iceDone(pc);return packSdp(pc.localDescription);}
+async function rtcAccept(code){const d=await unpackSdp(code);if(d.type!=='answer')throw new Error('kind');if(!NET.pc||NET.role!=='host')throw new Error('state');await NET.pc.setRemoteDescription(d);}
+async function rtcJoin(code){const d=await unpackSdp(code);if(d.type!=='offer')throw new Error('kind');netClose();NET.role='guest';const pc=new RTCPeerConnection({iceServers:ICE_SERVERS});NET.pc=pc;
+ pc.ondatachannel=e=>rtcWire(e.channel,pc);await pc.setRemoteDescription(d);await pc.setLocalDescription(await pc.createAnswer());await iceDone(pc);return packSdp(pc.localDescription);}
+function copyText(id){const t=$(id);if(!t||!t.value)return;const done=()=>pvpStatus(tr('已复制，发给对手即可。','Copied. Send it to your opponent.'));
+ try{navigator.clipboard.writeText(t.value).then(done,()=>{t.focus();t.select();pvpStatus(tr('浏览器不让自动复制，已全选，请手动复制。','The browser blocked copying; the text is selected, please copy it yourself.'));});}catch(e){t.focus();t.select();pvpStatus(tr('已全选，请手动复制。','Selected; please copy it yourself.'));}}
+
+/* ---- 战局大厅 ---- */
+const lobbyHead=()=>tr('<h2>联机对战</h2><p>两人各执一军。开局者执朱旗，应战者执青旗；斩敌主将或夺其帅旗者胜。</p>','<h2>Online Battle</h2><p>Two players, one army each. The host leads the vermilion banner, the guest the azure. Kill the enemy general or take their banner to win.</p>');
+const mapSel=maps=>'<select id="pv_map" aria-label="'+tr('战图','Map')+'">'+maps.map((L,i)=>'<option value="'+i+'">'+esc(mt(mkMission(L),'name')||tr('无名','Untitled'))+'</option>').join('')+'</select>';
+const lobbyClose=()=>[[tr('关闭','Close'),()=>{if(!NET.started)netClose();NET.lobbyOpen=false;closeModal();}]];
+function pvpLobby(){NET.lobbyOpen=true;
+ if(NET.roomState==='pending'){modal(lobbyHead()+'<p id="pv_status" aria-live="polite">'+tr('正在接通平台的联机通道…','Connecting to the platform’s online channel…')+'</p>',lobbyClose());return;}
+ if(NET.room)pvpLobbyRoom();else pvpLobbyRTC();}
+function pvpLobbyRoom(){const maps=pvpMaps();
+ modal(lobbyHead()+
+  '<h3>'+tr('开局邀战','Host a Game')+'</h3><p class="pv">'+mapSel(maps)+'<button id="pv_host" class="pri">'+tr('开局','Host')+'</button></p>'+
+  '<h3>'+tr('应战','Answer a Game')+'</h3><div id="pv_list" class="pv"></div><p class="pv"><input id="pv_code" maxlength="4" placeholder="'+tr('战局号','Code')+'" autocapitalize="off" autocomplete="off" aria-label="'+tr('战局号','Game code')+'"><button id="pv_join">'+tr('应战','Answer')+'</button></p>'+
+  '<p id="pv_status" aria-live="polite"></p><p class="role">'+tr('经由平台转发，双方在不同网络也能对战。对手须能打开此页面，且有“可参与”以上权限。开局者请把窗口留在前台，否则战局会变慢。','Relayed by the platform, so you can play across different networks. Your opponent must be able to open this page with at least “can participate” access. Host, keep your window in front or the battle will slow down.')+'</p>'+
+  (rtcOK()?'<p class="role">'+tr('对手只有查看权限、连不进来？','Opponent has view-only access and can’t get in? ')+'<button id="pv_rtc" class="lk">'+tr('改用邀请码直连','Connect directly with an invite code')+'</button></p>':''),lobbyClose());
+ pvpList();
+ $('pv_host').addEventListener('click',()=>{const L=maps[Number($('pv_map').value)|0];if(!L){pvpStatus(tr('没有可用的对战图。可在编辑器里把一张图勾选为“联机对战图”。','No online maps available. In the editor, tick “Online battle map” on a map.'));return;}
+  let code='';const ab='abcdefghjkmnpqrstuvwxyz23456789';for(let i=0;i<4;i++)code+=ab[Math.random()*ab.length|0];
+  netHost(L,code).then(ok=>pvpStatus(ok?tr('战局号 '+code.toUpperCase()+'：等待对手应战…（对手在同一页面点“联机对战”，从列表选择或输入此号）','Game code '+code.toUpperCase()+': waiting for an opponent… (they press “Online Battle” on this same page, then pick it from the list or enter the code)'):tr('联机通道不可用。','No online channel is available.')));});
+ $('pv_join').addEventListener('click',()=>pvpJoin($('pv_code').value));
+ if(rtcOK())$('pv_rtc').addEventListener('click',()=>{netClose();pvpLobbyRTC();});}
+function pvpLobbyRTC(){const maps=pvpMaps();
+ if(!rtcOK()){modal(lobbyHead()+'<p>'+tr('这个浏览器不支持直连（WebRTC），无法联机。请换用新版 Chrome、Edge、Firefox 或 Safari。','This browser does not support direct connections (WebRTC). Please use a current Chrome, Edge, Firefox or Safari.')+'</p>',lobbyClose());return;}
+ modal(lobbyHead()+
+  '<h3>'+tr('开局邀战','Host a Game')+'</h3><p class="pv">'+mapSel(maps)+'<button id="pv_host" class="pri">'+tr('生成邀请码','Make Invite Code')+'</button></p>'+
+  '<div id="pv_hbox" hidden><p class="st">'+tr('① 把邀请码发给对手（微信、邮件、短信均可）：','① Send the invite code to your opponent (any chat app, email or text will do):')+'</p><textarea id="pv_offer" rows="3" readonly spellcheck="false" aria-label="'+tr('邀请码','Invite code')+'"></textarea><p class="pv"><button id="pv_copyo">'+tr('复制邀请码','Copy Invite Code')+'</button></p>'+
+   '<p class="st">'+tr('② 对手会回你一段回执码，粘贴到这里：','② Your opponent will send back a reply code. Paste it here:')+'</p><textarea id="pv_ans" rows="3" spellcheck="false" placeholder="'+tr('粘贴对手的回执码','Paste your opponent’s reply code')+'" aria-label="'+tr('回执码','Reply code')+'"></textarea><p class="pv"><button id="pv_conn" class="pri">'+tr('连接开战','Connect and Fight')+'</button></p></div>'+
+  '<h3>'+tr('应战','Answer a Game')+'</h3><textarea id="pv_inv" rows="3" spellcheck="false" placeholder="'+tr('粘贴对手发来的邀请码','Paste the invite code you received')+'" aria-label="'+tr('邀请码','Invite code')+'"></textarea><p class="pv"><button id="pv_join">'+tr('生成回执码','Make Reply Code')+'</button></p>'+
+  '<div id="pv_gbox" hidden><p class="st">'+tr('把回执码发回给对手，对方点“连接开战”后即开战：','Send the reply code back. The battle starts once they press “Connect and Fight”:')+'</p><textarea id="pv_reply" rows="3" readonly spellcheck="false" aria-label="'+tr('回执码','Reply code')+'"></textarea><p class="pv"><button id="pv_copyr">'+tr('复制回执码','Copy Reply Code')+'</button></p></div>'+
+  '<p id="pv_status" aria-live="polite"></p>'+
+  '<p class="role">'+tr('两台电脑跨网络直接相连，不经游戏服务器。邀请码只能用一次，对局结束或关掉此窗口后要重新生成。开局者请把窗口留在前台。少数公司、校园网络或手机网络不让直连，届时会提示。','The two computers connect directly across the internet, with no game server in between. An invite code works once; make a new one after a game ends or this window closes. Host, keep your window in front. A few company, campus or mobile networks block direct connections; you will be told if that happens.')+'</p>',lobbyClose());
+ const busy=(id,on,txt)=>{const b=$(id);b.disabled=on;if(txt)b.textContent=txt;};
+ $('pv_host').addEventListener('click',()=>{const L=maps[Number($('pv_map').value)|0];if(!L){pvpStatus(tr('没有可用的对战图。可在编辑器里把一张图勾选为“联机对战图”。','No online maps available. In the editor, tick “Online battle map” on a map.'));return;}
+  busy('pv_host',true,tr('正在生成…','Generating…'));pvpStatus(tr('正在查询本机的网络地址，约需三秒…','Looking up this computer’s network address, about three seconds…'));$('pv_gbox').hidden=true;
+  rtcHost(L).then(code=>{$('pv_offer').value=code;$('pv_hbox').hidden=false;busy('pv_host',false,tr('重新生成','Make a New One'));pvpStatus(tr('邀请码已生成。发给对手，再把对手的回执码粘贴到下方。','Invite code ready. Send it to your opponent, then paste their reply code below.'));},
+   e=>{busy('pv_host',false,tr('生成邀请码','Make Invite Code'));pvpStatus(tr('生成邀请码失败：','Could not make an invite code: ')+(e&&e.message||tr('未知原因','unknown reason')));});});
+ $('pv_copyo').addEventListener('click',()=>copyText('pv_offer'));
+ $('pv_conn').addEventListener('click',()=>{busy('pv_conn',true);pvpStatus(tr('正在连接对手…','Connecting to your opponent…'));
+  rtcAccept($('pv_ans').value).then(()=>{setTimeout(()=>{if(NET.role==='host'&&!NET.started&&NET.pc&&NET.pc.connectionState!=='connected')pvpStatus(rtcFail());},15000);},
+   e=>{busy('pv_conn',false);pvpStatus(e&&e.message==='kind'?tr('这是一段邀请码，不是回执码：请让对手在“应战”里粘贴你的邀请码，再把他生成的回执码贴到这里。','That is an invite code, not a reply code. Have your opponent paste your invite code under “Answer a Game”, then paste the reply code they make here.'):e&&e.message==='state'?tr('请先生成邀请码。','Make an invite code first.'):tr('回执码不完整或有误，请让对手重新复制一遍。','The reply code is incomplete or wrong; ask your opponent to copy it again.'));});});
+ $('pv_join').addEventListener('click',()=>{busy('pv_join',true,tr('正在生成…','Generating…'));pvpStatus(tr('正在查询本机的网络地址，约需三秒…','Looking up this computer’s network address, about three seconds…'));$('pv_hbox').hidden=true;
+  rtcJoin($('pv_inv').value).then(code=>{$('pv_reply').value=code;$('pv_gbox').hidden=false;busy('pv_join',false,tr('生成回执码','Make Reply Code'));pvpStatus(tr('回执码已生成，发回给对手。对方点“连接开战”后即自动入阵。','Reply code ready. Send it back; you join the battle as soon as they press “Connect and Fight”.'));
+    setTimeout(()=>{if(NET.role==='guest'&&!NET.started&&NET.pc&&NET.pc.connectionState!=='connected')pvpStatus(tr('还没连上：请确认对手已粘贴你的回执码并点了“连接开战”。若对方已点，','Not connected yet: check that your opponent pasted your reply code and pressed “Connect and Fight”. If they did: ')+rtcFail());},40000);},
+   e=>{busy('pv_join',false,tr('生成回执码','Make Reply Code'));pvpStatus(e&&e.message==='kind'?tr('这是一段回执码，不是邀请码：应战要粘贴开局者发来的邀请码。','That is a reply code, not an invite code. To answer, paste the invite code the host sent you.'):tr('邀请码不完整或有误，请让对手重新复制一遍。','The invite code is incomplete or wrong; ask your opponent to copy it again.'));});});
+ $('pv_copyr').addEventListener('click',()=>copyText('pv_reply'));}
+function netInit(){
+ try{$('bpvp').addEventListener('click',pvpLobby);}catch(e){}
+ NET.roomState='none';
+ try{if(window.claude&&window.claude.use){NET.roomState='pending';const settle=()=>{NET.roomState=NET.room?'ok':'none';try{if(NET.lobbyOpen&&!NET.role&&!$('modal').hidden)pvpLobby();}catch(e){}};
+  window.claude.use('room').then(r=>{if(!r){settle();return;}NET.room=r;
+   r.onPeers(ch=>{const seen={};NET.lobby=[];for(const p of ch.peers){const c=p&&p.presence&&p.presence.cp;if(!c||p.sameTab||typeof c.code!=='string'||!/^[a-z0-9]{4}$/.test(c.code)||seen[c.code])continue;seen[c.code]=1;NET.lobby.push({code:c.code,map:String(c.map||'').slice(0,16)});}pvpList();});settle();},settle);}}catch(e){NET.roomState='none';}
+ try{setInterval(()=>{if(NET.role!=='host'||!NET.started||!G||G.over)return;const now=performance.now(),gap=now-NET.frameAt;if(gap<600)return;NET.frameAt=now;let n=Math.min(20,Math.round(gap/50));while(n-->0&&!G.over)update(.05);netHostTick(1);},500);}catch(e){}}
+
+if(typeof window!=='undefined'&&window.__TEST)window.__CP={setLang,briefHtml,mt,endGame,buildTitle,applyLang,get LANG(){return LANG;},newGame,update,render,hud,drawMini,MISSIONS,fireAt,get G(){return G;},init,cmd,order,tactic,netHost,netJoin,rtcHost,rtcJoin,rtcAccept,packSdp,unpackSdp,netHostTick,guestTick,netRetry,NET,act,pvpMaps,mkPvp,startPvp,get ME(){return ME;},mkMission,checkLevel,captureBuiltin,levelOut,edLoad,blankLevel,terrainOf,UT,CT,setRun(){running=true;}};
 else init();
 })();
 

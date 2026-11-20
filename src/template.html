@@ -183,6 +183,16 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
 #mcard table{border-collapse:collapse;width:100%;font-size:14px}
 #mcard th,#mcard td{text-align:left;padding:.25em .5em .25em 0;border-bottom:1px solid var(--line);vertical-align:top}
 #mcard th{font-family:var(--brush);font-weight:400;font-size:18px;white-space:nowrap}
+#mcard .pv{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.4em 0}
+#mcard .pv button{font-size:17px}
+#mcard select,#mcard input{font:inherit;font-size:15px;color:var(--ink);background:var(--paper2);border:1px solid var(--line);border-radius:2px;padding:.3em .5em;min-width:0}
+#mcard input{width:7em;text-transform:uppercase;letter-spacing:.2em}
+#pv_status{color:var(--zhu);min-height:1.7em;margin:.3em 0}
+#mcard textarea{display:block;width:100%;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.4;color:var(--ink);background:var(--paper2);border:1px solid var(--line);border-radius:2px;padding:.35em .5em;resize:vertical;word-break:break-all}
+#mcard textarea:focus-visible,#mcard input:focus-visible,#mcard select:focus-visible{outline:2px solid var(--zhu);outline-offset:1px}
+#mcard .st{margin:.6em 0 .25em;font-size:14px}
+#mcard button.lk{border:0;padding:0;font-family:var(--body);font-size:inherit;color:var(--zhu);text-decoration:underline;text-underline-offset:3px;background:none}
+#mcard button:disabled{opacity:.5;cursor:default}
 #mbtns{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
 @media (prefers-reduced-motion:reduce){#quote{transition:none}#log .ln{animation:none}}
 </style>
@@ -203,7 +213,7 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
       <label><span data-en="Supply time">粮草时限</span><input type="range" id="d_pace" min="70" max="130" step="5"><output id="o_pace"></output></label>
       <label><span data-en="Volume">音量</span><input type="range" id="d_vol" min="0" max="100" step="5"><output id="o_vol"></output></label>
     </section>
-    <div class="foot"><button id="bcodex" data-en="Art of War Primer">兵法要览</button><button id="bedit" data-en="Campaign Editor">战役编辑器</button><button id="blang" lang="en">English</button><span>知彼知己，百战不殆。</span></div>
+    <div class="foot"><button id="bcodex" data-en="Art of War Primer">兵法要览</button><button id="bpvp" data-en="Online Battle">联机对战</button><button id="bedit" data-en="Campaign Editor">战役编辑器</button><button id="blang" lang="en">English</button><span>知彼知己，百战不殆。</span></div>
   </div>
   <svg class="mt" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
     <path fill="currentColor" opacity=".08" d="M0,200 C80,130 140,170 200,100 C240,60 280,130 340,95 C400,55 460,140 520,115 C600,75 680,160 760,125 C840,95 900,160 1000,135 L1000,300 L0,300Z"/>
@@ -283,6 +293,7 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
   <table>
     <tr><th>鼠标</th><td>左键点选，拖框多选，双击选同种；右键行军，右键敌阵进攻；滚轮缩放，方向键或 WASD 移动视野。</td></tr>
     <tr><th>触屏</th><td>轻点军阵选中，轻点地面行军，轻点敌阵进攻；单指拖动视野，双指缩放。</td></tr>
+    <tr><th>联机对战</th><td>卷首点“联机对战”。一人选战图“开局”，另一人“应战”。在 claude.ai 上用四位战局号；在其他地方（如自己架的网页）则两人互换一次“邀请码”和“回执码”，两台电脑跨网络直接相连。开局者执朱旗，应战者执青旗，各自只看得见自己视野内的敌军；斩敌主将或夺其帅旗者胜。对战中不能暂停、快进。</td></tr>
     <tr><th>画面</th><td>斜俯视的立体战场：山丘、绝壁、城垣、箭楼各有高低，军阵立于其上；高处之物会遮住身后。点选军阵，士卒举兵应声，旌旗翻卷；下令则应“得令”。</td></tr>
     <tr><th>镇守</th><td>原地坚守不追击，所受伤害减少；稍久即成“深沟高垒”，不惧冲锋。在林中镇守则为伏兵，敌不能察，暴起一击威力倍增。</td></tr>
     <tr><th>分兵 合兵</th><td>一阵分为两阵，可分守要道、包抄侧背；相邻的同种军阵可再合为一。</td></tr>
@@ -331,6 +342,7 @@ kbd{font-family:var(--body);font-size:11px;opacity:.55;margin-left:.35em}
   <table>
     <tr><th>Mouse</th><td>Left-click to select, drag a box for several, double-click to select every unit of that kind. Right-click ground to march, right-click an enemy to attack. Wheel to zoom; arrow keys or WASD to pan.</td></tr>
     <tr><th>Touch</th><td>Tap a unit to select, tap ground to march, tap an enemy to attack. Drag with one finger to pan, pinch to zoom.</td></tr>
+    <tr><th>Online Battle</th><td>On the title screen press “Online Battle”. One player picks a map and opens a game; the other answers it. On claude.ai you use a four-character game code; elsewhere (on your own hosted page) the two players swap an “invite code” and a “reply code” once, and the two computers connect directly across the internet. The host leads the vermilion banner, the guest the azure; each sees only enemies within their own sight. Kill the enemy general or take their banner to win. Online games cannot be paused or sped up.</td></tr>
     <tr><th>The field</th><td>A raised, oblique view: hills, cliffs, walls and towers have height, and units stand on top of them; tall things hide what lies behind. Selected soldiers raise their weapons and answer “诺”; given an order they reply “得令” (“As you command”).</td></tr>
     <tr><th>Hold</th><td>Stand fast and do not pursue; take less damage. After a while the unit is entrenched and shrugs off charges. Holding in a forest makes an ambush: the enemy cannot see you, and the first strike hits twice as hard.</td></tr>
     <tr><th>Split / Merge</th><td>Divide one unit into two to guard several roads or strike flanks; neighbouring units of the same kind can merge back into one.</td></tr>

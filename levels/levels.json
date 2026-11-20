@@ -1190,5 +1190,303 @@
    ],
    "winText": "The army is drilled: it advances and withdraws in good order. As the Sima Fa says, “Though the realm be at peace, to forget war is to court peril.” Your training is done — on to Changping."
   }
+ },
+ {
+  "id": "pvp-danshui",
+  "pvp": true,
+  "name": "丹水对阵",
+  "ord": "对战",
+  "role": "两军对垒",
+  "line": "两军隔丹水对垒，三处浅滩可渡。",
+  "brief": "两军隔丹水对垒，各据一垒。水上三处浅滩可渡：中路最近，直通敌垒正门；南北两路稍远，有山林可倚。",
+  "goals": [
+   "斩敌军主将，或夺其帅旗",
+   "保住我军主将与帅旗"
+  ],
+  "tips": [
+   "半渡而击：敌军涉水时迎头痛击。",
+   "垒门两侧箭楼上的弩手居高临下，强攻正门代价不小，可造攻城器，或诱敌出垒。",
+   "骑兵走南北两路绕后，专取弩手与落单之敌。",
+   "视野之外的敌军是看不见的：山丘上看得远，林中可设伏。"
+  ],
+  "winText": "此战告捷。",
+  "seed": 31,
+  "hour0": 5,
+  "hourLen": 60,
+  "face": {
+   "1": 0,
+   "2": 3.1416
+  },
+  "cam": [
+   12,
+   19
+  ],
+  "weather": {
+   "type": "sun",
+   "wind": 0,
+   "str": 1
+  },
+  "rows": [
+   ".............................~~.............................",
+   ".............................~~.............................",
+   "...................^^^.......~~.......^^^...................",
+   "...................^^^^......~~......^^^^...................",
+   ".....f.f.........^^^^^^^.....~~.....^^^^^^^.........f.f.....",
+   "....ffff.........^^^^^^^.....~~.....^^^^^^^.........ffff....",
+   "....fffff.........^^^^^......~~......^^^^^.........fffff....",
+   "....fffff.........^^^^^......~~......^^^^^.........fffff....",
+   "...ffffff.........^^^.^......~~......^.^^^.........ffffff...",
+   "....fffff.....---------------==---------------.....fffff....",
+   "......f.......-..............~~..............-.......f......",
+   "..............-.^^...........~~...........^^.-..............",
+   "..............-^^^^^.........~~.........^^^^^-..............",
+   "..............-^^^^^....f....~~....f....^^^^^-..............",
+   "..............-.^^^....fff...~~...fff....^^^.-..............",
+   "..............-.^^.....ffff..~~..ffff.....^^.-..............",
+   "..............-.......fffff..~~..fffff.......-..............",
+   "..............-.........ff...~~...ff.........-..............",
+   "..............-..............~~..............-..............",
+   "............-----------------==-----------------............",
+   "..............-..............~~..............-..............",
+   "..............-.........ff...~~...ff.........-..............",
+   "..............-........ffff..~~..ffff........-..............",
+   "..............-........fff...~~...fff........-..............",
+   "..............-.......ffff...~~...ffff.......-..............",
+   "..............-........f.....~~.....f........-..............",
+   "............^^-..............~~..............-^^............",
+   "............^^-^.............~~.............^-^^............",
+   ".......f....^^---------------==---------------^^....f.......",
+   "....ffff................%%%..~~..%%%................ffff....",
+   "....fffff..........^^...%%%%.~~.%%%%...^^..........fffff....",
+   "...ffffff..........^^^^^%%%..~~..%%%^^^^^..........ffffff...",
+   "...ffffff..........^^^^^.%...~~...%.^^^^^..........ffffff...",
+   ".....ffff.........^^^^^^^....~~....^^^^^^^.........ffff.....",
+   "...................^^^^^.....~~.....^^^^^...................",
+   "...................^^^^^.....~~.....^^^^^...................",
+   ".....................^.......~~.......^.....................",
+   ".............................~~............................."
+  ],
+  "forts": [
+   {
+    "x0": 3,
+    "y0": 14,
+    "x1": 11,
+    "y1": 24,
+    "side": 1,
+    "gates": [
+     [
+      11,
+      19,
+      1500
+     ]
+    ]
+   },
+   {
+    "x0": 48,
+    "y0": 14,
+    "x1": 56,
+    "y1": 24,
+    "side": 2,
+    "gates": [
+     [
+      48,
+      19,
+      1500
+     ]
+    ]
+   }
+  ],
+  "points": [
+   {
+    "x": 6.5,
+    "y": 19.5,
+    "side": 1,
+    "name": "帅旗",
+    "time": 10
+   },
+   {
+    "x": 53.5,
+    "y": 19.5,
+    "side": 2,
+    "name": "帅旗",
+    "time": 10
+   }
+  ],
+  "labels": [
+   {
+    "t": "丹水",
+    "x": 31.6,
+    "y": 13,
+    "s": 30
+   }
+  ],
+  "units": [
+   {
+    "type": "dun",
+    "n": 4000,
+    "x": 7,
+    "y": 19,
+    "general": true,
+    "hold": true,
+    "side": 1,
+    "name": "朱旗主将亲卫",
+    "name_en": "Vermilion General’s Guard"
+   },
+   {
+    "type": "dun",
+    "n": 4000,
+    "x": 52,
+    "y": 19,
+    "general": true,
+    "hold": true,
+    "side": 2,
+    "name": "青旗主将亲卫",
+    "name_en": "Azure General’s Guard"
+   },
+   {
+    "type": "nu",
+    "n": 4000,
+    "x": 10,
+    "y": 18,
+    "hold": true,
+    "side": 1
+   },
+   {
+    "type": "nu",
+    "n": 4000,
+    "x": 49,
+    "y": 18,
+    "hold": true,
+    "side": 2
+   },
+   {
+    "type": "nu",
+    "n": 4000,
+    "x": 10,
+    "y": 20,
+    "hold": true,
+    "side": 1
+   },
+   {
+    "type": "nu",
+    "n": 4000,
+    "x": 49,
+    "y": 20,
+    "hold": true,
+    "side": 2
+   },
+   {
+    "type": "ji",
+    "n": 5000,
+    "x": 14,
+    "y": 17,
+    "side": 1
+   },
+   {
+    "type": "ji",
+    "n": 5000,
+    "x": 45,
+    "y": 17,
+    "side": 2
+   },
+   {
+    "type": "ji",
+    "n": 5000,
+    "x": 14,
+    "y": 21,
+    "side": 1
+   },
+   {
+    "type": "ji",
+    "n": 5000,
+    "x": 45,
+    "y": 21,
+    "side": 2
+   },
+   {
+    "type": "dun",
+    "n": 4000,
+    "x": 16,
+    "y": 19,
+    "side": 1
+   },
+   {
+    "type": "dun",
+    "n": 4000,
+    "x": 43,
+    "y": 19,
+    "side": 2
+   },
+   {
+    "type": "qi",
+    "n": 3000,
+    "x": 13,
+    "y": 13,
+    "side": 1
+   },
+   {
+    "type": "qi",
+    "n": 3000,
+    "x": 46,
+    "y": 13,
+    "side": 2
+   },
+   {
+    "type": "qi",
+    "n": 3000,
+    "x": 13,
+    "y": 25,
+    "side": 1
+   },
+   {
+    "type": "qi",
+    "n": 3000,
+    "x": 46,
+    "y": 25,
+    "side": 2
+   }
+  ],
+  "events": [
+   {
+    "t": 240,
+    "do": "weather",
+    "type": "rain",
+    "wind": 0.785,
+    "str": 1,
+    "text": "天降大雨，弩弦受潮",
+    "text_en": "Heavy rain falls; bowstrings go slack"
+   },
+   {
+    "t": 330,
+    "do": "weather",
+    "type": "sun",
+    "wind": 0,
+    "str": 1,
+    "text": "雨歇",
+    "text_en": "The rain stops"
+   }
+  ],
+  "music": {
+   "scale": "yu"
+  },
+  "name_en": "Dan River Standoff",
+  "en": {
+   "name": "Dan River Standoff",
+   "ord": "Versus",
+   "role": "Two armies face off",
+   "line": "Two armies face each other across the Dan River; three fords can be crossed.",
+   "brief": "Two armies face each other across the Dan River, each holding a fort. Three fords cross the water: the middle one is shortest and leads straight to the enemy's main gate; the northern and southern ones are longer, with hills and woods to lean on.",
+   "goals": [
+    "Kill the enemy general, or take their banner",
+    "Keep your own general and banner"
+   ],
+   "tips": [
+    "Strike them halfway across: hit enemy troops while they are wading.",
+    "Crossbowmen on the towers beside each gate shoot from above, so storming the main gate is costly. Build siege engines, or lure the enemy out.",
+    "Send cavalry by the northern and southern fords to get behind the enemy and pick off crossbowmen and stragglers.",
+    "You cannot see enemies outside your sight: hills see far, and forests hide ambushes."
+   ],
+   "winText": "Victory."
+  }
  }
 ]

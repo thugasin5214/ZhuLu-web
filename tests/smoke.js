@@ -9,7 +9,7 @@ global.window={__TEST:true,addEventListener(){},devicePixelRatio:1};
 global.localStorage={getItem(){return null},setItem(){}};
 global.requestAnimationFrame=()=>{};
 const realST=setTimeout;global.setTimeout=()=>0;global.clearTimeout=()=>{};
-eval(fs.readFileSync(require('path').join(__dirname,'../src/game.js'),'utf8'));
+eval(fs.readFileSync(require('path').join(__dirname,'../src/game.js'),'utf8').replace('/*__RULES__*/null',()=>fs.readFileSync(require('path').join(__dirname,'../src/rules.json'),'utf8')));
 const CP=window.__CP;CP.init();
 const mode=process.argv[2]||'idle';
 for(let mi=0;mi<3;mi++){

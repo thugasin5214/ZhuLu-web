@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>逐鹿调参</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* 调参器：左栏参数（桌面端固定可滚动），右栏报告；手机上上下排列 */
+[hidden]{display:none!important}
+body{padding-block:0 3rem}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--ink);display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;padding-block:.8rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--paper);z-index:10}
+.bar h1{font-size:2rem;line-height:1;margin-right:.4rem}
+.bar .acts{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
+button,select{font:inherit;font-size:.88rem;color:var(--ink);background:var(--sheet);border:1px solid var(--rule);border-radius:2px;padding:.3rem .75rem;cursor:pointer}
+button:hover,select:hover{border-color:var(--wash)}
+button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--zhu);outline-offset:2px}
+button.go{background:var(--zhu);border-color:var(--zhu);color:var(--sheet);font-weight:600;padding-inline:1.1rem}
+button.go:disabled{opacity:.55;cursor:wait}
+#nchg{font-size:.85rem;color:var(--wash)}#nchg.on{color:var(--zhu);font-weight:600}
+#stale{font-size:.82rem;color:var(--zhe)}
+.grid{display:grid;grid-template-columns:minmax(0,23rem) minmax(0,1fr);gap:2rem;align-items:start;padding-top:1.2rem}
+aside.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 4.4rem);max-height:calc(100vh - 5.4rem);overflow:auto;display:grid;gap:.6rem;padding-right:.4rem;align-content:start}
+.side .search{width:100%;font:inherit;font-size:.9rem;padding:.35rem .6rem;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:2px}
+.pg{border-bottom:1px solid var(--rule)}
+.pg summary{cursor:pointer;padding:.45rem 0;font-family:var(--display);font-size:1.25rem;display:flex;align-items:baseline;gap:.5rem;list-style:none}
+.pg summary::-webkit-details-marker{display:none}
+.pg summary::before{content:"▸";font-family:var(--body);font-size:.75rem;color:var(--wash);transition:transform .15s}
+.pg[open] summary::before{transform:rotate(90deg)}
+.pg summary small{font-family:var(--mono);font-size:.72rem;color:var(--zhe)}
+.pg summary .cnt{margin-left:auto;font-family:var(--body);font-size:.75rem;font-weight:600;color:var(--zhu)}
+.prs{display:grid;gap:.1rem;padding-bottom:.6rem}
+.pr{display:grid;grid-template-columns:minmax(0,1fr) 5.6rem 1.6rem;grid-template-areas:"l i r" "l d d";gap:0 .4rem;align-items:center;padding:.3rem .4rem;border-left:2px solid transparent}
+.pr.ch{border-left-color:var(--zhu);background:var(--zhu-soft)}
+.pr label{grid-area:l;display:grid;line-height:1.35;min-width:0}
+.pr .ln{font-size:.9rem}
+.pr .hint{font-size:.75rem;color:var(--wash)}
+.pr code{font-size:.68rem;color:var(--zhe);overflow-wrap:anywhere}
+.pr input{grid-area:i}
+.pr .rs{grid-area:r;padding:0;width:1.6rem;height:1.6rem;line-height:1;color:var(--zhu)}
+.pr .dv{grid-area:d;font-family:var(--mono);font-size:.7rem;color:var(--wash);text-align:right;padding-right:2rem}
+input[type=number]{width:100%;font-family:var(--mono);font-size:.85rem;padding:.2rem .35rem;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:2px;text-align:right;font-variant-numeric:tabular-nums}
+input[type=number].ch{border-color:var(--zhu);color:var(--zhu);font-weight:500}
+.ptbl{overflow-x:auto;padding-bottom:.7rem}
+.ptbl table{min-width:0;font-size:.8rem}
+.ptbl th{white-space:nowrap;padding-right:.4rem}
+.ptbl td{padding:.15rem .2rem;border:0}
+.ptbl input[type=number]{width:4.2rem;font-size:.78rem}
+.empty{color:var(--wash);font-size:.9rem}
+.note{font-size:.8rem;color:var(--wash);line-height:1.6}
+.note code{font-size:.75rem}
+main.res{min-width:0;display:grid;gap:1rem;align-content:start}
+#meta{font-size:.85rem;color:var(--wash)}
+#prog{display:grid;gap:.35rem}
+#progt{font-size:.85rem;color:var(--wash)}
+.track{height:3px;background:var(--rule)}#progb{height:100%;background:var(--zhu);width:0;transition:width .1s}
+#report .wrap{max-width:none;gap:2rem}
+.err{color:var(--zhu)}
+#dlg{position:fixed;inset:0;z-index:20;background:rgba(20,18,16,.45);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+#dlg>div{background:var(--paper);border:1px solid var(--ink);width:min(46rem,100%);max-height:100%;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:.6rem;padding:1.1rem}
+#dlg h2{font-size:1.5rem}
+#dlgmsg{font-size:.85rem;color:var(--wash)}
+#dlgx{width:100%;min-height:16rem;font-family:var(--mono);font-size:.78rem;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);padding:.6rem;resize:vertical}
+#dlg .row{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:flex-end}
+@media (max-width:860px){.grid{grid-template-columns:1fr}aside.side{position:static;max-height:none;overflow:visible;padding-right:0}.bar{position:static}}
+</style>
+</head>
+<body>
+<header class="bar">
+ <h1>逐鹿调参</h1>
+ <div class="acts">
+  <button type="button" class="go" id="run">跑测试</button>
+  <label class="note">对比 <select id="cmp" aria-label="对比基准"><option value="base">默认参数</option><option value="prev">上一次运行</option></select></label>
+  <span id="nchg">全部为默认值</span><span id="stale" hidden>参数改了，结果未更新</span>
+ </div>
+ <div class="acts" style="margin-left:auto">
+  <button type="button" id="imp">导入</button><button type="button" id="exdiff">导出改动</button><button type="button" id="exfull">导出 rules.json</button><button type="button" id="exrep">导出报告</button><button type="button" id="reset">全部恢复默认</button>
+ </div>
+</header>
+<div class="grid">
+ <aside class="side" aria-label="规则参数">
+  <input class="search" id="q" type="search" placeholder="搜参数：冲锋、浅滩、forest…" aria-label="搜索参数">
+  <p class="note">改完点“跑测试”。红边是改过的项，↺ 恢复单项。参数默认值在仓库 <code>src/rules.json</code>；改动只存在本浏览器里。</p>
+  <div id="params"></div>
+ </aside>
+ <main class="res">
+  <div id="prog" hidden><span id="progt"></span><div class="track"><div id="progb"></div></div></div>
+  <p id="meta">正在用默认参数跑测试…</p>
+  <div id="report"></div>
+ </main>
+</div>
+<div id="dlg" hidden role="dialog" aria-modal="true" aria-labelledby="dlgt"><div>
+ <h2 id="dlgt"></h2><p id="dlgmsg"></p><textarea id="dlgx" spellcheck="false" aria-label="内容"></textarea>
+ <div class="row"><button type="button" id="dlgcopy">复制</button><button type="button" id="dlgdl">下载 .html</button><button type="button" class="go" id="dlgok">导入</button><button type="button" id="dlgclose">关闭</button></div>
+</div></div>
+<script>
+// 引擎：src/game.js 跑在无界面桩里，与 tests/smoke.js 的桩相同
+const ENGINE=(function(){
+ function ctxP(){const g={addColorStop(){}};const t={};return new Proxy(t,{get(o,k){if(k in o)return o[k];if(k==='createRadialGradient'||k==='createLinearGradient')return()=>g;if(k==='measureText')return()=>({width:10});return()=>{};},set(o,k,v){o[k]=v;return true;}});}
+ function el(){return{style:{},dataset:{},classList:{add(){},remove(){},toggle(){},contains(){return false}},children:[],width:300,height:200,hidden:false,innerHTML:'',
+  getContext(){return ctxP()},addEventListener(){},appendChild(){},remove(){},getBoundingClientRect(){return{left:0,top:0,width:1200,height:700}},closest(){return null},setPointerCapture(){}};}
+ const els={};
+ const document={getElementById:id=>els[id]||(els[id]=el()),createElement:()=>el(),fonts:{load(){}}};
+ const window={__TEST:true,addEventListener(){},devicePixelRatio:1};
+ const localStorage={getItem(){return null},setItem(){}};
+ const requestAnimationFrame=()=>{},setTimeout=()=>0,clearTimeout=()=>{},navigator={},AudioContext=undefined,webkitAudioContext=undefined;
+/*__GAME__*/
+ const CP=window.__CP;CP.init();return CP;})();
+</script>
+<script>/*__SUITE__*/</script>
+<script>/*__REPORT__*/</script>
+<script>/*__TUNER__*/</script>
+</body>
+</html>

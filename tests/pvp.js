@@ -1,7 +1,7 @@
 // 联机对战测试：同一进程里起两个互相隔离的引擎（主机、客机），用模拟的 BroadcastChannel 连起来，
 // 走完握手、传战图、开局、客机下令、主机广播战况、分出胜负。用法：node tests/pvp.js [en]
 const fs=require('fs'),path=require('path'),vm=require('vm');
-const SRC=fs.readFileSync(path.join(__dirname,'../src/game.js'),'utf8');
+const SRC=fs.readFileSync(path.join(__dirname,'../src/game.js'),'utf8').replace('/*__RULES__*/null',()=>fs.readFileSync(path.join(__dirname,'../src/rules.json'),'utf8'));
 const LV=JSON.parse(fs.readFileSync(path.join(__dirname,'../levels/levels.json'),'utf8'));
 const EN=process.argv.includes('en');
 // 模拟通道：消息先排队，由测试循环统一投递，并做一次 JSON 往返（等同结构化克隆）

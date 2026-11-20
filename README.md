@@ -1,8 +1,11 @@
-# 长平之战 水墨兵戏
+# 逐鹿 水墨兵戏
+
+> 秦失其鹿，天下共逐之。——《史记·淮阴侯列传》
 
 中国古风水墨风格的即时战略游戏，单文件网页，无外部依赖（字体除外），电脑和手机浏览器都能玩。
 
 - 教学关“讲武”（卷首第一关）：校尉逐课教示行军、统众、四阵、接战、火攻、合击
+- 明史主线（开发中，见 [`docs/ming/PLAN.md`](docs/ming/PLAN.md)）：朱元璋从和尚到开国，已做卷一三关——濠州（一阵伏击）、横涧山（夜袭火攻）、和州（守城）
 - 三场长平战役（坚壁、拔垒、合围），外加一关纯数据写成的样板关“破釜”（巨鹿之战）
 - 戟、盾、弩、骑互克，四种阵形，地势、隘口、昼夜风雨、士气粮草
 - 攻城器、筑楼、火攻、列阵战术（两翼包抄、绕后夹击、侧翼包抄）
@@ -21,25 +24,37 @@
 |---|---|
 | `src/game.js` | 引擎、三关原战役、数据关卡加载器、编辑器 |
 | `src/template.html` | 页面骨架与样式 |
+| `src/rules.json` | 规则参数（所有可调数值），构建时嵌进引擎 |
+| `src/tuner.html`、`src/tuner.js` | 网页调参器的骨架与界面 |
 | `levels/levels.json` | 随附的数据关卡（数组），构建时嵌进页面 |
-| `build.py` | 把以上三者拼成 `index.html` |
-| `index.html` | 构建产物，已提交，方便直接打开或用 Pages 发布 |
+| `build.py` | 拼出 `index.html`（游戏）与 `tuner.html`（调参器） |
+| `index.html`、`tuner.html` | 构建产物，已提交，方便直接打开或用 Pages 发布 |
 | `tests/` | 无界面测试脚本（Node） |
 
 ## 构建与测试
 
 ```sh
-python3 build.py            # 改了 src/ 或 levels/ 之后重新生成 index.html
+python3 build.py            # 改了 src/、levels/ 或 tests/rules-*.js 之后重新生成 index.html 与 tuner.html
 node tests/smoke.js smart   # 脚本玩家跑完原三关（idle 为挂机）
 node tests/level.js         # 校验并试跑 levels.json 第一关
 node tests/tactics.js       # 三种列阵战术的走位
 node tests/tutorial.js      # 脚本玩家按教示走完教学关“讲武”（加 en 参数用英文模式跑）
 node tests/i18n.js          # 英文模式跑各关，查军报、状态栏、简报、战报里漏翻的中文
 node tests/pvp.js           # 两个引擎经模拟通道联机对战一局：握手、传图、号令、视野、结局、邀请码（加 en 用英文模式）
+node tests/rules.js         # 规则数值测试（地势、战马、渡河、镇守、阵形、天时、均势），生成 docs/rules-report.html
+node tests/rules.js --rules 改动.json   # 用一组试调参数跑，报告里与默认参数逐项对比
 ```
 
 测试只需要 Node，不需要安装任何包。脚本玩家很粗糙，胜负有随机波动（第二关尤其如此），
 它们的用处是确认“能跑完、不报错、胜负条件会触发”，不是衡量平衡。
+
+## 调规则
+
+规则里的数值（地势加成、战马折损、冲锋、镇守、渡河、侧背、天时、兵种攻防与相克、阵形、地形速度……）都在 `src/rules.json`，构建时嵌进游戏。
+
+- **网页调参器** `tuner.html`（构建产物，线上为 https://thugasin5214.github.io/ZhuLu-web/tuner.html）：左栏改参数，点“跑测试”，在浏览器里真跑引擎、跑完整套规则测试，右栏出报告，并与默认参数（或上一次运行）逐项对比关键数字。调满意了点“导出 rules.json”，替换仓库里的 `src/rules.json`，再 `python3 build.py`；或“导出改动”存成文件，用 `node tests/rules.js --rules 文件.json` 在命令行复现。
+- **测试集** `tests/rules-suite.js`：Node 与调参器共用。“公式”测试核对每条规则是否按当前参数生效；“模拟”测试在程序生成的地形上摆阵真跑，检查设计意图（如仰攻吃亏、半渡而击）是否成立；“观察”测试只记数字（如同兵种对攻的先手优势），供平衡参考。
+- 新加一条规则时：数值放进 `src/rules.json`，代码里用 `RU.组.键` 读取；在 `src/tuner.js` 的 `META` 里写上中文名；在测试集里加一项测试。
 
 ## 加一关
 

@@ -6,7 +6,7 @@
 |---|---|
 | 仓库 | https://github.com/thugasin5214/ZhuLu-web |
 | 发布分支 | `main`，根目录 `/` |
-| 构建产物 | `index.html`（已提交进仓库） |
+| 构建产物 | `index.html`（游戏）、`tuner.html`（规则调参器），都已提交进仓库 |
 | 线上地址（开启 Pages 后） | https://thugasin5214.github.io/ZhuLu-web/ |
 | 依赖 | Python 3（构建）、Node 18+（测试），都不需要装第三方包 |
 
@@ -50,6 +50,7 @@ node tests/level.js          # 校验并试跑 levels.json 第一关
 node tests/tactics.js        # 列阵战术走位
 node tests/pvp.js            # 联机对战：两个引擎模拟联机打完一局
 node tests/smoke.js smart    # 脚本玩家跑完原三关（较慢；胜负有随机波动，属正常）
+node tests/rules.js          # 规则数值测试；除已知问题 D5 外应全部通过，并重写 docs/rules-report.html
 
 # 3) 本地打开验证
 open index.html              # macOS；或用浏览器直接打开
@@ -62,6 +63,7 @@ open index.html              # macOS；或用浏览器直接打开
 - [ ] “战役编辑器”能打开，“破釜”数据关可以进入
 - [ ] 手机宽度（浏览器开发者工具切换设备）下界面可用
 - [ ] 浏览器控制台无报错
+- [ ] 打开 `tuner.html`，自动跑完一遍测试并出报告
 
 > 注意：如果改了 `src/` 或 `levels/` 却忘记跑 `build.py`，线上不会有任何变化——线上只认 `index.html`。
 
@@ -142,5 +144,6 @@ git push origin main
 | Pages 返回 404 | Pages 未开启（见第 0 节）；或仓库为私有且账号无付费计划 |
 | `build.py` 报 `game.js 里不能出现 </script` | `src/game.js` 中出现了字面量 `</script`，改写为 `<\/script` |
 | `build.py` 报 assert 占位符错误 | `src/template.html` 中的 `/*__GAME__*/` 或 `/*__LEVELS__*/` 被删改了，恢复即可 |
+| 改了规则数值线上没变 | 数值在 `src/rules.json`，改完要 `python3 build.py`，`index.html` 和 `tuner.html` 都会重新生成 |
 | `build.py` 报 JSON 错误 | `levels/levels.json` 格式不合法，用编辑器“导入导出”页重新导出，或 `python3 -m json.tool levels/levels.json` 定位 |
 | 测试胜负结果每次不同 | 正常；脚本玩家有随机性，测试只确认能跑完、不报错 |

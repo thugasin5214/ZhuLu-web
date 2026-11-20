@@ -7,26 +7,33 @@ const TNAME_EN=['Plain','Hill','Forest','River','Ford','Road','Wall','Gate','Cam
 const TNOTE_EN=['Open ground; favors cavalry charges','Higher ground: stronger in melee, longer bow range; steep slopes injure horses','Hold here to lie in ambush; slows and wears cavalry; burns','','Troops wading take double casualties','Fast marching','','','Defenders behind ramparts shrug off missiles','Burnt out','Mud: very slow, horses bog down, heaviest attrition','','Collapsed wall; troops can storm through'];
 const TNAME=TNAME_ZH.slice();
 const TNOTE_ZH=['无险可守，利骑兵驰突','地势越高，攻守越利，弩矢越远；陡处战马易伤','镇守可设伏；骑兵难行且折损，畏火攻','','半渡受击，伤亡倍增','行军迅捷','','','守军依垒，矢石难伤','草木已尽','泥淖难行，战马陷足，折损最重','','城垣崩缺，可由此突入'];const TNOTE=TNOTE_ZH.slice();
-const SPD=[1,.65,.7,0,.45,1.3,.12,1,1,.9,.5,0,.6];
+const SPD=new Array(13).fill(0);   // 地形速度，由 RU.terrainSpeed 填入
 const GN_ZH={ram:'冲车',ladder:'云梯',cata:'发石车'},GN_EN={ram:'battering ram',ladder:'scaling ladders',cata:'trebuchet'},GN=Object.assign({},GN_ZH),GT={ram:12,ladder:9,cata:18},GS={ram:.75,ladder:.9,cata:.6};
 const HN='子丑寅卯辰巳午未申酉戌亥',HNP=['Zi','Chou','Yin','Mao','Chen','Si','Wu','Wei','Shen','You','Xu','Hai'],GAN_ZH='甲乙丙丁戊己庚辛壬癸';let GAN=GAN_ZH;
 const INK='#1d1b19',QING='#2f4d66',ZHU='#b3261e',ZHE='#8f6a3f',PAPER='#e6dfcc';
 const BRUSH_ZH='"Ma Shan Zheng","STKaiti","KaiTi","Kaiti SC",serif';let BRUSH=BRUSH_ZH;
 const UT={
- ji:{name:'戟兵',ch:'戟',spd:46,atk:1,def:1,range:0},
- dun:{name:'盾兵',ch:'盾',spd:42,atk:.9,def:1.25,range:0},
- nu:{name:'弩手',ch:'弩',spd:44,atk:.5,def:.7,range:200},
- qi:{name:'骑兵',ch:'骑',spd:92,atk:1.15,def:.9,range:0},
- liang:{name:'粮队',ch:'粮',spd:32,atk:.05,def:1.1,range:0}};
-const CT={ji:{qi:1.6,dun:.85},dun:{ji:1.2,qi:.85,nu:1.2},qi:{nu:1.7,dun:1.15,ji:.7,liang:1.3},nu:{},liang:{}};
+ ji:{name:'戟兵',ch:'戟'},dun:{name:'盾兵',ch:'盾'},nu:{name:'弩手',ch:'弩'},qi:{name:'骑兵',ch:'骑'},liang:{name:'粮队',ch:'粮'}};   // 数值见 src/rules.json
+const CT={};
 const FM={
- fang:{name:'方阵',atk:1,def:1,spd:1},
- feng:{name:'锋矢阵',atk:1.3,def:.8,spd:1.15},
- yuan:{name:'圆阵',atk:.75,def:1.4,spd:.6,noflank:true},
- yan:{name:'雁行阵',atk:.9,def:.85,spd:1,shot:1.3,rng:1.1}};
+ fang:{name:'方阵'},feng:{name:'锋矢阵'},yuan:{name:'圆阵',noflank:true},yan:{name:'雁行阵'}};
 const UT_EN={ji:'Halberdiers',dun:'Shieldmen',nu:'Crossbowmen',qi:'Cavalry',liang:'Supply Train'},UT_ZH={};for(const k in UT)UT_ZH[k]=UT[k].name;
 const FM_EN={fang:'Square',feng:'Arrowhead',yuan:'Circle',yan:'Wild Goose'},FM_ZH={};for(const k in FM)FM_ZH[k]=FM[k].name;
-const FMC={feng:{yan:1.25,yuan:.85},fang:{feng:1.1},yan:{},yuan:{}};
+const FMC={};
+/* 规则参数：默认值在 src/rules.json，构建时嵌入。setRules(覆盖) 先恢复默认、再合并覆盖值（调参器用）。 */
+const RULES0=/*__RULES__*/null;let RU=null;
+const TSK=['plain','hill','forest','','ford','road','wall','gate','camp','burnt','marsh','','rubble'];
+function setRules(o){
+ if(!RULES0)throw new Error('RULES0 未嵌入：请用 build.py 构建，或在测试里替换 /*__RULES__*/');
+ const merge=(a,b)=>{for(const k in b){if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&a[k]&&typeof a[k]==='object')merge(a[k],b[k]);else a[k]=b[k];}return a;};
+ RU=merge(JSON.parse(JSON.stringify(RULES0)),o||{});
+ for(const k in RU.units)if(UT[k])Object.assign(UT[k],RU.units[k]);
+ for(const k in RU.counters)CT[k]=Object.assign({},RU.counters[k]);
+ for(const k in RU.formations)if(FM[k])Object.assign(FM[k],RU.formations[k]);
+ for(const k in RU.formationCounters)FMC[k]=Object.assign({},RU.formationCounters[k]);
+ TSK.forEach((k,i)=>{SPD[i]=k?RU.terrainSpeed[k]:0;});
+ return RU;}
+setRules();
 const QUOTES={
  flank:['出其不意，攻其无备','计篇','Attack where he is unprepared; appear where you are not expected.'],high:['凡军好高而恶下','行军篇','An army prefers high ground and dislikes the low.'],ford:['令半济而击之，利','行军篇','Let half the enemy cross the river, then strike.'],
  rest:['以近待远，以佚待劳','军争篇','Close to the field, await the distant foe; rested, await the weary.'],ai:['隘形者，我先居之，必盈之以待敌','地形篇','In a narrow pass, occupy it first, hold it in strength, and await the enemy.'],siege:['攻城之法，为不得已','谋攻篇','Attacking walled cities is the last resort.'],shi:['如转圆石于千仞之山者，势也','势篇','Like round stones rolled down a mountain a thousand fathoms high: that is momentum.'],marsh:['绝斥泽，惟亟去无留','行军篇','Cross salt marshes quickly; do not linger.'],terrain:['夫地形者，兵之助也','地形篇','The lie of the land is the soldier\'s best ally.'],fire:['发火有时，起火有日','火攻篇','There is a season for fire, and days for kindling it.'],wind:['火发上风，无攻下风','火攻篇','Set fire from upwind; never attack from downwind.'],
@@ -129,7 +136,7 @@ function computeGap(){const blk=(x,y)=>{if(x<0||y<0||x>=MW||y>=MH)return false;c
  for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){const i=y*MW+x;G.gap[i]=0;if(blk(x,y))continue;let w=9;
   for(const[ax,ay]of[[1,0],[0,1]]){let n=1;for(let k=1;k<5&&!blk(x+ax*k,y+ay*k);k++)n++;for(let k=1;k<5&&!blk(x-ax*k,y-ay*k);k++)n++;if(n<w)w=n;}
   if(w<=2)G.gap[i]=w;}}
-const frontage=g=>600+1400*g;
+const frontage=g=>RU.terrain.frontageBase+RU.terrain.frontagePer*g;
 function computeElev(){const m=G.map,e=G.elev;const hill=(x,y)=>x<0||y<0||x>=MW||y>=MH||m[y*MW+x]===HILL||m[y*MW+x]===CLIFF;
  for(let i=0;i<MW*MH;i++)e[i]=m[i]===HILL?1:m[i]===WALL?2:0;
  for(let lv=2;lv<=3;lv++){const up=[];for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){const i=y*MW+x;if(e[i]!==lv-1)continue;let ok=true;
@@ -165,8 +172,8 @@ function build(g){
 const gS=new Float32Array(MW*MH),came=new Int32Array(MW*MH),closed=new Uint8Array(MW*MH);
 const DX=[1,-1,0,0,1,1,-1,-1],DY=[0,0,1,-1,1,-1,1,-1];
 const pass=(i,u)=>{const t=G.map[i];if(t===RIVER||t===CLIFF)return false;if(t===WALL)return !!(u&&u.gear==='ladder');return true;};
-function spdF(t,type){let s=SPD[t];if(type==='qi'){if(t===HILL)s=.5;else if(t===FOREST)s=.42;else if(t===MARSH)s=.3;}
- if(G.weather==='rain'&&(t===PLAIN||t===BURNT))s*=type==='qi'?.75:.88;return s;}
+function spdF(t,type){const cs=RU.cavSpeed;let s=SPD[t];if(type==='qi'){if(t===HILL)s=cs.hill;else if(t===FOREST)s=cs.forest;else if(t===MARSH)s=cs.marsh;}
+ if(G.weather==='rain'&&(t===PLAIN||t===BURNT))s*=type==='qi'?RU.weather.rainPlainCav:RU.weather.rainPlainInf;return s;}
 function nearPass(tx,ty){for(let r=1;r<8;r++)for(let y=ty-r;y<=ty+r;y++)for(let x=tx-r;x<=tx+r;x++){if(x<0||y<0||x>=MW||y>=MH)continue;if(Math.max(Math.abs(x-tx),Math.abs(y-ty))!==r)continue;if(pass(y*MW+x))return y*MW+x;}return -1;}
 function los(x0,y0,x1,y1){const d=Math.hypot(x1-x0,y1-y0),n=Math.ceil(d/13);for(let s=0;s<=n;s++){const t=G.map[tileIdx(x0+(x1-x0)*s/n,y0+(y1-y0)*s/n)];if(!(t===PLAIN||t===ROAD||t===CAMP||t===BURNT))return false;}return true;}
 function hpush(h,f,i){h.push([f,i]);let c=h.length-1;while(c>0){const p=(c-1)>>1;if(h[p][0]<=h[c][0])break;[h[p],h[c]]=[h[c],h[p]];c=p;}}
@@ -230,55 +237,56 @@ function surrounded(u){let q=0;for(const e of G.units){if(e.side===u.side||!e.al
  return((q&1)+(q>>1&1)+(q>>2&1)+(q>>3&1))>=3;}
 function wallBetween(a,b){if(G.map[tileIdx(a.x,a.y)]===WALL||G.map[tileIdx(b.x,b.y)]===WALL)return false;for(let s=1;s<4;s++){const i=tileIdx(a.x+(b.x-a.x)*s/4,a.y+(b.y-a.y)*s/4),t=G.map[i];if(t===WALL)return true;if(t===GATE){const g=G.gateIdx[i];if(g&&g.hp>0)return true;}}return false;}
 const canSee=(u,e)=>u.side===1||G.pvp?e.vis:(!e.hidden||dist(u,e)<70);
-function visionOf(u){let v=420-250*dark();if(G.weather==='fog')v*=.45;return v*(1+.12*elevOf(u));}
-function rangeOf(u){let r=UT[u.kind].range*(FM[u.fm].rng||1)*(1+.1*elevOf(u));if(G.weather==='fog')r*=.6;return r*(1-.2*dark());}
-function rangeTo(u,t){return rangeOf(u)*(1-.08*Math.min(3,elevOf(t)))*(1+Math.cos(ang(u,t)-G.wind)*(G.windStr>1?.22:.08));}
+function visionOf(u){const W=RU.weather;let v=W.vision-W.nightVision*dark();if(G.weather==='fog')v*=W.fogVision;return v*(1+RU.elevation.vision*elevOf(u));}
+function rangeOf(u){let r=UT[u.kind].range*(FM[u.fm].rng||1)*(1+RU.elevation.range*elevOf(u));if(G.weather==='fog')r*=RU.weather.fogRange;return r*(1-RU.weather.nightRange*dark());}
+function rangeTo(u,t){return rangeOf(u)*(1-RU.elevation.rangeTarget*Math.min(RU.elevation.maxLv,elevOf(t)))*(1+Math.cos(ang(u,t)-G.wind)*(G.windStr>1?.22:.08));}
 
 let FLK=1;
 const ctr=(a,b)=>{const c=CT[a.kind]||CT[a.type]||{},v=c[b.kind];return v!==undefined?v:(c[b.type]||1);};
 function meleeMult(a,b){
- const A=UT[a.kind],B=UT[b.kind],fa=FM[a.fm],fb=FM[b.fm];
+ const A=UT[a.kind],B=UT[b.kind],fa=FM[a.fm],fb=FM[b.fm],E=RU.elevation,T=RU.terrain,H=RU.hold,C=RU.combat,K=RU.charge,F=RU.flank;
  let m=A.atk*fa.atk/(B.def*fb.def)*ctr(a,b)*(FMC[a.fm][b.fm]||1)*(a.chargeT>0?(A.charge||1):1);
  const ta=tAtU(a),tb=tAtU(b);
- const dh=elevOf(a)-elevOf(b);if(dh>0){m*=1+.12*Math.min(dh,3);quote('high');}else if(dh<0)m*=1-.1*Math.min(-dh,3);
- if(tb===FOREST)m*=.85;
- if(a.type==='qi'&&(ta===FOREST||tb===FOREST||ta===MARSH))m*=.7;
- if(tb===FORD){m*=1.5;quote('ford');}if(ta===FORD)m*=.6;
- if(tb===MARSH)m*=1.2;
- if(tb===WALL)m*=1.4;if(ta===WALL)m*=.6;if(a.gear==='ram')m*=.85;
- if(tb===CAMP&&G.own[tileIdx(b.x,b.y)]===b.side)m*=.75;
- const dug=b.hold&&b.holdT>8;
- if(b.hold){m*=dug?.65:.85;if(dug)quote('dig');}
- FLK=1;
- if(!fb.noflank&&b.state!=='rout'){const da=Math.abs(angDiff(b.face,ang(b,a)));if(da>2.2){m*=1.5;FLK=1.6;quote('flank');}else if(da>1.35){m*=1.25;FLK=1.3;}}
- if(a.chargeT>0&&!dug){if(a.type==='qi'){if(dh>=0&&!(b.type==='ji'&&b.fm!=='feng'&&FLK===1))m*=1.6;}else m*=1.2;
-  if(dh>0){m*=1.15;quote('shi');}
-  if(dark()>.6){m*=1.15;quote('night');}}
- m*=(.6+.4*a.stam/100)*(.75+.35*cl(a.morale,0,100)/100);
- if(a.ambushT>0)m*=1.7;
- if(a.death)m*=1.3;
- if(b.state==='rout')m*=1.5;
- if(a.stam-b.stam>45){m*=1.15;quote('rest');}
- if(b.atkP>=3){FLK*=1.2;quote('mass');}
+ const dh=elevOf(a)-elevOf(b);if(dh>0){m*=1+E.meleeUp*Math.min(dh,E.maxLv);quote('high');}else if(dh<0)m*=1-E.meleeDown*Math.min(-dh,E.maxLv);
+ if(tb===FOREST)m*=T.forestDef;
+ if(a.type==='qi'&&(ta===FOREST||tb===FOREST||ta===MARSH))m*=T.cavForest;
+ if(tb===FORD){m*=T.fordTarget;quote('ford');}if(ta===FORD)m*=T.fordAttacker;
+ if(tb===MARSH)m*=T.marshTarget;
+ if(tb===WALL)m*=T.wallTarget;if(ta===WALL)m*=T.wallAttacker;if(a.gear==='ram')m*=.85;
+ if(tb===CAMP&&G.own[tileIdx(b.x,b.y)]===b.side)m*=T.campDef;
+ const dug=b.hold&&b.holdT>H.dugTime;
+ if(b.hold){m*=dug?H.dugMelee:H.melee;if(dug)quote('dig');}
+ FLK=1;let fl=0;
+ if(!fb.noflank&&b.state!=='rout'){const da=Math.abs(angDiff(b.face,ang(b,a)));if(da>2.2){m*=F.rear;FLK=F.rearMorale;fl=2;quote('flank');}else if(da>1.35){m*=F.side;FLK=F.sideMorale;fl=1;}}
+ if(a.chargeT>0&&!dug){if(a.type==='qi'){if(dh>=0&&!(b.type==='ji'&&b.fm!=='feng'&&fl===0))m*=K.cav;}else m*=K.inf;
+  if(dh>0){m*=E.chargeDown;quote('shi');}
+  if(dark()>.6){m*=K.night;quote('night');}}
+ m*=(C.stamMin+(1-C.stamMin)*a.stam/100)*(C.moraleMin+C.moraleSpan*cl(a.morale,0,100)/100);
+ if(a.ambushT>0)m*=H.ambushMelee;
+ if(a.death)m*=C.deathFight;
+ if(b.state==='rout')m*=C.routHit;
+ if(a.stam-b.stam>C.restGap){m*=C.restBonus;quote('rest');}
+ if(b.atkP>=3){FLK*=F.massMorale;quote('mass');}
  return m;
 }
 function rangedMult(a,b){
- let m=(UT[a.kind].shot||1)*(UT[b.kind].arrowDef||1)*(FM[a.fm].shot||1)*(.6+.4*a.stam/100)*(.8+.25*cl(a.morale,0,100)/100);
- if(b.type==='dun')m*=b.fm==='yuan'?.35:.45;else if(b.fm==='yuan')m*=1.2;
+ const W=RU.weather,T=RU.terrain,S=RU.shield,C=RU.combat,E=RU.elevation,H=RU.hold;
+ let m=(UT[a.kind].shot||1)*(UT[b.kind].arrowDef||1)*(FM[a.fm].shot||1)*(C.shotStamMin+(1-C.shotStamMin)*a.stam/100)*(C.shotMoraleMin+C.shotMoraleSpan*cl(a.morale,0,100)/100);
+ if(b.type==='dun')m*=b.fm==='yuan'?S.dunYuanArrow:S.dunArrow;else if(b.fm==='yuan')m*=S.yuanArrow;
  const tb=tAtU(b);
- if(tb===FOREST)m*=.6;if(tb===FORD)m*=1.3;if(tb===WALL)m*=1.4;
- if(G.gap[tileIdx(b.x,b.y)]&&tb!==GATE){m*=1.25;if(elevOf(a)>elevOf(b)){m*=1.15;quote('ai');}}
- if(tb===CAMP&&G.own[tileIdx(b.x,b.y)]===b.side)m*=.5;
- if(G.weather==='rain')m*=.5;
- if(b.hold&&b.holdT>8)m*=.8;
- if(a.ambushT>0)m*=1.4;
- if(b.state==='rout')m*=1.2;
- const dh=elevOf(a)-elevOf(b);m*=1+.1*cl(dh,-3,4);if(dh>0)quote('high');
- return m*(1-.2*dark());
+ if(tb===FOREST)m*=T.forestShot;if(tb===FORD)m*=T.fordShot;if(tb===WALL)m*=T.wallShot;
+ if(G.gap[tileIdx(b.x,b.y)]&&tb!==GATE){m*=T.gapShot;if(elevOf(a)>elevOf(b)){m*=T.gapHighShot;quote('ai');}}
+ if(tb===CAMP&&G.own[tileIdx(b.x,b.y)]===b.side)m*=T.campShot;
+ if(G.weather==='rain')m*=W.rainShot;
+ if(b.hold&&b.holdT>H.dugTime)m*=H.dugShot;
+ if(a.ambushT>0)m*=H.ambushShot;
+ if(b.state==='rout')m*=C.routShot;
+ const dh=elevOf(a)-elevOf(b);m*=1+E.shot*cl(dh,-E.maxLv,E.maxLv+1);if(dh>0)quote('high');
+ return m*(1-W.nightShot*dark());
 }
 function hurt(b,dmg,mk){
  if(dmg<=0||!b.alive)return;dmg=Math.min(dmg,b.n);b.n-=dmg;b.lastHit=G.t;b.hitT=.2;
- if(b.type!=='liang'&&!b.death)b.morale-=dmg/b.nMax*100*1.6*mk;
+ if(b.type!=='liang'&&!b.death)b.morale-=dmg/b.nMax*100*RU.combat.moraleHit*mk;
  if(b.side===1)G.stats.loss+=dmg;else G.stats.kill+=dmg;
 }
 function fight(u,dt){
@@ -286,13 +294,13 @@ function fight(u,dt){
  if(u.state==='rout'||u.type==='liang'){u.had=false;return;}
  const tg=u.target&&u.target.alive?u.target:null;let foe=null;
  if(tg&&dist(u,tg)<u.r+tg.r+10&&!wallBetween(u,tg))foe=tg;else if(u.contact&&u.contact.alive)foe=u.contact;
- if(foe&&!u.had&&u.runT>1.2&&!(G.weather==='rain'&&u.type==='qi')){u.chargeT=3.5;if(u.type==='qi'&&foe.type==='nu')quote('speed');}
+ if(foe&&!u.had&&u.runT>RU.charge.run&&!(G.weather==='rain'&&u.type==='qi')){u.chargeT=RU.charge.time;if(u.type==='qi'&&foe.type==='nu')quote('speed');}
  u.had=!!foe;
  if(foe){
-  if(u.hidden){u.ambushT=6;u.hidden=false;quote('ambush');}
+  if(u.hidden){u.ambushT=RU.hold.ambushTime;u.hidden=false;quote('ambush');}
   const m=meleeMult(u,foe);const ga=G.gap[tileIdx(u.x,u.y)],gb=G.gap[tileIdx(foe.x,foe.y)],gp=ga&&gb?Math.min(ga,gb):(ga||gb);let eff=u.n;if(gp&&eff>frontage(gp)){eff=frontage(gp);quote('ai');}
-  let dmg=16*Math.pow(eff/1000,.7)*m*dt*(u.side===2&&!G.pvp?D.might/100:1);if(u.state==='move'&&!tg)dmg*=.4;G.heat=Math.min(3,(G.heat||0)+dt*2);
-  foe.atkN++;hurt(foe,dmg,FLK);u.stam-=1.1*dt;u.lastAtk=G.t;
+  let dmg=RU.combat.meleeBase*Math.pow(eff/1000,RU.combat.sizeExp)*m*dt*(u.side===2&&!G.pvp?D.might/100:1);if(u.state==='move'&&!tg)dmg*=RU.combat.moveFight;G.heat=Math.min(3,(G.heat||0)+dt*2);
+  foe.atkN++;hurt(foe,dmg,FLK);u.stam-=RU.march.stamFight*dt;u.lastAtk=G.t;
   if(u.state!=='move')u.face=turn(u.face,ang(u,foe),dt*5);
   if(Math.random()<dt*6){splat((u.x+foe.x)/2,(u.y+foe.y)/2);sfx('clash',u.x,u.y);}
  }else if(UT[u.kind].range&&u.state!=='move'){
@@ -300,8 +308,8 @@ function fight(u,dt){
   if(u.cd<=0){let t2=null;
    if(tg&&canSee(u,tg)&&dist(u,tg)<=rangeTo(u,tg))t2=tg;
    else if(!u.ordered||!tg){let bd=1e9;for(const e of G.units){if(e.side===u.side||!e.alive||!canSee(u,e))continue;const d=dist(u,e);if(d<bd&&d<=rangeTo(u,e)){bd=d;t2=e;}}}
-   if(t2){if(u.hidden){u.ambushT=6;u.hidden=false;quote('ambush');}
-    u.cd=2.2;hurt(t2,11*2.2*Math.pow(u.n/1000,.7)*rangedMult(u,t2)*(u.side===2&&!G.pvp?D.might/100:1),1);volley(u,t2,false);sfx('arrow',u.x,u.y);G.heat=Math.min(3,(G.heat||0)+.3);
+   if(t2){if(u.hidden){u.ambushT=RU.hold.ambushTime;u.hidden=false;quote('ambush');}
+    u.cd=RU.combat.volleyCd;hurt(t2,RU.combat.volleyBase*RU.combat.volleyCd*Math.pow(u.n/1000,RU.combat.sizeExp)*rangedMult(u,t2)*(u.side===2&&!G.pvp?D.might/100:1),1);volley(u,t2,false);sfx('arrow',u.x,u.y);G.heat=Math.min(3,(G.heat||0)+.3);
     if(u.side===2&&!G.pvp&&D.wit>=3&&u.fireCd<=0&&G.weather!=='rain'){const fi=tileIdx(t2.x,t2.y);if(flam(fi)&&G.own[fi]!==2&&startFire(fi)){u.fireCd=40;volley(u,t2,true);msg(tr('敌军发火箭'+(G.map[fi]===FOREST?'焚林':'烧营')+'！','Enemy fire arrows set the '+(G.map[fi]===FOREST?'forest':'camp')+' ablaze!'),'warn');}}u.face=ang(u,t2);u.lastAtk=G.t;u.stam-=.6;}
    else u.cd=.25;}
  }
@@ -341,17 +349,17 @@ function stepUnit(u,dt){
  // 扼隘：敌军镇守于隘口时，不能从其身侧硬闯，只能接战
  {const k=u.contact;if(k&&k.alive&&k.hold&&u.state!=='rout'&&G.gap[tileIdx(k.x,k.y)]&&(k.x-u.x)*dx+(k.y-u.y)*dy>0){u.runT=0;u.face=turn(u.face,ang(u,k),dt*5);if(u.side===2&&u.ai&&!u.target)u.target=k;return;}}
  const fast=u.march&&u.stam>5;if(u.march&&!fast)u.march=false;
- const gpw=G.gap[tileIdx(u.x,u.y)],slow=(u.gear?GS[u.gear]:1)*(gpw&&u.n>frontage(gpw)?.75:1);
+ const gpw=G.gap[tileIdx(u.x,u.y)],slow=(u.gear?GS[u.gear]:1)*(gpw&&u.n>frontage(gpw)?RU.terrain.gapSlow:1);
  const de=G.elev[tileIdx(wp.x,wp.y)]-G.elev[tileIdx(u.x,u.y)];
- const sp=slow*(de>0?.82:de<0?1.1:1)*UT[u.kind].spd*FM[u.fm].spd*spdF(t,u.type)*(u.state==='rout'?1.25:1)*(fast?1.45:1)*(u.stam<15?.75:1),st=sp*dt;
+ const sp=slow*(de>0?RU.elevation.upSpeed:de<0?RU.elevation.downSpeed:1)*UT[u.kind].spd*FM[u.fm].spd*spdF(t,u.type)*(u.state==='rout'?1.25:1)*(fast?RU.march.forceSpeed:1)*(u.stam<RU.march.tiredAt?RU.march.tiredSpeed:1),st=sp*dt;
  const nx=d<=st?wp.x:u.x+dx/d*st,ny=d<=st?wp.y:u.y+dy/d*st,ni=tileIdx(nx,ny);
  if(G.map[ni]===GATE){const g=G.gateIdx[ni];if(g&&g.hp>0&&g.side!==u.side){u.siege=g;u.face=Math.atan2(dy,dx);u.runT=0;return;}}
  u.x=nx;u.y=ny;if(d<=st)u.path.shift();
  if(d>1)u.face=turn(u.face,Math.atan2(dy,dx),dt*6);
  u.runT=spdF(t,u.type)>=.9?u.runT+dt:0;
- u.stam-=dt*(fast?2.6:.3);
- if(u.type==='qi'&&u.state!=='rout'){const e=G.elev[ni];let k=t===MARSH?1:t===FOREST?.6:t===HILL&&e>=2?(e>=3?.8:.5):G.weather==='rain'&&fast&&(t===PLAIN||t===BURNT)?.25:0;
-  if(k){const loss=Math.min(u.n,u.n*k/100*(fast?2.2:1)*dt);u.n-=loss;if(u.side===1)G.stats.loss+=loss;else G.stats.kill+=loss;u.runT=0;
+ u.stam-=dt*(fast?RU.march.stamForce:RU.march.stamMarch);
+ if(u.type==='qi'&&u.state!=='rout'){const e=G.elev[ni],HS=RU.horse;let k=t===MARSH?HS.marsh:t===FOREST?HS.forest:t===HILL&&e>=2?(e>=3?HS.hill3:HS.hill2):G.weather==='rain'&&fast&&(t===PLAIN||t===BURNT)?HS.rainForce:0;
+  if(k){const loss=Math.min(u.n,u.n*k/100*(fast?HS.forceMul:1)*dt);u.n-=loss;if(u.side===1)G.stats.loss+=loss;else G.stats.kill+=loss;u.runT=0;
    if((u.side===1||G.pvp)&&G.t-(u.wornT||-99)>25){u.wornT=G.t;msg(tr(u.name+(t===MARSH?'陷于沮泽':t===FOREST?'穿行密林':t===HILL?'攀行险坡':'雨中疾驰')+'，战马折损',u.name+(t===MARSH?' bogged in marsh':t===FOREST?' pushing through forest':t===HILL?' climbing steep slopes':' galloping in rain')+': horses lost'),'warn',u.side);quote(t===MARSH?'marsh':'terrain');}}}
  // 看护：两息之内几乎未动，则重新寻路并稍作侧移
  u.stT=(u.stT||0)+dt;if(u.stT>2){if(u.path.length&&Math.hypot(u.x-(u.sx||0),u.y-(u.sy||0))<5&&!u.contact){const f=u.path[u.path.length-1];u.path=findPath(u,f.x,f.y);const a=u.face+(Math.random()<.5?1.57:-1.57);tryMove(u,Math.cos(a)*8,Math.sin(a)*8);}u.sx=u.x;u.sy=u.y;u.stT=0;}
@@ -417,7 +425,7 @@ function aiThink(u){
     ai.fT=G.t+9;const k=best.r+u.r+30,p=findPath(u,best.x-Math.cos(best.face)*k,best.y-Math.sin(best.face)*k);
     if(p.length){ai.flank={tg:best,until:G.t+3.5};u.target=null;u.path=p;u.state='move';u.hold=false;u.fm='feng';return;}}
   }
-  u.target=best;aiForm(u,best);if(!ai.stay){if(u.hidden)u.ambushT=6;u.hold=false;u.state='idle';}return;}
+  u.target=best;aiForm(u,best);if(!ai.stay){if(u.hidden)u.ambushT=RU.hold.ambushTime;u.hold=false;u.state='idle';}return;}
  u.target=null;if(wit>=2&&u.type!=='nu')u.fm='fang';
  if(ai.stay){u.hold=true;return;}
  if(ai.mode==='guard'){if(dist(u,ai.post)>36){if(!u.path.length){u.path=findPath(u,ai.post.x,ai.post.y);u.state='move';u.hold=false;}}else{u.hold=true;u.state='idle';}}
@@ -431,7 +439,7 @@ const aslt=(x,y,o)=>Object.assign({mode:'assault',goal:{x,y}},o);
 /* ---------- 士气、体力、溃散 ---------- */
 function upkeep(u,dt){
  const calm=G.t-u.lastHit>5&&!u.contact,gr=G.grain[u.side],starve=gr!==null&&gr<=0;
- if(u.state!=='move'&&!u.contact&&!u.path.length)u.stam+=dt*(u.hold?3:2);
+ if(u.state!=='move'&&!u.contact&&!u.path.length)u.stam+=dt*(u.hold?RU.hold.restHold:RU.hold.rest);
  u.stam=cl(u.stam,0,100);
  if(u.hold)u.holdT+=dt;else u.holdT=0;
  if(u.make){if(!u.hold||u.state==='rout')u.make=null;else if(!u.contact){u.make.t+=dt*Math.sqrt(u.n/3000)/GT[u.make.g];if(Math.random()<dt*1.6)sfx('thud',u.x,u.y);
@@ -445,7 +453,7 @@ function upkeep(u,dt){
  if(starve)u.morale-=dt*(u.side===2?1:.8);
  const fi=tileIdx(u.x,u.y);if(G.fires.has(fi)){hurt(u,(30+u.n*.006)*dt,1.5);}
  u.morale=cl(u.morale,0,100);
- u.hidden=u.hold&&u.holdT>3&&!u.make&&!u.build&&(G.map[fi]===FOREST||(G.map[fi]===HILL&&G.elev[fi]>=2))&&G.t-u.lastHit>4&&G.t-u.lastAtk>4&&!u.contact&&u.ambushT<=0;
+ u.hidden=u.hold&&u.holdT>RU.hold.hideTime&&!u.make&&!u.build&&(G.map[fi]===FOREST||(G.map[fi]===HILL&&G.elev[fi]>=2))&&G.t-u.lastHit>4&&G.t-u.lastAtk>4&&!u.contact&&u.ambushT<=0;
  if(u.n<Math.max(120,u.nMax*.08)){kill(u);return;}
  if(starve&&u.morale<15){removeUnit(u);msg(tr((u.side===2?'敌':'我军')+u.name+(u.side===2?'弃甲请降':'粮尽而散'),u.side===2?'Enemy '+u.name+' throws down its arms and surrenders':'Our '+u.name+' starves and scatters'),u.side===2?'good':'warn');if(u.side===2)G.stats.surr+=u.n;return;}
  if(u.state==='rout'){u.routT+=dt;let near=false;for(const e of G.units)if(e.side!==u.side&&e.alive&&dist(e,u)<230){near=true;break;}
@@ -501,7 +509,7 @@ function orderSim(wx,wy){
  let s=selOK();if(!s.length)return;for(const u of s)u.man=null;
  const e=pickUnit(wx,wy,3-ACT);
  sfx('move');
- if(e){for(const u of s){u.bomb=null;if(u.hidden)u.ambushT=10;u.target=e;u.ordered=true;u.hold=false;u.state='idle';u.repT=0;}ring(e.x,e.y,ZHU);ack(s,'杀');use('attack');return;}
+ if(e){for(const u of s){u.bomb=null;if(u.hidden)u.ambushT=RU.hold.ambushOrderTime;u.target=e;u.ordered=true;u.hold=false;u.state='idle';u.repT=0;}ring(e.x,e.y,ZHU);ack(s,'杀');use('attack');return;}
  {const ti=tileIdx(wx,wy),tt=G.map[ti],gg=G.gateIdx[ti],cat=s.filter(u=>u.gear==='cata');
   if(cat.length&&(tt===WALL&&G.own[ti]!==ACT||(tt===GATE&&gg&&gg.hp>0&&gg.side!==ACT)||(G.tower[ti]>0&&G.own[ti]===3-ACT))){
    for(const u of cat){u.bomb={i:ti};u.bcd=1;u.target=null;u.ordered=false;u.hold=false;u.state='idle';u.path=[];u.repT=0;}
@@ -531,7 +539,7 @@ function tactic(mode,e){
  mv.forEach((u,j)=>{let sd=mode==='wings'||mv.length>1?(j<mv.length/2?-1:1):(angDiff(a,ang(e,u))<0?-1:1);
   if(mv.length===1&&mode==='wings')sd=1;if(!okSide(u,sd)&&okSide(u,-sd)&&!(mode==='wings'&&mv.length>1))sd=-sd;
   const pts=mode==='rear'?[{da:sd*1.9,R:95},{da:PI,R:42}]:[{da:sd*PI/2,R:42}];
-  u.man={tg:e,a,pts,mode};u.hold=false;u.target=null;u.ordered=false;u.bomb=null;u.make=null;u.build=null;u.path=[];u.state='move';if(u.hidden)u.ambushT=10;});
+  u.man={tg:e,a,pts,mode};u.hold=false;u.target=null;u.ordered=false;u.bomb=null;u.make=null;u.build=null;u.path=[];u.state='move';if(u.hidden)u.ambushT=RU.hold.ambushOrderTime;});
  if(front){front.path=[];front.target=null;front.ordered=false;front.march=false;front.bomb=null;
   if(dist(front,e)>e.r+front.r+60){front.hold=false;front.state='move';front.man={tg:e,a,pts:[{da:0,R:-10}],hold:true};}else{front.man=null;front.hold=true;front.state='idle';front.face=ang(front,e);}ack([front],'守');}
  ack(mv,mode==='wings'?'包抄':mode==='rear'?'绕后':'侧击');sfx('move');ring(e.x,e.y,ZHU);
@@ -861,7 +869,7 @@ function hud(){
  const s=selOK();let info;
  if(!s.length)info=tr('点选我军军阵以下令。'+(touchy?'轻点地面行军，轻点敌阵进攻。':'右键行军或进攻，拖框多选。'),'Select a unit to give orders. '+(touchy?'Tap ground to march, tap an enemy to attack.':'Right-click to march or attack; drag a box to select several.'));
  else if(s.length===1){const u=s[0],t=tAtU(u);info='<b>'+u.name+'</b>　'+tr('兵 ','Men ')+Math.round(u.n)+'　'+tr('士气 ','Morale ')+Math.round(u.morale)+'　'+tr('体力 ','Stamina ')+Math.round(u.stam)+'　'+FM[u.fm].name+(UT[u.kind].weapon?'　'+UT[u.kind].weapon:'')+'　'+tr('地势 ','Height ')+elevOf(u)+(u.gear?'　'+GN[u.gear]:'')+(G.gap[tileIdx(u.x,u.y)]?'　<i>'+tr('隘口','Pass')+'</i>':'')+
-  (u.hidden?'　<i>'+tr('伏','Ambush')+'</i>':u.hold?(u.holdT>8?'　<i>'+tr('深沟高垒','Entrenched')+'</i>':'　<i>'+tr('镇守','Holding')+'</i>'):'')+(u.death?'　<i>'+tr('死战','Last stand')+'</i>':'')+'<br><small>'+TNAME[t]+(TNOTE[t]?tr('：',': ')+TNOTE[t]:'')+(G.gap[tileIdx(u.x,u.y)]?tr('　隘口：每阵至多 '+frontage(G.gap[tileIdx(u.x,u.y)])+' 人接战，大军施展不开','　Pass: at most '+frontage(G.gap[tileIdx(u.x,u.y)])+' men per unit can fight; large armies are cramped'):'')+'</small>';}
+  (u.hidden?'　<i>'+tr('伏','Ambush')+'</i>':u.hold?(u.holdT>RU.hold.dugTime?'　<i>'+tr('深沟高垒','Entrenched')+'</i>':'　<i>'+tr('镇守','Holding')+'</i>'):'')+(u.death?'　<i>'+tr('死战','Last stand')+'</i>':'')+'<br><small>'+TNAME[t]+(TNOTE[t]?tr('：',': ')+TNOTE[t]:'')+(G.gap[tileIdx(u.x,u.y)]?tr('　隘口：每阵至多 '+frontage(G.gap[tileIdx(u.x,u.y)])+' 人接战，大军施展不开','　Pass: at most '+frontage(G.gap[tileIdx(u.x,u.y)])+' men per unit can fight; large armies are cramped'):'')+'</small>';}
  else{let n=0;for(const u of s)n+=u.n;info=tr('<b>'+s.length+' 阵</b>　共 '+Math.round(n)+' 人','<b>'+s.length+' units</b>　'+Math.round(n)+' men');}
  setH('selinfo',info);
  const bs=$('btns').children;for(let i=0;i<bs.length;i++){const b=bs[i],c=b.dataset.c;let on=false;
@@ -1068,7 +1076,7 @@ function applyLang(){const e=EN();
  Object.assign(GN,e?GN_EN:GN_ZH);Object.assign(TAC,e?TAC_EN:TAC_ZH);
  for(const k in UT_ZH)if(UT[k])UT[k].name=e?UT_EN[k]:UT_ZH[k];for(const k in FM)FM[k].name=e?FM_EN[k]:FM_ZH[k];
  BRUSH=e?'"Cormorant Garamond",'+BRUSH_ZH:BRUSH_ZH;WIT=e?WIT_EN:WIT_ZH;WN=e?WN_EN:WN_ZH;WD=e?WD_EN:WD_ZH;GAN=e?'ABCDEFGHIJ':GAN_ZH;
- try{document.documentElement.lang=e?'en':'zh-CN';document.title=e?'Changping · Ink-Wash War Game':'长平之战 水墨兵戏';
+ try{document.documentElement.lang=e?'en':'zh-CN';document.title=e?'ZhuLu · Ink-Wash War Game':'逐鹿 水墨兵戏';
   for(const el of document.querySelectorAll('[data-en]')){if(el.dataset.zh===undefined)el.dataset.zh=el.innerHTML;el.innerHTML=e?el.dataset.en:el.dataset.zh;}
   for(const el of document.querySelectorAll('[data-en-label]')){if(el.dataset.zhLabel===undefined)el.dataset.zhLabel=el.getAttribute('aria-label')||'';el.setAttribute('aria-label',e?el.dataset.enLabel:el.dataset.zhLabel);}
   const b=$('blang');b.textContent=e?'中文':'English';b.lang=e?'zh':'en';}catch(_){}}
@@ -1080,7 +1088,7 @@ function init(){
  applyLang();buildTitle();netInit();window.addEventListener('resize',resize);
  try{$('bedit').addEventListener('click',()=>openEditor());}catch(e){}
  try{document.fonts.load('600 30px "Cormorant Garamond"','Fire Hold');}catch(e){}
- try{document.fonts.load('30px "Ma Shan Zheng"','长平丹水故关秦壁赵垒营西粮道戟盾弩骑帅将守伏溃死疾火攻');}catch(e){}
+ try{document.fonts.load('30px "Ma Shan Zheng"','逐鹿长平丹水故关秦壁赵垒营西粮道戟盾弩骑帅将守伏溃死疾火攻');}catch(e){}
  const ptrs=new Map(),pos=e=>{const r=cvEl.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};};
  const pd=()=>{const a=[...ptrs.values()];return Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);};
  cvEl.addEventListener('contextmenu',e=>e.preventDefault());
@@ -1732,6 +1740,6 @@ function netInit(){
    r.onPeers(ch=>{const seen={};NET.lobby=[];for(const p of ch.peers){const c=p&&p.presence&&p.presence.cp;if(!c||p.sameTab||typeof c.code!=='string'||!/^[a-z0-9]{4}$/.test(c.code)||seen[c.code])continue;seen[c.code]=1;NET.lobby.push({code:c.code,map:String(c.map||'').slice(0,16)});}pvpList();});settle();},settle);}}catch(e){NET.roomState='none';}
  try{setInterval(()=>{if(NET.role!=='host'||!NET.started||!G||G.over)return;const now=performance.now(),gap=now-NET.frameAt;if(gap<600)return;NET.frameAt=now;let n=Math.min(20,Math.round(gap/50));while(n-->0&&!G.over)update(.05);netHostTick(1);},500);}catch(e){}}
 
-if(typeof window!=='undefined'&&window.__TEST)window.__CP={setLang,briefHtml,mt,endGame,buildTitle,applyLang,get LANG(){return LANG;},newGame,update,render,hud,drawMini,MISSIONS,fireAt,get G(){return G;},init,cmd,order,tactic,netHost,netJoin,rtcHost,rtcJoin,rtcAccept,packSdp,unpackSdp,netHostTick,guestTick,netRetry,NET,act,pvpMaps,mkPvp,startPvp,get ME(){return ME;},mkMission,checkLevel,captureBuiltin,levelOut,edLoad,blankLevel,terrainOf,UT,CT,setRun(){running=true;}};
+if(typeof window!=='undefined'&&window.__TEST)window.__CP={RT:{FM,FMC,SPD,setRules,RULES0,get RU(){return RU;},TNAME_ZH,UT_ZH,frontage,meleeMult,rangedMult,rangeOf,rangeTo,spdF,findPath,spawn,elevOf,visionOf,setWeather,get FLK(){return FLK;}},setLang,briefHtml,mt,endGame,buildTitle,applyLang,get LANG(){return LANG;},newGame,update,render,hud,drawMini,MISSIONS,fireAt,get G(){return G;},init,cmd,order,tactic,netHost,netJoin,rtcHost,rtcJoin,rtcAccept,packSdp,unpackSdp,netHostTick,guestTick,netRetry,NET,act,pvpMaps,mkPvp,startPvp,get ME(){return ME;},mkMission,checkLevel,captureBuiltin,levelOut,edLoad,blankLevel,terrainOf,UT,CT,setRun(){running=true;}};
 else init();
 })();

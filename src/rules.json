@@ -1,0 +1,36 @@
+{
+  "combat": {"meleeBase": 16, "sizeExp": 0.7, "volleyBase": 11, "volleyCd": 2.2, "moveFight": 0.4, "moraleHit": 1.6,
+             "stamMin": 0.6, "moraleMin": 0.75, "moraleSpan": 0.35, "shotStamMin": 0.6, "shotMoraleMin": 0.8, "shotMoraleSpan": 0.25,
+             "deathFight": 1.3, "routHit": 1.5, "routShot": 1.2, "restGap": 45, "restBonus": 1.15},
+  "elevation": {"meleeUp": 0.12, "meleeDown": 0.1, "maxLv": 3, "shot": 0.1, "range": 0.1, "rangeTarget": 0.08, "vision": 0.12,
+                "upSpeed": 0.82, "downSpeed": 1.1, "chargeDown": 1.15},
+  "terrain": {"forestDef": 0.85, "cavForest": 0.7, "fordTarget": 1.5, "fordAttacker": 0.6, "marshTarget": 1.2, "wallTarget": 1.4, "wallAttacker": 0.6,
+              "campDef": 0.75, "forestShot": 0.6, "fordShot": 1.3, "wallShot": 1.4, "campShot": 0.5, "gapShot": 1.25, "gapHighShot": 1.15,
+              "frontageBase": 600, "frontagePer": 1400, "gapSlow": 0.75},
+  "hold": {"melee": 0.85, "dugMelee": 0.65, "dugShot": 0.8, "dugTime": 8, "hideTime": 3, "ambushMelee": 1.7, "ambushShot": 1.4,
+           "ambushTime": 6, "ambushOrderTime": 10, "rest": 2, "restHold": 3},
+  "charge": {"cav": 1.6, "inf": 1.2, "night": 1.15, "time": 3.5, "run": 1.2},
+  "flank": {"side": 1.25, "rear": 1.5, "sideMorale": 1.3, "rearMorale": 1.6, "massMorale": 1.2},
+  "march": {"stamMarch": 0.3, "stamForce": 2.6, "stamFight": 1.1, "forceSpeed": 1.45, "tiredAt": 15, "tiredSpeed": 0.75},
+  "horse": {"marsh": 1, "forest": 0.6, "hill2": 0.5, "hill3": 0.8, "rainForce": 0.25, "forceMul": 2.2},
+  "weather": {"rainShot": 0.5, "rainPlainInf": 0.88, "rainPlainCav": 0.75, "fogRange": 0.6, "fogVision": 0.45,
+              "nightShot": 0.2, "nightRange": 0.2, "vision": 420, "nightVision": 250},
+  "shield": {"dunArrow": 0.45, "dunYuanArrow": 0.35, "yuanArrow": 1.2},
+  "units": {
+    "ji":    {"spd": 46, "atk": 1,    "def": 1,    "range": 0},
+    "dun":   {"spd": 42, "atk": 0.9,  "def": 1.25, "range": 0},
+    "nu":    {"spd": 44, "atk": 0.5,  "def": 0.7,  "range": 200},
+    "qi":    {"spd": 92, "atk": 1.15, "def": 0.9,  "range": 0},
+    "liang": {"spd": 32, "atk": 0.05, "def": 1.1,  "range": 0}
+  },
+  "counters": {"ji": {"qi": 1.6, "dun": 0.85}, "dun": {"ji": 1.2, "qi": 0.85, "nu": 1.2}, "qi": {"nu": 1.7, "dun": 1.15, "ji": 0.7, "liang": 1.3}, "nu": {}, "liang": {}},
+  "formations": {
+    "fang": {"atk": 1,    "def": 1,    "spd": 1},
+    "feng": {"atk": 1.3,  "def": 0.8,  "spd": 1.15},
+    "yuan": {"atk": 0.75, "def": 1.4,  "spd": 0.6},
+    "yan":  {"atk": 0.9,  "def": 0.85, "spd": 1, "shot": 1.3, "rng": 1.1}
+  },
+  "formationCounters": {"feng": {"yan": 1.25, "yuan": 0.85}, "fang": {"feng": 1.1}, "yan": {}, "yuan": {}},
+  "terrainSpeed": {"plain": 1, "hill": 0.65, "forest": 0.7, "ford": 0.45, "road": 1.3, "wall": 0.12, "gate": 1, "camp": 1, "burnt": 0.9, "marsh": 0.5, "rubble": 0.6},
+  "cavSpeed": {"hill": 0.5, "forest": 0.42, "marsh": 0.3}
+}

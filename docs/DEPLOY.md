@@ -48,6 +48,7 @@ python3 build.py
 # 2) 跑无界面测试（每个都应跑完、不抛异常）
 node tests/level.js          # 校验并试跑 levels.json 第一关
 node tests/tactics.js        # 列阵战术走位
+node tests/pvp.js            # 联机对战：两个引擎模拟联机打完一局
 node tests/smoke.js smart    # 脚本玩家跑完原三关（较慢；胜负有随机波动，属正常）
 
 # 3) 本地打开验证
